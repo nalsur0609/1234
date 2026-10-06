@@ -1,0 +1,52 @@
+name: TEST1 POST-AXIAL Artifact Bridge
+
+on:
+  push:
+    branches:
+      - test1-post-axial-regression-r1
+    paths:
+      - '.github/workflows/test1-post-axial-artifact-bridge.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  bridge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Download exact successful-run artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: test1-post-axial-regression-r1-a574dd2e0c85d128c074ec5ebd0bed77a18404fc
+          path: carrier_results
+          repository: nalsur0609/1234
+          run-id: 37480755948
+          github-token: ${{ github.token }}
+
+      - name: Verify transferred result hashes
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '%s  %s\n' 'fa2e4df550fd56f61d01053896f670ff063f34d284799881655add2d2388bbd1' 'carrier_results/regression/r1/TEST1_POST_AXIAL_REGRESSION_R1.json' | sha256sum -c -
+          printf '%s  %s\n' 'b0de80e2d701de1d425d002dbdbb070064c32d4db91f9febba663cb13c34c78e' 'carrier_results/regression/r1/TEST1_POST_AXIAL_INTEGRATION_RESULTS_R1.jsonl' | sha256sum -c -
+          printf '%s  %s\n' '80908cb8542afede3383e340f12f1a3ae2f53d79202fee8329544f2578d6ba91' 'carrier_results/regression/r1/TEST1_POST_AXIAL_WEB_RESULTS_R1.json' | sha256sum -c -
+          printf '%s  %s\n' '3c17f2d9a783f968aab1cb38b6f650a230f571babbbff80a9b9a4ca6e73644e7' 'carrier_results/regression/r1/TEST1_POST_AXIAL_SCENARIO_RESULTS_R1.jsonl' | sha256sum -c -
+          printf '%s  %s\n' 'b2179e40843bd050030e659f9dca2da3cdcb86740953171714d50331d93a6cb8' 'carrier_results/regression/r1/TEST1_POST_AXIAL_DEFECTS_R1.json' | sha256sum -c -
+          printf '%s  %s\n' 'c8f234095e7a253c24bb73134f3a688f1f0b967d1eac8925f19332ef938b4760' 'carrier_results/docs/TEST1_POST_AXIAL_REGRESSION_R1_HANDOFF.md' | sha256sum -c -
+
+      - name: Commit exact transfer copy
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add carrier_results
+          git commit -m 'TEST1 POST-AXIAL: bridge exact successful-run artifacts'
+          git push origin HEAD:test1-post-axial-regression-r1
