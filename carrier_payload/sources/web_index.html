@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TEST1 — локальный подбор R1</title>
+  <style>
+    :root { font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    body { margin: 0; background: #f4f6f8; color: #17202a; }
+    header { background: #17202a; color: white; padding: 18px 24px; }
+    header h1 { margin: 0 0 6px; font-size: 22px; }
+    header p { margin: 0; opacity: .85; }
+    .warning { margin: 16px auto 0; max-width: 1180px; background: #fff3cd; border: 1px solid #e6c96b; padding: 12px 14px; border-radius: 8px; }
+    main { max-width: 1180px; margin: 16px auto 40px; padding: 0 16px; display: grid; gap: 16px; }
+    .card { background: white; border: 1px solid #dfe4ea; border-radius: 10px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+    label { display: grid; gap: 6px; font-weight: 600; }
+    select, input, textarea, button { font: inherit; }
+    select, input, textarea { width: 100%; box-sizing: border-box; border: 1px solid #cfd6dd; border-radius: 7px; padding: 9px 10px; background: white; }
+    textarea { min-height: 76px; resize: vertical; }
+    button { border: 0; border-radius: 7px; padding: 10px 14px; cursor: pointer; background: #1f6feb; color: white; font-weight: 700; }
+    button.secondary { background: #5b6673; }
+    .muted { color: #66717d; font-size: 13px; }
+    .param { border: 1px solid #e1e6eb; border-radius: 8px; padding: 12px; margin-top: 10px; }
+    .param-head { display:flex; justify-content:space-between; gap:12px; align-items:baseline; }
+    .badge { display:inline-block; border-radius:999px; padding:3px 8px; font-size:12px; font-weight:700; background:#e9eef5; }
+    .status { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+    .exact { color: #176b35; }
+    .probable { color: #8a5a00; }
+    .notselected { color: #9d1c1c; }
+    pre { white-space: pre-wrap; word-break: break-word; background:#0d1117; color:#e6edf3; padding:14px; border-radius:8px; max-height: 680px; overflow:auto; }
+    .snapshots code { display:block; margin:5px 0; word-break:break-all; }
+    .warning-list { margin: 8px 0 0; padding-left: 20px; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>TEST1 — Frozen Local Web Runtime R1</h1>
+  <p>Экспериментальный интерфейс ручной проверки текущего frozen DATA + RULES + GenericMatcher.</p>
+</header>
+
+<div class="warning">
+  <strong>Эксперимент TEST1.</strong>
+  Этот интерфейс не является production-ready подбором. Текст заявки не разбирается и не создаёт факты:
+  подбор выполняется только по явно выбранному профилю и структурированным полям текущего frozen-контракта.
+</div>
+
+<main>
+  <section class="card snapshots">
+    <h2>Frozen authority</h2>
+    <div id="authority">Загрузка...</div>
+  </section>
+
+  <section class="card">
+    <h2>Структурированный подбор</h2>
+    <div class="grid">
+      <label>Профиль / группа
+        <select id="profile"></select>
+      </label>
+      <label>ID заявки
+        <input id="requestId" value="manual-web-r1">
+      </label>
+      <label>ID позиции
+        <input id="positionId" value="1">
+      </label>
+    </div>
+    <label style="margin-top:12px">Исходный текст заявки — только для trace, не парсится
+      <textarea id="rawText" placeholder="Например: исходная строка клиента. Это поле не влияет на параметры подбора."></textarea>
+    </label>
+    <div id="profileMeta" class="muted" style="margin-top:10px"></div>
+    <div id="parameters"></div>
+    <div style="display:flex;gap:10px;margin-top:14px">
+      <button id="run">Выполнить подбор</button>
+      <button class="secondary" id="clear">Очистить параметры</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Результат</h2>
+    <div id="summary" class="muted">Подбор ещё не выполнялся.</div>
+    <div id="warnings"></div>
+    <h3>Полный result + decision trace</h3>
+    <pre id="trace">{}</pre>
+  </section>
+</main>
+
+<script>
+let profileData = [];
+
+function stringifyValue(value) {
+  return JSON.stringify(value);
+}
+
+function displayValue(value) {
+  const text = JSON.stringify(value, null, 0);
+  return text === undefined ? "" : text;
+}
+
+function parseInputValue(text) {
+  const trimmed = text.trim();
+  if (trimmed === "") return {empty: true};
+  try {
+    return {empty: false, value: JSON.parse(trimmed)};
+  } catch (_) {
+    return {empty: false, value: trimmed};
+  }
+}
+
+function classForResult(resultClass) {
+  if (resultClass === "TEST1_EXACT") return "exact";
+  if (resultClass === "TEST1_PROBABLE") return "probable";
+  return "notselected";
+}
+
+async function loadAuthority() {
+  const r = await fetch("/api/authority");
+  const data = await r.json();
+  const snapshots = data.snapshot_ids || {};
+  document.getElementById("authority").innerHTML =
+    "<strong>" + data.status + "</strong>" +
+    "<code>DATA ref: " + data.frozen_inputs.find(x => x.component === "DATA_CATALOG").ref + "</code>" +
+    "<code>RULES ref: " + data.frozen_inputs.find(x => x.component === "RULES").ref + "</code>" +
+    "<code>ENGINE ref: " + data.frozen_inputs.find(x => x.component === "ENGINE").ref + "</code>" +
+    "<code>SCHEMA ref: " + data.frozen_inputs.find(x => x.component === "SHARED_SCHEMA").ref + "</code>" +
+    "<code>data_snapshot_id: " + snapshots.data_snapshot_id + "</code>" +
+    "<code>rules_snapshot_id: " + snapshots.rules_snapshot_id + "</code>" +
+    "<code>engine_snapshot_id: " + snapshots.engine_snapshot_id + "</code>" +
+    "<p class='muted'>Каталог: " + data.scope.catalog_exact_sku +
+    " SKU; DATA_FACT_SUFFICIENT: " + data.scope.data_fact_sufficient_sku +
+    "; frozen executable profiles: " + data.scope.executable_profiles + ".</p>";
+}
+
+async function loadProfiles() {
+  const r = await fetch("/api/profiles");
+  const data = await r.json();
+  profileData = data.profiles;
+  const select = document.getElementById("profile");
+  select.innerHTML = "";
+  for (const p of profileData) {
+    const option = document.createElement("option");
+    option.value = p.group_id;
+    option.textContent = p.group_id + " (" + p.eligible_real_sku + " SKU)";
+    select.appendChild(option);
+  }
+  renderProfile();
+}
+
+function renderProfile() {
+  const id = document.getElementById("profile").value;
+  const p = profileData.find(x => x.group_id === id);
+  const params = document.getElementById("parameters");
+  params.innerHTML = "";
+  if (!p) return;
+
+  const finding = p.known_fail_closed_finding
+    ? " ВАЖНО: для этого профиля frozen axial seam известен как fail-closed."
+    : "";
+  document.getElementById("profileMeta").textContent =
+    p.contract_id + " · eligible real SKU: " + p.eligible_real_sku + "." + finding;
+
+  for (const param of p.parameters) {
+    const wrap = document.createElement("div");
+    wrap.className = "param";
+    const unit = param.canonical_unit == null ? "без единицы" : param.canonical_unit;
+    const samples = (param.observed_frozen_values || []).slice(0, 5).map(displayValue).join(" · ");
+    wrap.innerHTML =
+      "<div class='param-head'><strong>" + param.key + "</strong><span class='badge'>" + param.role + "</span></div>" +
+      "<div class='muted'>" + param.comparison_semantics + " · " + param.value_type + " · " + unit + "</div>" +
+      "<label style='margin-top:8px'>Значение (JSON или текст)" +
+      "<input data-param='" + param.key.replace(/'/g, "&#39;") + "' data-unit='" +
+      (param.canonical_unit == null ? "" : String(param.canonical_unit).replace(/'/g, "&#39;")) +
+      "' placeholder='" + (samples ? "Примеры: " + samples.replace(/'/g, "&#39;") : "Введите значение") + "'>" +
+      "</label>";
+    params.appendChild(wrap);
+  }
+}
+
+async function runSelection() {
+  const profile = document.getElementById("profile").value;
+  const parameters = {};
+  for (const input of document.querySelectorAll("[data-param]")) {
+    const parsed = parseInputValue(input.value);
+    if (parsed.empty) continue;
+    parameters[input.dataset.param] = {
+      value: parsed.value,
+      unit: input.dataset.unit === "" ? null : input.dataset.unit
+    };
+  }
+
+  const payload = {
+    request_id: document.getElementById("requestId").value || "manual-web-r1",
+    position_id: document.getElementById("positionId").value || "1",
+    raw_request_text: document.getElementById("rawText").value || "",
+    profile,
+    parameters
+  };
+
+  const r = await fetch("/api/select", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(payload)
+  });
+  const data = await r.json();
+  const resultClass = data.result ? data.result.result_class : (data.result_class || "TEST1_NOT_SELECTED");
+  const selected = data.result ? data.result.selected_exact_sku : null;
+  document.getElementById("summary").innerHTML =
+    "<div class='status " + classForResult(resultClass) + "'>" + resultClass + "</div>" +
+    "<div>Выбранный exact SKU: <strong>" + (selected == null ? "—" : selected) + "</strong></div>";
+
+  const warningValues = data.result ? (data.result.warnings || []) : (data.warnings || []);
+  document.getElementById("warnings").innerHTML = warningValues.length
+    ? "<h3>Warnings / fail-closed причины</h3><ul class='warning-list'>" +
+      warningValues.map(x => "<li>" + String(x) + "</li>").join("") + "</ul>"
+    : "<p class='muted'>Warnings отсутствуют.</p>";
+  document.getElementById("trace").textContent = JSON.stringify(data, null, 2);
+}
+
+document.getElementById("profile").addEventListener("change", renderProfile);
+document.getElementById("run").addEventListener("click", runSelection);
+document.getElementById("clear").addEventListener("click", () => {
+  for (const input of document.querySelectorAll("[data-param]")) input.value = "";
+});
+Promise.all([loadAuthority(), loadProfiles()]).catch(err => {
+  document.getElementById("trace").textContent = "Ошибка загрузки: " + err;
+});
+</script>
+</body>
+</html>
