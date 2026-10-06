@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - etim-r6-processing1822-ci
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
