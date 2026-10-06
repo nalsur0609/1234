@@ -1,0 +1,51 @@
+name: Public CI Carrier Smoke
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/public-ci-smoke.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  ubuntu:
+    name: ubuntu-public-runner-smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Prove Ubuntu runner execution
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "PUBLIC_CI_CARRIER=1234"
+          echo "OS=ubuntu"
+          echo "REPOSITORY=$GITHUB_REPOSITORY"
+          echo "RUN_ID=$GITHUB_RUN_ID"
+          echo "RUN_ATTEMPT=$GITHUB_RUN_ATTEMPT"
+          echo "WORKFLOW_SHA=$GITHUB_SHA"
+          uname -a
+          python3 --version
+          git --version
+          echo "PUBLIC_CI_UBUNTU_SMOKE=PASS"
+
+  windows:
+    name: windows-public-runner-smoke
+    runs-on: windows-latest
+    timeout-minutes: 5
+    steps:
+      - name: Prove Windows runner execution
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          Write-Host "PUBLIC_CI_CARRIER=1234"
+          Write-Host "OS=windows"
+          Write-Host "REPOSITORY=$env:GITHUB_REPOSITORY"
+          Write-Host "RUN_ID=$env:GITHUB_RUN_ID"
+          Write-Host "RUN_ATTEMPT=$env:GITHUB_RUN_ATTEMPT"
+          Write-Host "WORKFLOW_SHA=$env:GITHUB_SHA"
+          [System.Environment]::OSVersion.VersionString
+          python --version
+          git --version
+          Write-Host "PUBLIC_CI_WINDOWS_SMOKE=PASS"
