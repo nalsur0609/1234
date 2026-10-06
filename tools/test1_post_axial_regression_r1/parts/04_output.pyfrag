@@ -1,0 +1,279 @@
+def authority_and_drift_checks() -> dict[str, Any]:
+    rows = []
+    for (ref, path), source_expected in sorted(EXPECTED_BLOBS.items()):
+        payload = git_show(ref, path)
+        actual = git_blob_sha1(payload)
+        carrier_expected = carrier_expected_blob(ref, path)
+        rows.append({
+            "ref": ref,
+            "path": path,
+            "source_original_git_blob_sha1": source_expected,
+            "carrier_expected_git_blob_sha1": carrier_expected,
+            "actual_git_blob_sha1": actual,
+            "carrier_match": actual == carrier_expected,
+            "source_byte_exact": actual == source_expected,
+            "projection": "BOUNDED_EXACT_ROW_SUBSET" if (ref, path) == (DATA_REF, DATA_CATALOG_PATH) else "BYTE_EXACT_SOURCE_COPY",
+        })
+    if not all(r["carrier_match"] for r in rows):
+        raise AssertionError("carrier payload blob drift detected")
+
+    catalog_payload = git_show(DATA_REF, DATA_CATALOG_PATH)
+    catalog_rows = [json.loads(line) for line in catalog_payload.decode("utf-8").splitlines() if line.strip()]
+    profile_ids = sorted({r["group_id"] for r in catalog_rows})
+    if len(catalog_rows) != CARRIER_EXPECTED_CATALOG_RECORDS:
+        raise AssertionError(f"carrier catalog record count drift: {len(catalog_rows)}")
+    if profile_ids != sorted(CARRIER_EXPECTED_PROFILE_IDS):
+        raise AssertionError(f"carrier catalog profile drift: {profile_ids}")
+    if {r["data_snapshot_id"] for r in catalog_rows} != {"TEST1_DATA_R1_FACT_MATERIALIZATION_20261005"}:
+        raise AssertionError("carrier catalog snapshot id drift")
+
+    banned_keys = {"email","phone","inn","kpp","ogrn","customer","client","price","cost","discount","password","secret","api_key","api-key","token","address"}
+    def walk_keys(value):
+        if isinstance(value, dict):
+            for k, v in value.items():
+                if str(k).strip().lower() in banned_keys:
+                    raise AssertionError(f"sensitive/commercial carrier key forbidden: {k}")
+                walk_keys(v)
+        elif isinstance(value, list):
+            for v in value:
+                walk_keys(v)
+    for row in catalog_rows:
+        walk_keys(row)
+    raw_text = catalog_payload.decode("utf-8")
+    if re.search(r"[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}", raw_text, re.I):
+        raise AssertionError("email-like value found in carrier catalog")
+    if re.search(r"(?:\+7|8)[\s\-()]*\d{3}[\s\-()]*\d{3}[\s\-]*\d{2}[\s\-]*\d{2}", raw_text):
+        raise AssertionError("phone-like value found in carrier catalog")
+
+    repaired = json.loads(git_show(RULES_REF, RULES_PATH).decode("utf-8"))
+    axial = next(c for c in repaired["contracts"] if c["group_id"] == AXIAL_PROFILE)
+    size_param = next(p for p in axial["parameters"] if p["key"] == "compatibility.size.tuple")
+    check = {
+        "all_carrier_payload_blobs_match": True,
+        "pinned_blobs": rows,
+        "no_data_source_row_mutation": True,
+        "data_projection_scope": {
+            "source_original_catalog_blob_sha1": CARRIER_CATALOG_ORIGINAL_SOURCE_BLOB,
+            "carrier_subset_blob_sha1": CARRIER_CATALOG_SUBSET_BLOB,
+            "records": len(catalog_rows),
+            "profiles": profile_ids,
+            "selection": "exact source rows for all current-WEB-executable profiles",
+        },
+        "sensitive_data_boundary": {
+            "email_like_matches": 0,
+            "phone_like_matches": 0,
+            "forbidden_commercial_or_credential_keys": 0,
+            "customer_data": "NOT_PRESENT",
+            "commercial_price_data": "NOT_PRESENT",
+            "credentials_or_env": "NOT_PRESENT",
+        },
+        "no_engine_drift": True,
+        "no_scenario_input_drift": True,
+        "no_web_source_drift": True,
+        "repaired_rules_ref_exact": RULES_REF,
+        "repaired_rules_blob_exact": EXPECTED_BLOBS[(RULES_REF, RULES_PATH)],
+        "repaired_rules_snapshot_id": repaired.get("rules_snapshot_id"),
+        "axial_compatibility_size_tuple": {
+            "value_type": size_param.get("value_type"),
+            "comparison_semantics": size_param.get("comparison_semantics"),
+        },
+        "stale_old_rules_ref_executed": False,
+        "private_test1_regression_head": PRIVATE_TEST1_REGRESSION_HEAD,
+        "public_carrier_repo": PUBLIC_CARRIER_REPO,
+        "public_carrier_resume_authority": PUBLIC_CARRIER_RESUME_AUTHORITY,
+    }
+    if repaired.get("rules_snapshot_id") != RULES_SNAPSHOT_ID:
+        raise AssertionError(f"repaired rules snapshot mismatch: {repaired.get('rules_snapshot_id')}")
+    if size_param.get("value_type") != "OPAQUE_TOKEN" or size_param.get("comparison_semantics") != "EQUALS":
+        raise AssertionError(f"repaired axial contract mismatch: {size_param}")
+    return check
+
+
+def build_handoff(summary: Mapping[str, Any]) -> str:
+    integ = summary["integration"]
+    web = summary["web"]
+    scen = summary["scenarios"]
+    return f"""# TEST1-REGRESSION-1 / POST-AXIAL CROSS-WORKSTREAM REGRESSION R1 — HANDOFF
+
+Status: READY FOR ML TEST REVIEW
+
+Authority:
+- Issue #18
+- ML TEST START authority: {START_AUTHORITY}
+- benchmark isolation boundary: {BENCHMARK_BOUNDARY}
+- exact TEST1 base: `{BASE_REF}`
+
+Frozen workstream authorities:
+- DATA `{DATA_REF}`
+- repaired RULES `{RULES_REF}`
+- ENGINE `{ENGINE_REF}`
+- previous non-WEB integration reference `{INTEGRATION_REF}`
+- WEB source reference `{WEB_REF}`
+- scenario corpus reference `{SCENARIO_REF}`
+
+Execution binding:
+- private TEST1 remains SSOT; the public carrier is compute-only under resume authority 6018146028;\n- DATA catalog input is a bounded exact-row projection of the pinned DATA blob covering all current-WEB-executable profiles;\n- ENGINE / WEB / scenario / schema / repaired RULES source files are byte-exact copies checked by Git blob SHA-1;
+- accepted WEB source is not modified in the repository;
+- regression runtime binds only the accepted repaired RULES ref/blob/snapshot;
+- the original scenario input/oracle artifacts remain unchanged;
+- only the seven Issue #18 axial scenario IDs receive the explicit ML-authority expectation override.
+
+## Regression A — non-WEB
+- real DATA-sufficient positives: {integ['eligible_real_sku']}
+- profiles: {integ['profiles_exercised']}
+- positive TEST1_EXACT: {integ['positive_TEST1_EXACT']}
+- positive TEST1_PROBABLE: {integ['positive_TEST1_PROBABLE']}
+- positive TEST1_NOT_SELECTED: {integ['positive_TEST1_NOT_SELECTED']}
+- missing-mandatory executed / NOT_SELECTED: {integ['missing_mandatory_executed']} / {integ['missing_mandatory_NOT_SELECTED']}
+- contradiction executed / NOT_SELECTED: {integ['contradiction_executed']} / {integ['contradiction_NOT_SELECTED']}
+- contradiction NOT_EXECUTED: {integ['contradiction_NOT_EXECUTED']}
+- deterministic mismatches: {integ['deterministic_rerun_mismatches']}
+- selected_with_mandatory_contradiction: {integ['selected_with_mandatory_contradiction']}
+- engine crashes: {integ['engine_crashes']}
+
+## Regression B — live WEB
+- server started: {str(web['server_started']).lower()}
+- positive profiles: {web['positive_profile_count']}
+- TEST1_EXACT: {web['positive_TEST1_EXACT']}
+- axial result: {web['axial_positive']['result_class']}
+- missing mandatory: {web['negative_requests']['missing_mandatory']['result_class']}
+- contradiction: {web['negative_requests']['contradiction']['result_class']}
+- unknown profile: {web['negative_requests']['unknown_profile']['result_class']}
+- deterministic mismatches: {web['deterministic_mismatches']}
+- selected_with_mandatory_contradiction: {web['selected_with_mandatory_contradiction']}
+- engine crashes: {web['engine_crashes']}
+- repaired RULES authority exact: {str(web['repaired_rules_authority_exact']).lower()}
+
+The accepted WEB source contains a historical `known_frozen_findings` presentation field describing the pre-repair axial fail-closed state. It is preserved because this regression is forbidden to patch WEB source. Runtime authority ref/blob/snapshot and actual selection execution are separately verified against the repaired RULES authority.
+
+## Regression C — 120 synthetic scenarios
+- total: {scen['total_scenario_rows']}
+- executed: {scen['executed']}
+- NOT_EXECUTED_CURRENT_SCOPE: {scen['NOT_EXECUTED_CURRENT_SCOPE']}
+- TEST1_EXACT: {scen['TEST1_EXACT']}
+- TEST1_PROBABLE: {scen['TEST1_PROBABLE']}
+- TEST1_NOT_SELECTED: {scen['TEST1_NOT_SELECTED']}
+- axial override exact: {scen['axial_override_executed_exact']} / 7
+- deterministic mismatches: {scen['deterministic_mismatches']}
+- selected_with_mandatory_contradiction: {scen['selected_with_mandatory_contradiction']}
+- engine crashes: {scen['engine_crashes']}
+- unresolved mismatch/defect count: {scen['unresolved_mismatch_defect_count']}
+
+## Consistency
+- DATA source-row mutation: none; carrier uses the bounded exact-row profile projection
+- ENGINE drift: none
+- WEB source drift: none
+- scenario input drift: none
+- repaired RULES blob/ref/snapshot: exact
+- stale old RULES snapshot executed: no
+
+Dedicated workflow:
+`.github/workflows/test1-post-axial-regression-r1.yml`
+
+Exact-head CI run and PR/HEAD identity are recorded in the final Issue #18 handoff comment after committed-artifact verification.
+
+No accepted DATA/RULES/ENGINE/WEB/SCENARIOS/QA/shared-schema artifact was modified.
+No matcher or selection semantics were changed.
+No benchmark integration.
+No merge.
+No STABLE declaration.
+
+`TEST1_POST_AXIAL_CROSS_WORKSTREAM_REGRESSION_R1 = READY_FOR_ML_TEST_REVIEW`
+"""
+
+
+def canonical_json(obj: Any) -> str:
+    return json.dumps(obj, ensure_ascii=False, sort_keys=True, indent=2) + "\n"
+
+
+def jsonl(rows: list[Mapping[str, Any]]) -> str:
+    return "".join(
+        json.dumps(r, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n"
+        for r in rows
+    )
+
+
+def compute() -> dict[str, str]:
+    drift = authority_and_drift_checks()
+    integration_summary, integration_rows, integration_defects = run_integration()
+    web_results, web_defects = run_web_regression()
+    scenario_summary, scenario_rows, scenario_defects = run_scenarios()
+    defects = integration_defects + web_defects + scenario_defects
+    defect_doc = {
+        "schema_version": "TEST1_POST_AXIAL_DEFECTS_R1",
+        "issue": 18,
+        "start_authority_comment": START_AUTHORITY,
+        "unresolved_defect_count": len(defects),
+        "defects": defects,
+    }
+    summary = {
+        "schema_version": "TEST1_POST_AXIAL_REGRESSION_R1",
+        "status": "READY_FOR_ML_TEST_REVIEW",
+        "issue": 18,
+        "start_authority_comment": START_AUTHORITY,
+        "benchmark_boundary_comment": BENCHMARK_BOUNDARY,
+        "authorities": {
+            "base": BASE_REF,
+            "data": DATA_REF,
+            "rules_repaired": RULES_REF,
+            "engine": ENGINE_REF,
+            "integration_reference": INTEGRATION_REF,
+            "web_reference": WEB_REF,
+            "scenario_reference": SCENARIO_REF,
+        },
+        "consistency": drift,
+        "integration": integration_summary,
+        "web": web_results,
+        "scenarios": scenario_summary,
+        "unresolved_defect_count": len(defects),
+        "final_marker": "TEST1_POST_AXIAL_CROSS_WORKSTREAM_REGRESSION_R1 = READY_FOR_ML_TEST_REVIEW",
+    }
+    if defects:
+        raise AssertionError(f"unresolved defects: {defects[:3]}")
+    return {
+        str(SUMMARY_PATH.relative_to(ROOT)): canonical_json(summary),
+        str(INTEGRATION_RESULTS_PATH.relative_to(ROOT)): jsonl(integration_rows),
+        str(WEB_RESULTS_PATH.relative_to(ROOT)): canonical_json(web_results),
+        str(SCENARIO_RESULTS_PATH.relative_to(ROOT)): jsonl(scenario_rows),
+        str(DEFECTS_PATH.relative_to(ROOT)): canonical_json(defect_doc),
+        str(DOC_PATH.relative_to(ROOT)): build_handoff(summary),
+    }
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument("--write", action="store_true")
+    mode.add_argument("--check", action="store_true")
+    args = parser.parse_args()
+
+    outputs = compute()
+    if args.write:
+        for rel, content in outputs.items():
+            path = ROOT / rel
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(content, encoding="utf-8")
+    else:
+        for rel, expected in outputs.items():
+            path = ROOT / rel
+            if not path.exists():
+                raise AssertionError(f"missing committed regression artifact: {rel}")
+            actual = path.read_text(encoding="utf-8")
+            if actual != expected:
+                raise AssertionError(f"committed artifact differs from exact recomputation: {rel}")
+
+    summary = json.loads(outputs[str(SUMMARY_PATH.relative_to(ROOT))])
+    print(json.dumps({
+        "status": "PASS",
+        "integration_positive_exact": summary["integration"]["positive_TEST1_EXACT"],
+        "web_positive_exact": summary["web"]["positive_TEST1_EXACT"],
+        "scenario_executed": summary["scenarios"]["executed"],
+        "scenario_exact": summary["scenarios"]["TEST1_EXACT"],
+        "scenario_not_selected": summary["scenarios"]["TEST1_NOT_SELECTED"],
+        "unresolved_defect_count": summary["unresolved_defect_count"],
+    }, ensure_ascii=False, sort_keys=True))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
