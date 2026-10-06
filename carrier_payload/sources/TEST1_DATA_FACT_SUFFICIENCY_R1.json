@@ -1,0 +1,4543 @@
+{
+  "schema_version": "TEST1_DATA_FACT_SUFFICIENCY_R1",
+  "data_snapshot_id": "TEST1_DATA_R1_FACT_MATERIALIZATION_20261005",
+  "authority": {
+    "rules_repo": "nalsur0609/PROGRAMMA_PODBORA_TEST1_SANDBOX",
+    "rules_issue": 3,
+    "rules_pr": 5,
+    "rules_ref": "38eaac6623e934174bfdc036b36d802e7d800403",
+    "rules_acceptance_comment": 5993578482,
+    "rules_path": "rules/r1/TEST1_GROUP_CONTRACTS_R1.json",
+    "rules_hash": "git-blob-sha1:32e9d0c36a1c12ead415e55cdd7150b8d889e363",
+    "engine_pr": 6,
+    "engine_ref": "e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+    "engine_acceptance_comment": 5993578978
+  },
+  "definitions": {
+    "DATA_FACT_SUFFICIENT_SKU": "ENGINE-semantic-compatible SKU with every active MANDATORY candidate fact in KNOWN and no AMBIGUOUS/CONFLICT mandatory state.",
+    "MANDATORY_COMPLETE_SKU": "SKU with every contract MANDATORY fact in KNOWN regardless of current ENGINE semantic support."
+  },
+  "totals": {
+    "catalogue_sku": 2775,
+    "authoritative_profile_count": 78,
+    "active_contract_count": 71,
+    "contract_population_sku": 2704,
+    "source_contract_uncovered_profile_count": 7,
+    "source_contract_uncovered_sku": 71,
+    "engine_semantic_compatible_contract_count": 42,
+    "engine_semantic_compatible_sku": 1255,
+    "engine_semantic_blocked_contract_count": 29,
+    "engine_semantic_blocked_sku": 1449,
+    "mandatory_complete_sku_all_contracts": 1391,
+    "DATA_FACT_SUFFICIENT_SKU": 367,
+    "missing_mandatory_blocked_sku": 888,
+    "ambiguous_or_conflict_blocked_sku": 0
+  },
+  "profiles": [
+    {
+      "group_id": "boiler.compatibility_item.r1",
+      "sku_count": 1,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:boiler.compatibility_item.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "item.function",
+        "compatibility.parent.scope",
+        "compatibility.interface"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 1,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "boiler.electric.r1",
+      "sku_count": 22,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:boiler.electric.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "electrical.rated_power",
+        "boiler.circuit.configuration",
+        "electrical.supply_voltage",
+        "electrical.phase"
+      ],
+      "mandatory_complete_sku": 10,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "conduit.pipe.corrugated.r1",
+      "sku_count": 8,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:conduit.pipe.corrugated.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "application.system",
+        "compatibility.target.interface",
+        "dimension.outside.diameter"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "control.dry_run_relay.r1",
+      "sku_count": 1,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:control.dry_run_relay.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "control.dry.run.principle",
+        "control.sensing.range",
+        "electrical.supply_voltage",
+        "electrical.contact.current_rating"
+      ],
+      "mandatory_complete_sku": 1,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "control.pressure_switch.r1",
+      "sku_count": 3,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:control.pressure_switch.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "control.application",
+        "measurement.pressure.min",
+        "measurement.pressure.max",
+        "connection.interface_spec",
+        "electrical.contact.current_rating",
+        "electrical.contact.voltage_rating"
+      ],
+      "mandatory_complete_sku": 3,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "control.pump_controller.r1",
+      "sku_count": 5,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:control.pump_controller.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "control.mode",
+        "electrical.supply_voltage",
+        "compatibility.target.profile.id"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 5,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "control.smart_gateway.r1",
+      "sku_count": 1,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:control.smart_gateway.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "gateway.role",
+        "protocol",
+        "device.scope",
+        "network.interface",
+        "power.interface"
+      ],
+      "mandatory_complete_sku": 1,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "control.smart_thermostatic_head.r1",
+      "sku_count": 3,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:control.smart_thermostatic_head.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "control.protocol",
+        "control.ecosystem",
+        "compatibility.target.interface",
+        "compatibility.target.product.scope"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "control.temperature_switch.r1",
+      "sku_count": 7,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:control.temperature_switch.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "measurement.temperature.min",
+        "measurement.temperature.max",
+        "mounting.form",
+        "sensor.form",
+        "switching.logic"
+      ],
+      "mandatory_complete_sku": 4,
+      "data_fact_sufficient_sku": 4,
+      "missing_mandatory_blocked_sku": 3,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "control.thermostat.r1",
+      "sku_count": 28,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:control.thermostat.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "control.application",
+        "measurement.temperature.min",
+        "measurement.temperature.max",
+        "output.interface"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 28,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "convector.trench.natural.r1",
+      "sku_count": 169,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:convector.trench.natural.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "convector.convection.type",
+        "thermal.output",
+        "thermal.rating.condition",
+        "dimension.depth",
+        "dimension.width",
+        "dimension.length"
+      ],
+      "mandatory_complete_sku": 169,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "fitting.axial.polymer.r1",
+      "sku_count": 115,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:fitting.axial.polymer.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "product.function",
+        "geometry",
+        "system.compatibility_id",
+        "pipe.material.family",
+        "pipe.outer_diameter"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 115,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "fitting.compression.polymer.r1",
+      "sku_count": 11,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:fitting.compression.polymer.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "fitting.function",
+        "pipe.system.identity",
+        "fitting.pipe.interface"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 11,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "fitting.hdpe.compression.r1",
+      "sku_count": 8,
+      "contract_status": "SOURCE_CONTRACT_UNCOVERED",
+      "contract_id": null,
+      "engine_semantic_status": "NOT_APPLICABLE",
+      "mandatory_keys": [],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "fitting.multilayer.press.r1",
+      "sku_count": 84,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:fitting.multilayer.press.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "product.subtype",
+        "connection.end1.type",
+        "connection.end1.size",
+        "connection.end2.type",
+        "connection.end2.size",
+        "connection.press.profile",
+        "pipe.material.class"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 84,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "fitting.multilayer.screw.r1",
+      "sku_count": 64,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:fitting.multilayer.screw.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "product.function",
+        "geometry",
+        "system.compatibility_id",
+        "pipe.material.family",
+        "pipe.outer_diameter",
+        "connection.interface_spec"
+      ],
+      "mandatory_complete_sku": 53,
+      "data_fact_sufficient_sku": 53,
+      "missing_mandatory_blocked_sku": 11,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "fitting.threaded.brass.r1",
+      "sku_count": 743,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:fitting.threaded.brass.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "product.function",
+        "connection.thread.standard",
+        "connection.thread.ports"
+      ],
+      "mandatory_complete_sku": 543,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "flue.component.r1",
+      "sku_count": 199,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:flue.component.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "flue.component.type",
+        "flue.system.type",
+        "flue.nominal.diameter",
+        "compatibility.interface.code"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 199,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "heater.electric_panel.stone.r1",
+      "sku_count": 15,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:heater.electric_panel.stone.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "heater.thermal.power",
+        "electrical.supply_voltage",
+        "installation.form"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 15,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hose.flexible.water.r1",
+      "sku_count": 72,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hose.flexible.water.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "hose.end.a.interface",
+        "hose.end.b.interface",
+        "hose.length"
+      ],
+      "mandatory_complete_sku": 72,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.air_dirt_separator.r1",
+      "sku_count": 1,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.air_dirt_separator.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "separator.function",
+        "connection.nominal_size.dn",
+        "connection.interface.code"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.air_vent.r1",
+      "sku_count": 5,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.air_vent.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "vent.type",
+        "connection.interface_spec",
+        "mounting.orientation"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 5,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.collector_accessory.r1",
+      "sku_count": 9,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.collector_accessory.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "accessory.type",
+        "compatibility.target.article",
+        "compatibility.interface.code",
+        "compatibility.target.profile.id"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 9,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.collector_assembly.r1",
+      "sku_count": 147,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.collector_assembly.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "collector.subtype",
+        "collector.circuit_count",
+        "connection.main.interface",
+        "connection.outlet.interface"
+      ],
+      "mandatory_complete_sku": 147,
+      "data_fact_sufficient_sku": 147,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.collector_cabinet.r1",
+      "sku_count": 39,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.collector_cabinet.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "cabinet.installation.type",
+        "dimension.width",
+        "dimension.height",
+        "dimension.depth"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.distribution_header.r1",
+      "sku_count": 18,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.distribution_header.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "collector.circuit_count",
+        "pressure.max_working",
+        "temperature.operating.max",
+        "connection.end1.size",
+        "connection.end3.size",
+        "connection.outlet.role"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 18,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.electrothermal_actuator.r1",
+      "sku_count": 4,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.electrothermal_actuator.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "control.normal.state",
+        "electrical.supply_voltage",
+        "control.signal.type",
+        "mount.thread",
+        "actuator.stroke",
+        "actuator.force.n"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.fast_mount_accessory.r1",
+      "sku_count": 10,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.fast_mount_accessory.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "accessory.role",
+        "supported.parent.scope",
+        "target.interface"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 10,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.filter.strainer.r1",
+      "sku_count": 1,
+      "contract_status": "SOURCE_CONTRACT_UNCOVERED",
+      "contract_id": null,
+      "engine_semantic_status": "NOT_APPLICABLE",
+      "mandatory_keys": [],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.hydraulic_separator.r1",
+      "sku_count": 5,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.hydraulic_separator.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "hydraulic.rated.flow",
+        "connection.interface_spec",
+        "separator.configuration"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 5,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.instrument.pressure_gauge.r1",
+      "sku_count": 36,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.instrument.pressure_gauge.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "measurement.pressure.min",
+        "measurement.pressure.max",
+        "connection.interface_spec",
+        "mounting.form"
+      ],
+      "mandatory_complete_sku": 19,
+      "data_fact_sufficient_sku": 19,
+      "missing_mandatory_blocked_sku": 17,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.instrument.thermomanometer.r1",
+      "sku_count": 21,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.instrument.thermomanometer.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "measurement.pressure.min",
+        "measurement.pressure.max",
+        "measurement.temperature.min",
+        "measurement.temperature.max",
+        "connection.interface.code"
+      ],
+      "mandatory_complete_sku": 19,
+      "data_fact_sufficient_sku": 19,
+      "missing_mandatory_blocked_sku": 2,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.instrument.thermometer.r1",
+      "sku_count": 19,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.instrument.thermometer.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "measurement.temperature.min",
+        "measurement.temperature.max",
+        "sensor.form",
+        "mounting.form"
+      ],
+      "mandatory_complete_sku": 18,
+      "data_fact_sufficient_sku": 18,
+      "missing_mandatory_blocked_sku": 1,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.instrument_accessory.r1",
+      "sku_count": 2,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.instrument_accessory.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "product.subtype",
+        "accessory.target.instrument.type",
+        "accessory.interface.id"
+      ],
+      "mandatory_complete_sku": 1,
+      "data_fact_sufficient_sku": 1,
+      "missing_mandatory_blocked_sku": 1,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.mixing_valve_3way.r1",
+      "sku_count": 18,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.mixing_valve_3way.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "control.method",
+        "connection.nominal.size",
+        "connection.type"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 18,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.multibox.r1",
+      "sku_count": 1,
+      "contract_status": "SOURCE_CONTRACT_UNCOVERED",
+      "contract_id": null,
+      "engine_semantic_status": "NOT_APPLICABLE",
+      "mandatory_keys": [],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.pressure_reducer.r1",
+      "sku_count": 7,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.pressure_reducer.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "pressure.inlet.max",
+        "pressure.outlet.min",
+        "pressure.outlet.max",
+        "connection.nominal.size"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 7,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.pump_group.r1",
+      "sku_count": 15,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.pump_group.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "assembly.circuit.type",
+        "assembly.with.pump",
+        "connection.interface_spec"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 15,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.pump_mixing_unit.r1",
+      "sku_count": 9,
+      "contract_status": "SOURCE_CONTRACT_UNCOVERED",
+      "contract_id": null,
+      "engine_semantic_status": "NOT_APPLICABLE",
+      "mandatory_keys": [],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.rotary_actuator.r1",
+      "sku_count": 20,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.rotary_actuator.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "electrical.supply_voltage",
+        "control.signal.type",
+        "compatibility.target.interface",
+        "compatibility.target.product.scope"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.safety_group.r1",
+      "sku_count": 4,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.safety_group.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "safety.protected.equipment.type",
+        "hydraulic.set.pressure",
+        "connection.interface_spec",
+        "assembly.component.set"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.safety_valve.r1",
+      "sku_count": 36,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.safety_valve.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "product.application",
+        "pressure.set_opening",
+        "connection.inlet.size",
+        "compatibility.medium"
+      ],
+      "mandatory_complete_sku": 34,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.solenoid_accessory.r1",
+      "sku_count": 12,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.solenoid_accessory.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "accessory.type",
+        "compatibility.target.article",
+        "compatibility.interface.code",
+        "compatibility.target.profile.id"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 12,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.solenoid_valve.r1",
+      "sku_count": 48,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.solenoid_valve.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "control.action.principle",
+        "control.normal.state",
+        "pressure.operating.max",
+        "electrical.supply_voltage",
+        "connection.nominal.size",
+        "compatibility.medium"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 48,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.thermostatic_mixing_valve.r1",
+      "sku_count": 25,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.thermostatic_mixing_valve.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "temperature.setpoint.min.c",
+        "temperature.setpoint.max.c",
+        "connection.nominal_size.dn",
+        "connection.interface.code"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.valve.ball.r1",
+      "sku_count": 121,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.valve.ball.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "product.function",
+        "connection.interface_spec",
+        "connection.thread.ports"
+      ],
+      "mandatory_complete_sku": 114,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.valve.check.r1",
+      "sku_count": 2,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.valve.check.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "product.function",
+        "hydraulic.flow.direction",
+        "connection.interface_spec",
+        "application.medium"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 2,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.water_hammer_arrester.r1",
+      "sku_count": 1,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.water_hammer_arrester.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "arrester.absorption.volume.ml",
+        "pressure.max_working",
+        "temperature.operating.max",
+        "medium.allowed",
+        "connection.end1.size",
+        "connection.end1.type"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 1,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "hydronic.zone_valve.r1",
+      "sku_count": 4,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:hydronic.zone_valve.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "valve.way.count",
+        "connection.nominal_size.dn",
+        "control.mode",
+        "compatibility.interface.code"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "installation.tool.axial_system.r1",
+      "sku_count": 14,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:installation.tool.axial_system.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "tool.operation",
+        "compatibility.platform",
+        "compatibility.size.tuple"
+      ],
+      "mandatory_complete_sku": 7,
+      "data_fact_sufficient_sku": 7,
+      "missing_mandatory_blocked_sku": 7,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "installation.tool.valve_service.r1",
+      "sku_count": 3,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:installation.tool.valve_service.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "tool.kind",
+        "tool.interface.geometry",
+        "tool.size.range"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 3,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "mounting.fastener.anchor.r1",
+      "sku_count": 8,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:mounting.fastener.anchor.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "anchor.kind",
+        "diameter",
+        "length"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 8,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "mounting.fastener.dowel.r1",
+      "sku_count": 4,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:mounting.fastener.dowel.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "fastener.kind",
+        "dimension.diameter",
+        "fastener.length"
+      ],
+      "mandatory_complete_sku": 2,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "mounting.fastener.metric.r1",
+      "sku_count": 26,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:mounting.fastener.metric.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "product.subtype",
+        "fastener.length",
+        "fastener.metric.thread"
+      ],
+      "mandatory_complete_sku": 17,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "mounting.fastener.screw.r1",
+      "sku_count": 2,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:mounting.fastener.screw.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "screw.kind",
+        "diameter",
+        "length"
+      ],
+      "mandatory_complete_sku": 1,
+      "data_fact_sufficient_sku": 1,
+      "missing_mandatory_blocked_sku": 1,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "mounting.fastening_system_component.r1",
+      "sku_count": 21,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:mounting.fastening_system_component.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "product.subtype",
+        "mount.profile.interface",
+        "load.max.n"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 21,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "mounting.support.perforated.r1",
+      "sku_count": 6,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:mounting.support.perforated.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "product.subtype",
+        "dimension.length",
+        "dimension.width",
+        "mount.hole.pattern"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "mounting.support.pipe_clamp.r1",
+      "sku_count": 41,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:mounting.support.pipe_clamp.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "product.subtype",
+        "support.pipe.diameter.min",
+        "support.pipe.diameter.max"
+      ],
+      "mandatory_complete_sku": 33,
+      "data_fact_sufficient_sku": 33,
+      "missing_mandatory_blocked_sku": 8,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "mounting.support.profile.r1",
+      "sku_count": 8,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:mounting.support.profile.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "profile.kind",
+        "dimension.cross.section",
+        "dimension.wall.thickness",
+        "dimension.length"
+      ],
+      "mandatory_complete_sku": 8,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "pipe.multilayer.pexb_al.r1",
+      "sku_count": 27,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:pipe.multilayer.pexb_al.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "pipe.layer.structure",
+        "pipe.application.class",
+        "dimension.outside.diameter",
+        "dimension.wall.thickness"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 27,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "pipe.pex_a.r1",
+      "sku_count": 24,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:pipe.pex_a.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "pipe.system.identity",
+        "dimension.outside.diameter",
+        "application.system"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 24,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "pump.accessory.r1",
+      "sku_count": 2,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:pump.accessory.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "pump.accessory.function",
+        "compatibility.interface.code",
+        "compatibility.target.profile.id"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 2,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "pump.circulation.r1",
+      "sku_count": 30,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:pump.circulation.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "hydraulic.design_flow",
+        "hydraulic.head.design",
+        "connection.nominal_size.dn",
+        "installation.length",
+        "electrical.supply_voltage",
+        "connection.interface.code"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "pump.drainage.r1",
+      "sku_count": 3,
+      "contract_status": "SOURCE_CONTRACT_UNCOVERED",
+      "contract_id": null,
+      "engine_semantic_status": "NOT_APPLICABLE",
+      "mandatory_keys": [],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "pump.surface.r1",
+      "sku_count": 9,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:pump.surface.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "hydraulic.duty.curve",
+        "pump.surface.subtype",
+        "application.medium"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "radiator.accessory.r1",
+      "sku_count": 8,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:radiator.accessory.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "accessory.type",
+        "radiator.section.or.model.interface",
+        "compatibility.target.profile.id"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 8,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "radiator.aluminium.r1",
+      "sku_count": 65,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:radiator.aluminium.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "material.class",
+        "radiator.section.count",
+        "dimension.center_distance",
+        "radiator.connection.type"
+      ],
+      "mandatory_complete_sku": 65,
+      "data_fact_sufficient_sku": 65,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "radiator.bimetallic.r1",
+      "sku_count": 110,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:radiator.bimetallic.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "dimension.center_distance",
+        "radiator.connection.side",
+        "pressure.max_working"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 110,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "radiator.tubular_steel.r1",
+      "sku_count": 35,
+      "contract_status": "SOURCE_CONTRACT_UNCOVERED",
+      "contract_id": null,
+      "engine_semantic_status": "NOT_APPLICABLE",
+      "mandatory_keys": [],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "towel_warmer.electric.r1",
+      "sku_count": 28,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:towel_warmer.electric.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "towel.geometry.profile",
+        "dimension.height",
+        "dimension.width"
+      ],
+      "mandatory_complete_sku": 11,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "underfloor.installation_mat.r1",
+      "sku_count": 2,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:underfloor.installation_mat.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "underfloor.mat.type",
+        "dimension.board.length",
+        "dimension.board.width"
+      ],
+      "mandatory_complete_sku": 2,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "vessel.membrane.accessory.r1",
+      "sku_count": 1,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:vessel.membrane.accessory.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "accessory.role",
+        "supported.parent.scope",
+        "interface.spec",
+        "load.size.variant"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 1,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "vessel.replacement_membrane.r1",
+      "sku_count": 9,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:vessel.replacement_membrane.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "compatibility.parent.scope",
+        "product.application",
+        "vessel.interface.geometry"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "voltage_stabilizer.boiler.r1",
+      "sku_count": 3,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:voltage_stabilizer.boiler.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "electrical.output.power.va",
+        "electrical.input.voltage.min",
+        "electrical.input.voltage.max",
+        "electrical.output.voltage",
+        "electrical.phase.count"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 3,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "water_heater.combined.r1",
+      "sku_count": 14,
+      "contract_status": "SOURCE_CONTRACT_UNCOVERED",
+      "contract_id": null,
+      "engine_semantic_status": "NOT_APPLICABLE",
+      "mandatory_keys": [],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "water_heater.compatibility_item.r1",
+      "sku_count": 22,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:water_heater.compatibility_item.r1",
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "mandatory_keys": [
+        "item.function",
+        "supported.parent.scope",
+        "interface.spec"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 22,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "water_heater.heating_element.r1",
+      "sku_count": 14,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:water_heater.heating_element.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "element.type",
+        "rated.power",
+        "supply.voltage",
+        "connection.interface_spec",
+        "interface.spec",
+        "supported.parent.scope"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    },
+    {
+      "group_id": "water_heater.indirect.r1",
+      "sku_count": 37,
+      "contract_status": "ACTIVE",
+      "contract_id": "TEST1-R1:water_heater.indirect.r1",
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "mandatory_keys": [
+        "water.heater.volume",
+        "installation.mounting",
+        "water.heater.exchanger.count"
+      ],
+      "mandatory_complete_sku": 37,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0
+    }
+  ],
+  "contracts": [
+    {
+      "contract_id": "TEST1-R1:fitting.threaded.brass.r1",
+      "group_id": "fitting.threaded.brass.r1",
+      "sku_count": 743,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "connection.thread.ports",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::STRUCTURED_ROLE_SIZE_GENDER_MATCH"
+        }
+      ],
+      "mandatory_keys": [
+        "product.function",
+        "connection.thread.standard",
+        "connection.thread.ports"
+      ],
+      "mandatory_complete_sku": 543,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "product.function": {
+          "KNOWN": 543,
+          "MISSING": 200,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.thread.standard": {
+          "KNOWN": 543,
+          "MISSING": 200,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.thread.ports": {
+          "KNOWN": 543,
+          "MISSING": 200,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:flue.component.r1",
+      "group_id": "flue.component.r1",
+      "sku_count": 199,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "flue.component.type",
+        "flue.system.type",
+        "flue.nominal.diameter",
+        "compatibility.interface.code"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 199,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "flue.component.type": {
+          "KNOWN": 0,
+          "MISSING": 199,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "flue.system.type": {
+          "KNOWN": 0,
+          "MISSING": 199,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "flue.nominal.diameter": {
+          "KNOWN": 0,
+          "MISSING": 199,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.interface.code": {
+          "KNOWN": 0,
+          "MISSING": 199,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:convector.trench.natural.r1",
+      "group_id": "convector.trench.natural.r1",
+      "sku_count": 169,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "thermal.rating.condition",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::CONDITION_COMPATIBLE"
+        }
+      ],
+      "mandatory_keys": [
+        "convector.convection.type",
+        "thermal.output",
+        "thermal.rating.condition",
+        "dimension.depth",
+        "dimension.width",
+        "dimension.length"
+      ],
+      "mandatory_complete_sku": 169,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "convector.convection.type": {
+          "KNOWN": 169,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "thermal.output": {
+          "KNOWN": 169,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "thermal.rating.condition": {
+          "KNOWN": 169,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "dimension.depth": {
+          "KNOWN": 169,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "dimension.width": {
+          "KNOWN": 169,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "dimension.length": {
+          "KNOWN": 169,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.collector_assembly.r1",
+      "group_id": "hydronic.collector_assembly.r1",
+      "sku_count": 147,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "collector.subtype",
+        "collector.circuit_count",
+        "connection.main.interface",
+        "connection.outlet.interface"
+      ],
+      "mandatory_complete_sku": 147,
+      "data_fact_sufficient_sku": 147,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "collector.subtype": {
+          "KNOWN": 147,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "collector.circuit_count": {
+          "KNOWN": 147,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.main.interface": {
+          "KNOWN": 147,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.outlet.interface": {
+          "KNOWN": 147,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.valve.ball.r1",
+      "group_id": "hydronic.valve.ball.r1",
+      "sku_count": 121,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "connection.thread.ports",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::STRUCTURED_ROLE_SIZE_GENDER_MATCH"
+        }
+      ],
+      "mandatory_keys": [
+        "product.function",
+        "connection.interface_spec",
+        "connection.thread.ports"
+      ],
+      "mandatory_complete_sku": 114,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "product.function": {
+          "KNOWN": 115,
+          "MISSING": 6,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.interface_spec": {
+          "KNOWN": 114,
+          "MISSING": 7,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.thread.ports": {
+          "KNOWN": 114,
+          "MISSING": 7,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:fitting.axial.polymer.r1",
+      "group_id": "fitting.axial.polymer.r1",
+      "sku_count": 115,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "product.function",
+        "geometry",
+        "system.compatibility_id",
+        "pipe.material.family",
+        "pipe.outer_diameter"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 115,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "product.function": {
+          "KNOWN": 113,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "geometry": {
+          "KNOWN": 113,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "system.compatibility_id": {
+          "KNOWN": 0,
+          "MISSING": 115,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "pipe.material.family": {
+          "KNOWN": 14,
+          "MISSING": 101,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "pipe.outer_diameter": {
+          "KNOWN": 0,
+          "MISSING": 115,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:radiator.bimetallic.r1",
+      "group_id": "radiator.bimetallic.r1",
+      "sku_count": 110,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "dimension.center_distance",
+        "radiator.connection.side",
+        "pressure.max_working"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 110,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "dimension.center_distance": {
+          "KNOWN": 67,
+          "MISSING": 43,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "radiator.connection.side": {
+          "KNOWN": 67,
+          "MISSING": 43,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "pressure.max_working": {
+          "KNOWN": 0,
+          "MISSING": 110,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:fitting.multilayer.press.r1",
+      "group_id": "fitting.multilayer.press.r1",
+      "sku_count": 84,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "product.subtype",
+        "connection.end1.type",
+        "connection.end1.size",
+        "connection.end2.type",
+        "connection.end2.size",
+        "connection.press.profile",
+        "pipe.material.class"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 84,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "product.subtype": {
+          "KNOWN": 83,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.end1.type": {
+          "KNOWN": 46,
+          "MISSING": 38,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.end1.size": {
+          "KNOWN": 46,
+          "MISSING": 38,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.end2.type": {
+          "KNOWN": 46,
+          "MISSING": 38,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.end2.size": {
+          "KNOWN": 46,
+          "MISSING": 38,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.press.profile": {
+          "KNOWN": 0,
+          "MISSING": 84,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "pipe.material.class": {
+          "KNOWN": 83,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hose.flexible.water.r1",
+      "group_id": "hose.flexible.water.r1",
+      "sku_count": 72,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "hose.length",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::EXACT_OR_MIN"
+        }
+      ],
+      "mandatory_keys": [
+        "hose.end.a.interface",
+        "hose.end.b.interface",
+        "hose.length"
+      ],
+      "mandatory_complete_sku": 72,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "hose.end.a.interface": {
+          "KNOWN": 72,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "hose.end.b.interface": {
+          "KNOWN": 72,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "hose.length": {
+          "KNOWN": 72,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:radiator.aluminium.r1",
+      "group_id": "radiator.aluminium.r1",
+      "sku_count": 65,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "material.class",
+        "radiator.section.count",
+        "dimension.center_distance",
+        "radiator.connection.type"
+      ],
+      "mandatory_complete_sku": 65,
+      "data_fact_sufficient_sku": 65,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "material.class": {
+          "KNOWN": 65,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "radiator.section.count": {
+          "KNOWN": 65,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "dimension.center_distance": {
+          "KNOWN": 65,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "radiator.connection.type": {
+          "KNOWN": 65,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:fitting.multilayer.screw.r1",
+      "group_id": "fitting.multilayer.screw.r1",
+      "sku_count": 64,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "product.function",
+        "geometry",
+        "system.compatibility_id",
+        "pipe.material.family",
+        "pipe.outer_diameter",
+        "connection.interface_spec"
+      ],
+      "mandatory_complete_sku": 53,
+      "data_fact_sufficient_sku": 53,
+      "missing_mandatory_blocked_sku": 11,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "product.function": {
+          "KNOWN": 53,
+          "MISSING": 11,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "geometry": {
+          "KNOWN": 53,
+          "MISSING": 11,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "system.compatibility_id": {
+          "KNOWN": 53,
+          "MISSING": 11,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "pipe.material.family": {
+          "KNOWN": 53,
+          "MISSING": 11,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "pipe.outer_diameter": {
+          "KNOWN": 53,
+          "MISSING": 11,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.interface_spec": {
+          "KNOWN": 53,
+          "MISSING": 11,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.solenoid_valve.r1",
+      "group_id": "hydronic.solenoid_valve.r1",
+      "sku_count": 48,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "control.action.principle",
+        "control.normal.state",
+        "pressure.operating.max",
+        "electrical.supply_voltage",
+        "connection.nominal.size",
+        "compatibility.medium"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 48,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "control.action.principle": {
+          "KNOWN": 0,
+          "MISSING": 48,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "control.normal.state": {
+          "KNOWN": 0,
+          "MISSING": 48,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "pressure.operating.max": {
+          "KNOWN": 0,
+          "MISSING": 48,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "electrical.supply_voltage": {
+          "KNOWN": 0,
+          "MISSING": 48,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.nominal.size": {
+          "KNOWN": 0,
+          "MISSING": 48,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.medium": {
+          "KNOWN": 0,
+          "MISSING": 48,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:mounting.support.pipe_clamp.r1",
+      "group_id": "mounting.support.pipe_clamp.r1",
+      "sku_count": 41,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "product.subtype",
+        "support.pipe.diameter.min",
+        "support.pipe.diameter.max"
+      ],
+      "mandatory_complete_sku": 33,
+      "data_fact_sufficient_sku": 33,
+      "missing_mandatory_blocked_sku": 8,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "product.subtype": {
+          "KNOWN": 35,
+          "MISSING": 6,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "support.pipe.diameter.min": {
+          "KNOWN": 33,
+          "MISSING": 8,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "support.pipe.diameter.max": {
+          "KNOWN": 33,
+          "MISSING": 8,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.collector_cabinet.r1",
+      "group_id": "hydronic.collector_cabinet.r1",
+      "sku_count": 39,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "dimension.width",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::MAX_OR_EXACT"
+        },
+        {
+          "key": "dimension.height",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::MAX_OR_EXACT"
+        },
+        {
+          "key": "dimension.depth",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::MAX_OR_EXACT"
+        }
+      ],
+      "mandatory_keys": [
+        "cabinet.installation.type",
+        "dimension.width",
+        "dimension.height",
+        "dimension.depth"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "cabinet.installation.type": {
+          "KNOWN": 0,
+          "MISSING": 39,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "dimension.width": {
+          "KNOWN": 0,
+          "MISSING": 39,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "dimension.height": {
+          "KNOWN": 0,
+          "MISSING": 39,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "dimension.depth": {
+          "KNOWN": 0,
+          "MISSING": 39,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:water_heater.indirect.r1",
+      "group_id": "water_heater.indirect.r1",
+      "sku_count": 37,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "water.heater.volume",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::PRODUCT_GTE_OR_EXACT_PER_REQUEST"
+        }
+      ],
+      "mandatory_keys": [
+        "water.heater.volume",
+        "installation.mounting",
+        "water.heater.exchanger.count"
+      ],
+      "mandatory_complete_sku": 37,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "water.heater.volume": {
+          "KNOWN": 37,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "installation.mounting": {
+          "KNOWN": 37,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "water.heater.exchanger.count": {
+          "KNOWN": 37,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.instrument.pressure_gauge.r1",
+      "group_id": "hydronic.instrument.pressure_gauge.r1",
+      "sku_count": 36,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "measurement.pressure.min",
+        "measurement.pressure.max",
+        "connection.interface_spec",
+        "mounting.form"
+      ],
+      "mandatory_complete_sku": 19,
+      "data_fact_sufficient_sku": 19,
+      "missing_mandatory_blocked_sku": 17,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "measurement.pressure.min": {
+          "KNOWN": 36,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "measurement.pressure.max": {
+          "KNOWN": 36,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.interface_spec": {
+          "KNOWN": 19,
+          "MISSING": 17,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "mounting.form": {
+          "KNOWN": 36,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.safety_valve.r1",
+      "group_id": "hydronic.safety_valve.r1",
+      "sku_count": 36,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "pressure.set_opening",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::exact requested/protection set pressure match within explicit tolerance policy"
+        }
+      ],
+      "mandatory_keys": [
+        "product.application",
+        "pressure.set_opening",
+        "connection.inlet.size",
+        "compatibility.medium"
+      ],
+      "mandatory_complete_sku": 34,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "product.application": {
+          "KNOWN": 34,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "pressure.set_opening": {
+          "KNOWN": 34,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.inlet.size": {
+          "KNOWN": 34,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.medium": {
+          "KNOWN": 34,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:pump.circulation.r1",
+      "group_id": "pump.circulation.r1",
+      "sku_count": 30,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "connection.nominal_size.dn",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::EXACT_OR_ALLOWED_SET"
+        },
+        {
+          "key": "installation.length",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::EXACT_OR_TOLERANCE"
+        }
+      ],
+      "mandatory_keys": [
+        "hydraulic.design_flow",
+        "hydraulic.head.design",
+        "connection.nominal_size.dn",
+        "installation.length",
+        "electrical.supply_voltage",
+        "connection.interface.code"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "hydraulic.design_flow": {
+          "KNOWN": 0,
+          "MISSING": 30,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "hydraulic.head.design": {
+          "KNOWN": 0,
+          "MISSING": 30,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.nominal_size.dn": {
+          "KNOWN": 0,
+          "MISSING": 30,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "installation.length": {
+          "KNOWN": 0,
+          "MISSING": 30,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "electrical.supply_voltage": {
+          "KNOWN": 0,
+          "MISSING": 30,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.interface.code": {
+          "KNOWN": 0,
+          "MISSING": 30,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:control.thermostat.r1",
+      "group_id": "control.thermostat.r1",
+      "sku_count": 28,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "control.application",
+        "measurement.temperature.min",
+        "measurement.temperature.max",
+        "output.interface"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 28,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "control.application": {
+          "KNOWN": 16,
+          "MISSING": 12,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "measurement.temperature.min": {
+          "KNOWN": 3,
+          "MISSING": 25,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "measurement.temperature.max": {
+          "KNOWN": 3,
+          "MISSING": 25,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "output.interface": {
+          "KNOWN": 0,
+          "MISSING": 28,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:towel_warmer.electric.r1",
+      "group_id": "towel_warmer.electric.r1",
+      "sku_count": 28,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "towel.geometry.profile",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::EXACT_OR_ALLOWED_SET"
+        }
+      ],
+      "mandatory_keys": [
+        "towel.geometry.profile",
+        "dimension.height",
+        "dimension.width"
+      ],
+      "mandatory_complete_sku": 11,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "towel.geometry.profile": {
+          "KNOWN": 11,
+          "MISSING": 17,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "dimension.height": {
+          "KNOWN": 11,
+          "MISSING": 17,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "dimension.width": {
+          "KNOWN": 11,
+          "MISSING": 17,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:pipe.multilayer.pexb_al.r1",
+      "group_id": "pipe.multilayer.pexb_al.r1",
+      "sku_count": 27,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "pipe.layer.structure",
+        "pipe.application.class",
+        "dimension.outside.diameter",
+        "dimension.wall.thickness"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 27,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "pipe.layer.structure": {
+          "KNOWN": 0,
+          "MISSING": 27,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "pipe.application.class": {
+          "KNOWN": 0,
+          "MISSING": 27,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "dimension.outside.diameter": {
+          "KNOWN": 0,
+          "MISSING": 27,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "dimension.wall.thickness": {
+          "KNOWN": 0,
+          "MISSING": 27,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:mounting.fastener.metric.r1",
+      "group_id": "mounting.fastener.metric.r1",
+      "sku_count": 26,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "fastener.length",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::range_contains_requirement"
+        }
+      ],
+      "mandatory_keys": [
+        "product.subtype",
+        "fastener.length",
+        "fastener.metric.thread"
+      ],
+      "mandatory_complete_sku": 17,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "product.subtype": {
+          "KNOWN": 24,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "fastener.length": {
+          "KNOWN": 17,
+          "MISSING": 9,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "fastener.metric.thread": {
+          "KNOWN": 24,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.thermostatic_mixing_valve.r1",
+      "group_id": "hydronic.thermostatic_mixing_valve.r1",
+      "sku_count": 25,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "connection.nominal_size.dn",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::EXACT_OR_ALLOWED_SET"
+        }
+      ],
+      "mandatory_keys": [
+        "temperature.setpoint.min.c",
+        "temperature.setpoint.max.c",
+        "connection.nominal_size.dn",
+        "connection.interface.code"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "temperature.setpoint.min.c": {
+          "KNOWN": 17,
+          "MISSING": 8,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "temperature.setpoint.max.c": {
+          "KNOWN": 17,
+          "MISSING": 8,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.nominal_size.dn": {
+          "KNOWN": 17,
+          "MISSING": 8,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.interface.code": {
+          "KNOWN": 0,
+          "MISSING": 25,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:pipe.pex_a.r1",
+      "group_id": "pipe.pex_a.r1",
+      "sku_count": 24,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "pipe.system.identity",
+        "dimension.outside.diameter",
+        "application.system"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 24,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "pipe.system.identity": {
+          "KNOWN": 0,
+          "MISSING": 24,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "dimension.outside.diameter": {
+          "KNOWN": 0,
+          "MISSING": 24,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "application.system": {
+          "KNOWN": 0,
+          "MISSING": 24,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:boiler.electric.r1",
+      "group_id": "boiler.electric.r1",
+      "sku_count": 22,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "electrical.rated_power",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::candidate rated power >= explicitly required duty/range subject to engine sizing policy"
+        }
+      ],
+      "mandatory_keys": [
+        "electrical.rated_power",
+        "boiler.circuit.configuration",
+        "electrical.supply_voltage",
+        "electrical.phase"
+      ],
+      "mandatory_complete_sku": 10,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "electrical.rated_power": {
+          "KNOWN": 22,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "boiler.circuit.configuration": {
+          "KNOWN": 10,
+          "MISSING": 12,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "electrical.supply_voltage": {
+          "KNOWN": 10,
+          "MISSING": 12,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "electrical.phase": {
+          "KNOWN": 17,
+          "MISSING": 5,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:water_heater.compatibility_item.r1",
+      "group_id": "water_heater.compatibility_item.r1",
+      "sku_count": 22,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "item.function",
+        "supported.parent.scope",
+        "interface.spec"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 22,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "item.function": {
+          "KNOWN": 0,
+          "MISSING": 22,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "supported.parent.scope": {
+          "KNOWN": 0,
+          "MISSING": 22,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "interface.spec": {
+          "KNOWN": 0,
+          "MISSING": 22,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.instrument.thermomanometer.r1",
+      "group_id": "hydronic.instrument.thermomanometer.r1",
+      "sku_count": 21,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "measurement.pressure.min",
+        "measurement.pressure.max",
+        "measurement.temperature.min",
+        "measurement.temperature.max",
+        "connection.interface.code"
+      ],
+      "mandatory_complete_sku": 19,
+      "data_fact_sufficient_sku": 19,
+      "missing_mandatory_blocked_sku": 2,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "measurement.pressure.min": {
+          "KNOWN": 19,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "measurement.pressure.max": {
+          "KNOWN": 19,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "measurement.temperature.min": {
+          "KNOWN": 19,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "measurement.temperature.max": {
+          "KNOWN": 19,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.interface.code": {
+          "KNOWN": 19,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:mounting.fastening_system_component.r1",
+      "group_id": "mounting.fastening_system_component.r1",
+      "sku_count": 21,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "product.subtype",
+        "mount.profile.interface",
+        "load.max.n"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 21,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "product.subtype": {
+          "KNOWN": 21,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "mount.profile.interface": {
+          "KNOWN": 0,
+          "MISSING": 21,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "load.max.n": {
+          "KNOWN": 0,
+          "MISSING": 21,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.rotary_actuator.r1",
+      "group_id": "hydronic.rotary_actuator.r1",
+      "sku_count": 20,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "compatibility.target.product.scope",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::EXPLICIT_RELATION_REQUIRED"
+        }
+      ],
+      "mandatory_keys": [
+        "electrical.supply_voltage",
+        "control.signal.type",
+        "compatibility.target.interface",
+        "compatibility.target.product.scope"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "electrical.supply_voltage": {
+          "KNOWN": 0,
+          "MISSING": 20,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "control.signal.type": {
+          "KNOWN": 0,
+          "MISSING": 20,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.target.interface": {
+          "KNOWN": 0,
+          "MISSING": 20,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.target.product.scope": {
+          "KNOWN": 0,
+          "MISSING": 20,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.instrument.thermometer.r1",
+      "group_id": "hydronic.instrument.thermometer.r1",
+      "sku_count": 19,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "measurement.temperature.min",
+        "measurement.temperature.max",
+        "sensor.form",
+        "mounting.form"
+      ],
+      "mandatory_complete_sku": 18,
+      "data_fact_sufficient_sku": 18,
+      "missing_mandatory_blocked_sku": 1,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "measurement.temperature.min": {
+          "KNOWN": 19,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "measurement.temperature.max": {
+          "KNOWN": 19,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "sensor.form": {
+          "KNOWN": 19,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "mounting.form": {
+          "KNOWN": 18,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.distribution_header.r1",
+      "group_id": "hydronic.distribution_header.r1",
+      "sku_count": 18,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "collector.circuit_count",
+        "pressure.max_working",
+        "temperature.operating.max",
+        "connection.end1.size",
+        "connection.end3.size",
+        "connection.outlet.role"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 18,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "collector.circuit_count": {
+          "KNOWN": 0,
+          "MISSING": 18,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "pressure.max_working": {
+          "KNOWN": 0,
+          "MISSING": 18,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "temperature.operating.max": {
+          "KNOWN": 0,
+          "MISSING": 18,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.end1.size": {
+          "KNOWN": 0,
+          "MISSING": 18,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.end3.size": {
+          "KNOWN": 0,
+          "MISSING": 18,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.outlet.role": {
+          "KNOWN": 0,
+          "MISSING": 18,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.mixing_valve_3way.r1",
+      "group_id": "hydronic.mixing_valve_3way.r1",
+      "sku_count": 18,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "control.method",
+        "connection.nominal.size",
+        "connection.type"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 18,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "control.method": {
+          "KNOWN": 0,
+          "MISSING": 18,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.nominal.size": {
+          "KNOWN": 0,
+          "MISSING": 18,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.type": {
+          "KNOWN": 0,
+          "MISSING": 18,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:heater.electric_panel.stone.r1",
+      "group_id": "heater.electric_panel.stone.r1",
+      "sku_count": 15,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "heater.thermal.power",
+        "electrical.supply_voltage",
+        "installation.form"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 15,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "heater.thermal.power": {
+          "KNOWN": 0,
+          "MISSING": 15,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "electrical.supply_voltage": {
+          "KNOWN": 0,
+          "MISSING": 15,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "installation.form": {
+          "KNOWN": 0,
+          "MISSING": 15,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.pump_group.r1",
+      "group_id": "hydronic.pump_group.r1",
+      "sku_count": 15,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "assembly.circuit.type",
+        "assembly.with.pump",
+        "connection.interface_spec"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 15,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "assembly.circuit.type": {
+          "KNOWN": 0,
+          "MISSING": 15,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "assembly.with.pump": {
+          "KNOWN": 0,
+          "MISSING": 15,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.interface_spec": {
+          "KNOWN": 0,
+          "MISSING": 15,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:installation.tool.axial_system.r1",
+      "group_id": "installation.tool.axial_system.r1",
+      "sku_count": 14,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "tool.operation",
+        "compatibility.platform",
+        "compatibility.size.tuple"
+      ],
+      "mandatory_complete_sku": 7,
+      "data_fact_sufficient_sku": 7,
+      "missing_mandatory_blocked_sku": 7,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "tool.operation": {
+          "KNOWN": 7,
+          "MISSING": 7,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.platform": {
+          "KNOWN": 7,
+          "MISSING": 7,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.size.tuple": {
+          "KNOWN": 7,
+          "MISSING": 7,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:water_heater.heating_element.r1",
+      "group_id": "water_heater.heating_element.r1",
+      "sku_count": 14,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "rated.power",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::EXACT_OR_PARENT_CERTIFIED_ALLOWED_SET"
+        },
+        {
+          "key": "supply.voltage",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::EXACT_OR_CERTIFIED_RANGE"
+        }
+      ],
+      "mandatory_keys": [
+        "element.type",
+        "rated.power",
+        "supply.voltage",
+        "connection.interface_spec",
+        "interface.spec",
+        "supported.parent.scope"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "element.type": {
+          "KNOWN": 14,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "rated.power": {
+          "KNOWN": 12,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "supply.voltage": {
+          "KNOWN": 6,
+          "MISSING": 8,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.interface_spec": {
+          "KNOWN": 0,
+          "MISSING": 14,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "interface.spec": {
+          "KNOWN": 0,
+          "MISSING": 14,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "supported.parent.scope": {
+          "KNOWN": 14,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.solenoid_accessory.r1",
+      "group_id": "hydronic.solenoid_accessory.r1",
+      "sku_count": 12,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "accessory.type",
+        "compatibility.target.article",
+        "compatibility.interface.code",
+        "compatibility.target.profile.id"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 12,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "accessory.type": {
+          "KNOWN": 12,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.target.article": {
+          "KNOWN": 0,
+          "MISSING": 12,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.interface.code": {
+          "KNOWN": 0,
+          "MISSING": 12,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.target.profile.id": {
+          "KNOWN": 0,
+          "MISSING": 12,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:fitting.compression.polymer.r1",
+      "group_id": "fitting.compression.polymer.r1",
+      "sku_count": 11,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "fitting.function",
+        "pipe.system.identity",
+        "fitting.pipe.interface"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 11,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "fitting.function": {
+          "KNOWN": 0,
+          "MISSING": 11,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "pipe.system.identity": {
+          "KNOWN": 0,
+          "MISSING": 11,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "fitting.pipe.interface": {
+          "KNOWN": 0,
+          "MISSING": 11,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.fast_mount_accessory.r1",
+      "group_id": "hydronic.fast_mount_accessory.r1",
+      "sku_count": 10,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "accessory.role",
+        "supported.parent.scope",
+        "target.interface"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 10,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "accessory.role": {
+          "KNOWN": 0,
+          "MISSING": 10,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "supported.parent.scope": {
+          "KNOWN": 0,
+          "MISSING": 10,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "target.interface": {
+          "KNOWN": 0,
+          "MISSING": 10,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.collector_accessory.r1",
+      "group_id": "hydronic.collector_accessory.r1",
+      "sku_count": 9,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "accessory.type",
+        "compatibility.target.article",
+        "compatibility.interface.code",
+        "compatibility.target.profile.id"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 9,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "accessory.type": {
+          "KNOWN": 9,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.target.article": {
+          "KNOWN": 0,
+          "MISSING": 9,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.interface.code": {
+          "KNOWN": 0,
+          "MISSING": 9,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.target.profile.id": {
+          "KNOWN": 0,
+          "MISSING": 9,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:pump.surface.r1",
+      "group_id": "pump.surface.r1",
+      "sku_count": 9,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "hydraulic.duty.curve",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::CURVE_COVERS_REQUIRED_QH_POINT"
+        },
+        {
+          "key": "pump.surface.subtype",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::EXACT_OR_ALLOWED_SET"
+        }
+      ],
+      "mandatory_keys": [
+        "hydraulic.duty.curve",
+        "pump.surface.subtype",
+        "application.medium"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "hydraulic.duty.curve": {
+          "KNOWN": 0,
+          "MISSING": 9,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "pump.surface.subtype": {
+          "KNOWN": 0,
+          "MISSING": 9,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "application.medium": {
+          "KNOWN": 0,
+          "MISSING": 9,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:vessel.replacement_membrane.r1",
+      "group_id": "vessel.replacement_membrane.r1",
+      "sku_count": 9,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "compatibility.parent.scope",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::exact vessel article or explicit certified series/compatibility scope match"
+        }
+      ],
+      "mandatory_keys": [
+        "compatibility.parent.scope",
+        "product.application",
+        "vessel.interface.geometry"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "compatibility.parent.scope": {
+          "KNOWN": 0,
+          "MISSING": 9,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "product.application": {
+          "KNOWN": 0,
+          "MISSING": 9,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "vessel.interface.geometry": {
+          "KNOWN": 0,
+          "MISSING": 9,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:conduit.pipe.corrugated.r1",
+      "group_id": "conduit.pipe.corrugated.r1",
+      "sku_count": 8,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "application.system",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::EXACT_OR_ALLOWED_SET"
+        },
+        {
+          "key": "compatibility.target.interface",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::TARGET_OBJECT_DIMENSION_ROLE_MATCH"
+        }
+      ],
+      "mandatory_keys": [
+        "application.system",
+        "compatibility.target.interface",
+        "dimension.outside.diameter"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "application.system": {
+          "KNOWN": 0,
+          "MISSING": 8,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.target.interface": {
+          "KNOWN": 6,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "dimension.outside.diameter": {
+          "KNOWN": 8,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:mounting.fastener.anchor.r1",
+      "group_id": "mounting.fastener.anchor.r1",
+      "sku_count": 8,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "anchor.kind",
+        "diameter",
+        "length"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 8,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "anchor.kind": {
+          "KNOWN": 0,
+          "MISSING": 8,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "diameter": {
+          "KNOWN": 0,
+          "MISSING": 8,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "length": {
+          "KNOWN": 0,
+          "MISSING": 8,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:mounting.support.profile.r1",
+      "group_id": "mounting.support.profile.r1",
+      "sku_count": 8,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "dimension.wall.thickness",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::candidate thickness meets exact/range request"
+        },
+        {
+          "key": "dimension.length",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::candidate supplied length meets exact/range request"
+        }
+      ],
+      "mandatory_keys": [
+        "profile.kind",
+        "dimension.cross.section",
+        "dimension.wall.thickness",
+        "dimension.length"
+      ],
+      "mandatory_complete_sku": 8,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "profile.kind": {
+          "KNOWN": 8,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "dimension.cross.section": {
+          "KNOWN": 8,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "dimension.wall.thickness": {
+          "KNOWN": 8,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "dimension.length": {
+          "KNOWN": 8,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:radiator.accessory.r1",
+      "group_id": "radiator.accessory.r1",
+      "sku_count": 8,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "accessory.type",
+        "radiator.section.or.model.interface",
+        "compatibility.target.profile.id"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 8,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "accessory.type": {
+          "KNOWN": 0,
+          "MISSING": 8,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "radiator.section.or.model.interface": {
+          "KNOWN": 0,
+          "MISSING": 8,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.target.profile.id": {
+          "KNOWN": 0,
+          "MISSING": 8,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:control.temperature_switch.r1",
+      "group_id": "control.temperature_switch.r1",
+      "sku_count": 7,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "measurement.temperature.min",
+        "measurement.temperature.max",
+        "mounting.form",
+        "sensor.form",
+        "switching.logic"
+      ],
+      "mandatory_complete_sku": 4,
+      "data_fact_sufficient_sku": 4,
+      "missing_mandatory_blocked_sku": 3,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "measurement.temperature.min": {
+          "KNOWN": 4,
+          "MISSING": 3,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "measurement.temperature.max": {
+          "KNOWN": 4,
+          "MISSING": 3,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "mounting.form": {
+          "KNOWN": 4,
+          "MISSING": 3,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "sensor.form": {
+          "KNOWN": 4,
+          "MISSING": 3,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "switching.logic": {
+          "KNOWN": 4,
+          "MISSING": 3,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.pressure_reducer.r1",
+      "group_id": "hydronic.pressure_reducer.r1",
+      "sku_count": 7,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "pressure.inlet.max",
+        "pressure.outlet.min",
+        "pressure.outlet.max",
+        "connection.nominal.size"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 7,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "pressure.inlet.max": {
+          "KNOWN": 0,
+          "MISSING": 7,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "pressure.outlet.min": {
+          "KNOWN": 0,
+          "MISSING": 7,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "pressure.outlet.max": {
+          "KNOWN": 0,
+          "MISSING": 7,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.nominal.size": {
+          "KNOWN": 0,
+          "MISSING": 7,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:mounting.support.perforated.r1",
+      "group_id": "mounting.support.perforated.r1",
+      "sku_count": 6,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "dimension.length",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::range_contains_requirement"
+        }
+      ],
+      "mandatory_keys": [
+        "product.subtype",
+        "dimension.length",
+        "dimension.width",
+        "mount.hole.pattern"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "product.subtype": {
+          "KNOWN": 6,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "dimension.length": {
+          "KNOWN": 6,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "dimension.width": {
+          "KNOWN": 6,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "mount.hole.pattern": {
+          "KNOWN": 0,
+          "MISSING": 6,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:control.pump_controller.r1",
+      "group_id": "control.pump_controller.r1",
+      "sku_count": 5,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "control.mode",
+        "electrical.supply_voltage",
+        "compatibility.target.profile.id"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 5,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "control.mode": {
+          "KNOWN": 0,
+          "MISSING": 5,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "electrical.supply_voltage": {
+          "KNOWN": 5,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.target.profile.id": {
+          "KNOWN": 0,
+          "MISSING": 5,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.air_vent.r1",
+      "group_id": "hydronic.air_vent.r1",
+      "sku_count": 5,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "vent.type",
+        "connection.interface_spec",
+        "mounting.orientation"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 5,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "vent.type": {
+          "KNOWN": 2,
+          "MISSING": 3,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.interface_spec": {
+          "KNOWN": 0,
+          "MISSING": 5,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "mounting.orientation": {
+          "KNOWN": 0,
+          "MISSING": 5,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.hydraulic_separator.r1",
+      "group_id": "hydronic.hydraulic_separator.r1",
+      "sku_count": 5,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "hydraulic.rated.flow",
+        "connection.interface_spec",
+        "separator.configuration"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 5,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "hydraulic.rated.flow": {
+          "KNOWN": 5,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.interface_spec": {
+          "KNOWN": 5,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "separator.configuration": {
+          "KNOWN": 0,
+          "MISSING": 5,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.electrothermal_actuator.r1",
+      "group_id": "hydronic.electrothermal_actuator.r1",
+      "sku_count": 4,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "actuator.stroke",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::range_contains_requirement"
+        }
+      ],
+      "mandatory_keys": [
+        "control.normal.state",
+        "electrical.supply_voltage",
+        "control.signal.type",
+        "mount.thread",
+        "actuator.stroke",
+        "actuator.force.n"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "control.normal.state": {
+          "KNOWN": 0,
+          "MISSING": 4,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "electrical.supply_voltage": {
+          "KNOWN": 0,
+          "MISSING": 4,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "control.signal.type": {
+          "KNOWN": 0,
+          "MISSING": 4,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "mount.thread": {
+          "KNOWN": 0,
+          "MISSING": 4,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "actuator.stroke": {
+          "KNOWN": 0,
+          "MISSING": 4,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "actuator.force.n": {
+          "KNOWN": 0,
+          "MISSING": 4,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.safety_group.r1",
+      "group_id": "hydronic.safety_group.r1",
+      "sku_count": 4,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "safety.protected.equipment.type",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::EXACT_OR_ALLOWED_SET"
+        },
+        {
+          "key": "hydraulic.set.pressure",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::EXACT_OR_PROFILE_RULED_MATCH"
+        },
+        {
+          "key": "assembly.component.set",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::REQUIRED_COMPONENTS_SUBSET_OF_PRODUCT_SET"
+        }
+      ],
+      "mandatory_keys": [
+        "safety.protected.equipment.type",
+        "hydraulic.set.pressure",
+        "connection.interface_spec",
+        "assembly.component.set"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "safety.protected.equipment.type": {
+          "KNOWN": 0,
+          "MISSING": 4,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "hydraulic.set.pressure": {
+          "KNOWN": 2,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.interface_spec": {
+          "KNOWN": 0,
+          "MISSING": 4,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "assembly.component.set": {
+          "KNOWN": 0,
+          "MISSING": 4,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.zone_valve.r1",
+      "group_id": "hydronic.zone_valve.r1",
+      "sku_count": 4,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "connection.nominal_size.dn",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::EXACT_OR_ALLOWED_SET"
+        }
+      ],
+      "mandatory_keys": [
+        "valve.way.count",
+        "connection.nominal_size.dn",
+        "control.mode",
+        "compatibility.interface.code"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "valve.way.count": {
+          "KNOWN": 4,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.nominal_size.dn": {
+          "KNOWN": 0,
+          "MISSING": 4,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "control.mode": {
+          "KNOWN": 2,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.interface.code": {
+          "KNOWN": 0,
+          "MISSING": 4,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:mounting.fastener.dowel.r1",
+      "group_id": "mounting.fastener.dowel.r1",
+      "sku_count": 4,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "fastener.length",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::exact/minimum requested length match"
+        }
+      ],
+      "mandatory_keys": [
+        "fastener.kind",
+        "dimension.diameter",
+        "fastener.length"
+      ],
+      "mandatory_complete_sku": 2,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "fastener.kind": {
+          "KNOWN": 2,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "dimension.diameter": {
+          "KNOWN": 2,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "fastener.length": {
+          "KNOWN": 2,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:control.pressure_switch.r1",
+      "group_id": "control.pressure_switch.r1",
+      "sku_count": 3,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "electrical.contact.current_rating",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::PRODUCT_GTE_REQUEST_ONLY_SAME_LOAD_CATEGORY"
+        },
+        {
+          "key": "electrical.contact.voltage_rating",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::PRODUCT_GTE_REQUEST_ONLY_SAME_LOAD_CATEGORY"
+        }
+      ],
+      "mandatory_keys": [
+        "control.application",
+        "measurement.pressure.min",
+        "measurement.pressure.max",
+        "connection.interface_spec",
+        "electrical.contact.current_rating",
+        "electrical.contact.voltage_rating"
+      ],
+      "mandatory_complete_sku": 3,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "control.application": {
+          "KNOWN": 3,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "measurement.pressure.min": {
+          "KNOWN": 3,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "measurement.pressure.max": {
+          "KNOWN": 3,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.interface_spec": {
+          "KNOWN": 3,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "electrical.contact.current_rating": {
+          "KNOWN": 3,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "electrical.contact.voltage_rating": {
+          "KNOWN": 3,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:control.smart_thermostatic_head.r1",
+      "group_id": "control.smart_thermostatic_head.r1",
+      "sku_count": 3,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "control.protocol",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::EXACT_PROTOCOL_VERSION_OR_SUPPORTED_SET"
+        },
+        {
+          "key": "control.ecosystem",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::EXACT_OR_EXPLICITLY_SUPPORTED"
+        },
+        {
+          "key": "compatibility.target.product.scope",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::EXPLICIT_RELATION_OR_CERTIFIED_INTERFACE"
+        }
+      ],
+      "mandatory_keys": [
+        "control.protocol",
+        "control.ecosystem",
+        "compatibility.target.interface",
+        "compatibility.target.product.scope"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "control.protocol": {
+          "KNOWN": 0,
+          "MISSING": 3,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "control.ecosystem": {
+          "KNOWN": 0,
+          "MISSING": 3,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.target.interface": {
+          "KNOWN": 0,
+          "MISSING": 3,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.target.product.scope": {
+          "KNOWN": 0,
+          "MISSING": 3,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:installation.tool.valve_service.r1",
+      "group_id": "installation.tool.valve_service.r1",
+      "sku_count": 3,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "tool.kind",
+        "tool.interface.geometry",
+        "tool.size.range"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 3,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "tool.kind": {
+          "KNOWN": 0,
+          "MISSING": 3,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "tool.interface.geometry": {
+          "KNOWN": 0,
+          "MISSING": 3,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "tool.size.range": {
+          "KNOWN": 0,
+          "MISSING": 3,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:voltage_stabilizer.boiler.r1",
+      "group_id": "voltage_stabilizer.boiler.r1",
+      "sku_count": 3,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "electrical.output.power.va",
+        "electrical.input.voltage.min",
+        "electrical.input.voltage.max",
+        "electrical.output.voltage",
+        "electrical.phase.count"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 3,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "electrical.output.power.va": {
+          "KNOWN": 0,
+          "MISSING": 3,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "electrical.input.voltage.min": {
+          "KNOWN": 0,
+          "MISSING": 3,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "electrical.input.voltage.max": {
+          "KNOWN": 0,
+          "MISSING": 3,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "electrical.output.voltage": {
+          "KNOWN": 0,
+          "MISSING": 3,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "electrical.phase.count": {
+          "KNOWN": 0,
+          "MISSING": 3,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.instrument_accessory.r1",
+      "group_id": "hydronic.instrument_accessory.r1",
+      "sku_count": 2,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "product.subtype",
+        "accessory.target.instrument.type",
+        "accessory.interface.id"
+      ],
+      "mandatory_complete_sku": 1,
+      "data_fact_sufficient_sku": 1,
+      "missing_mandatory_blocked_sku": 1,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "product.subtype": {
+          "KNOWN": 1,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "accessory.target.instrument.type": {
+          "KNOWN": 1,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "accessory.interface.id": {
+          "KNOWN": 1,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.valve.check.r1",
+      "group_id": "hydronic.valve.check.r1",
+      "sku_count": 2,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "product.function",
+        "hydraulic.flow.direction",
+        "connection.interface_spec",
+        "application.medium"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 2,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "product.function": {
+          "KNOWN": 0,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "hydraulic.flow.direction": {
+          "KNOWN": 0,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.interface_spec": {
+          "KNOWN": 0,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "application.medium": {
+          "KNOWN": 0,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:mounting.fastener.screw.r1",
+      "group_id": "mounting.fastener.screw.r1",
+      "sku_count": 2,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "screw.kind",
+        "diameter",
+        "length"
+      ],
+      "mandatory_complete_sku": 1,
+      "data_fact_sufficient_sku": 1,
+      "missing_mandatory_blocked_sku": 1,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "screw.kind": {
+          "KNOWN": 1,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "diameter": {
+          "KNOWN": 1,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "length": {
+          "KNOWN": 1,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:pump.accessory.r1",
+      "group_id": "pump.accessory.r1",
+      "sku_count": 2,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "pump.accessory.function",
+        "compatibility.interface.code",
+        "compatibility.target.profile.id"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 2,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "pump.accessory.function": {
+          "KNOWN": 2,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.interface.code": {
+          "KNOWN": 0,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.target.profile.id": {
+          "KNOWN": 0,
+          "MISSING": 2,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:underfloor.installation_mat.r1",
+      "group_id": "underfloor.installation_mat.r1",
+      "sku_count": 2,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "dimension.board.length",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::exact/range geometry match"
+        },
+        {
+          "key": "dimension.board.width",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::exact/range geometry match"
+        }
+      ],
+      "mandatory_keys": [
+        "underfloor.mat.type",
+        "dimension.board.length",
+        "dimension.board.width"
+      ],
+      "mandatory_complete_sku": 2,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "underfloor.mat.type": {
+          "KNOWN": 2,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "dimension.board.length": {
+          "KNOWN": 2,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "dimension.board.width": {
+          "KNOWN": 2,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:boiler.compatibility_item.r1",
+      "group_id": "boiler.compatibility_item.r1",
+      "sku_count": 1,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "item.function",
+        "compatibility.parent.scope",
+        "compatibility.interface"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 1,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "item.function": {
+          "KNOWN": 0,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.parent.scope": {
+          "KNOWN": 0,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "compatibility.interface": {
+          "KNOWN": 0,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:control.dry_run_relay.r1",
+      "group_id": "control.dry_run_relay.r1",
+      "sku_count": 1,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "electrical.contact.current_rating",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::controlled load/current <= declared relay/contact rating with correct semantic role"
+        }
+      ],
+      "mandatory_keys": [
+        "control.dry.run.principle",
+        "control.sensing.range",
+        "electrical.supply_voltage",
+        "electrical.contact.current_rating"
+      ],
+      "mandatory_complete_sku": 1,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "control.dry.run.principle": {
+          "KNOWN": 1,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "control.sensing.range": {
+          "KNOWN": 1,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "electrical.supply_voltage": {
+          "KNOWN": 1,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "electrical.contact.current_rating": {
+          "KNOWN": 1,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:control.smart_gateway.r1",
+      "group_id": "control.smart_gateway.r1",
+      "sku_count": 1,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "network.interface",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::REQUEST_SUBSET_OF_CERTIFIED_SET"
+        }
+      ],
+      "mandatory_keys": [
+        "gateway.role",
+        "protocol",
+        "device.scope",
+        "network.interface",
+        "power.interface"
+      ],
+      "mandatory_complete_sku": 1,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "gateway.role": {
+          "KNOWN": 1,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "protocol": {
+          "KNOWN": 1,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "device.scope": {
+          "KNOWN": 1,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "network.interface": {
+          "KNOWN": 1,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "power.interface": {
+          "KNOWN": 1,
+          "MISSING": 0,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.air_dirt_separator.r1",
+      "group_id": "hydronic.air_dirt_separator.r1",
+      "sku_count": 1,
+      "engine_semantic_status": "BLOCKED_FOR_ENGINE_SEMANTICS",
+      "blocked_engine_parameters": [
+        {
+          "key": "connection.nominal_size.dn",
+          "comparison_semantics": "BLOCKED_FOR_ENGINE_SEMANTICS::EXACT_OR_ALLOWED_SET"
+        }
+      ],
+      "mandatory_keys": [
+        "separator.function",
+        "connection.nominal_size.dn",
+        "connection.interface.code"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 0,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "separator.function": {
+          "KNOWN": 0,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.nominal_size.dn": {
+          "KNOWN": 0,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.interface.code": {
+          "KNOWN": 0,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:hydronic.water_hammer_arrester.r1",
+      "group_id": "hydronic.water_hammer_arrester.r1",
+      "sku_count": 1,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "arrester.absorption.volume.ml",
+        "pressure.max_working",
+        "temperature.operating.max",
+        "medium.allowed",
+        "connection.end1.size",
+        "connection.end1.type"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 1,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "arrester.absorption.volume.ml": {
+          "KNOWN": 0,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "pressure.max_working": {
+          "KNOWN": 0,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "temperature.operating.max": {
+          "KNOWN": 0,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "medium.allowed": {
+          "KNOWN": 0,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.end1.size": {
+          "KNOWN": 0,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "connection.end1.type": {
+          "KNOWN": 0,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    },
+    {
+      "contract_id": "TEST1-R1:vessel.membrane.accessory.r1",
+      "group_id": "vessel.membrane.accessory.r1",
+      "sku_count": 1,
+      "engine_semantic_status": "ENGINE_SEMANTIC_COMPATIBLE",
+      "blocked_engine_parameters": [],
+      "mandatory_keys": [
+        "accessory.role",
+        "supported.parent.scope",
+        "interface.spec",
+        "load.size.variant"
+      ],
+      "mandatory_complete_sku": 0,
+      "data_fact_sufficient_sku": 0,
+      "missing_mandatory_blocked_sku": 1,
+      "ambiguous_or_conflict_blocked_sku": 0,
+      "mandatory_key_completeness": {
+        "accessory.role": {
+          "KNOWN": 0,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "supported.parent.scope": {
+          "KNOWN": 0,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "interface.spec": {
+          "KNOWN": 0,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        },
+        "load.size.variant": {
+          "KNOWN": 0,
+          "MISSING": 1,
+          "AMBIGUOUS": 0,
+          "CONFLICT": 0
+        }
+      }
+    }
+  ],
+  "coverage_summary": {
+    "normalized_contracts_available": true,
+    "dependency_status": "ACTIVE_REPAIRED_RULES_AUTHORITY",
+    "rules_issue": 3,
+    "rules_pr": 5,
+    "rules_head": "38eaac6623e934174bfdc036b36d802e7d800403",
+    "rules_acceptance_comment": 5993578482,
+    "contract_count": 71,
+    "contract_population_sku": 2704,
+    "engine_semantic_compatible_contract_count": 42,
+    "engine_semantic_compatible_sku": 1255,
+    "DATA_FACT_SUFFICIENT_SKU": 367,
+    "missing_mandatory_fact_blocked_sku": 888,
+    "ambiguous_or_conflict_fact_blocked_sku": 0,
+    "engine_semantic_blocked_sku": 1449,
+    "source_contract_uncovered_sku": 71,
+    "report_ref": "data/catalog/r1/TEST1_DATA_FACT_SUFFICIENCY_R1.json"
+  }
+}
