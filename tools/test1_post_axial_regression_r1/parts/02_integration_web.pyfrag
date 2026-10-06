@@ -1,0 +1,248 @@
+def run_integration() -> tuple[dict[str, Any], list[dict[str, Any]], list[dict[str, Any]]]:
+    module = load_module_from_bytes(
+        "test1_post_axial_nonweb_r1",
+        checked_bytes(INTEGRATION_REF, INTEGRATION_RUNNER_PATH),
+    )
+    bind_repaired_rules(module)
+    inputs = module.load_frozen_inputs()
+    matcher = inputs["engine_module"].GenericMatcher(inputs["schema"])
+    specs, by_group, contracts = module.build_fixture_specs(inputs, matcher)
+    records, meta = module.execute_corpus(
+        specs,
+        by_group=by_group,
+        contracts=contracts,
+        matcher=matcher,
+        engine_module=inputs["engine_module"],
+        full_traces_path=None,
+    )
+
+    positives = [r for r in records if r["fixture_kind"] == "POSITIVE" and r["execution_status"] == "EXECUTED"]
+    missing = [r for r in records if r["fixture_kind"] == "MISSING_MANDATORY" and r["execution_status"] == "EXECUTED"]
+    contradictions = [r for r in records if r["fixture_kind"] == "CONTRADICTION"]
+    executed_contradictions = [r for r in contradictions if r["execution_status"] == "EXECUTED"]
+
+    defects: list[dict[str, Any]] = []
+    for row in positives:
+        if row["result_class"] != "TEST1_EXACT":
+            defects.append({
+                "scope": "integration",
+                "id": row["fixture_id"],
+                "classification": "POSITIVE_NOT_EXACT",
+                "profile": row["profile"],
+                "actual": row["result_class"],
+            })
+    for row in missing + executed_contradictions:
+        if row["result_class"] != "TEST1_NOT_SELECTED":
+            defects.append({
+                "scope": "integration",
+                "id": row["fixture_id"],
+                "classification": "FAIL_CLOSED_REGRESSION",
+                "profile": row["profile"],
+                "actual": row["result_class"],
+            })
+
+    summary = {
+        "eligible_real_sku": len(positives),
+        "profiles_exercised": len({r["profile"] for r in positives}),
+        "positive_TEST1_EXACT": sum(r["result_class"] == "TEST1_EXACT" for r in positives),
+        "positive_TEST1_PROBABLE": sum(r["result_class"] == "TEST1_PROBABLE" for r in positives),
+        "positive_TEST1_NOT_SELECTED": sum(r["result_class"] == "TEST1_NOT_SELECTED" for r in positives),
+        "missing_mandatory_executed": len(missing),
+        "missing_mandatory_NOT_SELECTED": sum(r["result_class"] == "TEST1_NOT_SELECTED" for r in missing),
+        "contradiction_executed": len(executed_contradictions),
+        "contradiction_NOT_EXECUTED": sum(r["execution_status"] == "NOT_EXECUTED" for r in contradictions),
+        "contradiction_NOT_SELECTED": sum(
+            r["result_class"] == "TEST1_NOT_SELECTED" for r in executed_contradictions
+        ),
+        "deterministic_rerun_mismatches": meta["deterministic_rerun_mismatches"],
+        "selected_with_mandatory_contradiction": meta["selected_with_mandatory_contradiction"],
+        "engine_crashes": meta["engine_exceptions_crashes"],
+    }
+
+    if summary["eligible_real_sku"] != 367 or summary["profiles_exercised"] != 11:
+        raise AssertionError(f"integration cohort mismatch: {summary}")
+    if summary["positive_TEST1_EXACT"] != 367:
+        raise AssertionError(f"integration positive regression: {summary}")
+    if summary["missing_mandatory_executed"] != 11 or summary["missing_mandatory_NOT_SELECTED"] != 11:
+        raise AssertionError(f"integration missing-mandatory regression: {summary}")
+    if meta["deterministic_rerun_mismatches"] or meta["selected_with_mandatory_contradiction"] or meta["engine_exceptions_crashes"]:
+        raise AssertionError(f"integration safety gate: {summary}")
+    if defects:
+        raise AssertionError(f"integration defects: {defects[:3]}")
+
+    compact = []
+    for row in records:
+        item = {
+            "fixture_id": row["fixture_id"],
+            "execution_status": row["execution_status"],
+            "fixture_kind": row["fixture_kind"],
+            "profile": row["profile"],
+            "source_sku": row["source_sku"],
+        }
+        if row["execution_status"] == "EXECUTED":
+            item.update({
+                "result_class": row["result_class"],
+                "selected_exact_sku": row["selected_exact_sku"],
+                "surviving_candidates": row["surviving_candidates"],
+                "selected_with_mandatory_contradiction": row["selected_with_mandatory_contradiction"],
+                "snapshot_ids": row["snapshot_ids"],
+            })
+        else:
+            item["reason"] = row.get("reason")
+            item["snapshot_ids"] = row.get("snapshot_ids")
+        compact.append(item)
+    return summary, compact, defects
+
+
+def run_web_regression() -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    web, server, base_url, thread = start_web()
+    state = server.runtime_state
+    defects: list[dict[str, Any]] = []
+    try:
+        health_status, health = http_json("GET", base_url + "/health")
+        authority_status, authority = http_json("GET", base_url + "/api/authority")
+        profiles_status, profiles = http_json("GET", base_url + "/api/profiles")
+
+        positive_rows = []
+        deterministic_mismatches = 0
+        unsafe = 0
+        engine_crashes = 0
+        for profile in state.profile_ids:
+            payload = positive_payload(state, profile, profile)
+            try:
+                s1, b1 = http_json("POST", base_url + "/api/select", payload)
+                s2, b2 = http_json("POST", base_url + "/api/select", payload)
+            except Exception as exc:
+                engine_crashes += 1
+                defects.append({
+                    "scope": "web", "id": profile,
+                    "classification": "WEB_RUNTIME_EXCEPTION",
+                    "actual": f"{type(exc).__name__}: {exc}",
+                })
+                continue
+            same = s1 == s2 and b1 == b2
+            if not same:
+                deterministic_mismatches += 1
+            safety = int(b1.get("safety", {}).get("selected_with_mandatory_contradiction", 0))
+            unsafe += safety
+            result = b1.get("result", {})
+            row = {
+                "profile": profile,
+                "http_status": s1,
+                "result_class": result.get("result_class"),
+                "selected_exact_sku": result.get("selected_exact_sku"),
+                "deterministic_repeat_equal": same,
+                "selected_with_mandatory_contradiction": safety,
+            }
+            positive_rows.append(row)
+            if s1 != 200 or result.get("result_class") != "TEST1_EXACT":
+                defects.append({
+                    "scope": "web", "id": profile,
+                    "classification": "POSITIVE_PROFILE_NOT_EXACT",
+                    "actual": row,
+                })
+
+        missing_payload = positive_payload(state, state.profile_ids[0], "missing")
+        missing_key = next(
+            p["key"] for p in state.contracts[state.profile_ids[0]]["parameters"]
+            if p["role"] == "MANDATORY"
+        )
+        del missing_payload["parameters"][missing_key]
+        missing_status, missing_body = http_json("POST", base_url + "/api/select", missing_payload)
+
+        contradiction_profile, contradiction_payload, contradiction_key = build_contradiction_payload(state)
+        contradiction_status, contradiction_body = http_json(
+            "POST", base_url + "/api/select", contradiction_payload
+        )
+
+        unknown_status, unknown_body = http_json("POST", base_url + "/api/select", {
+            "request_id": "post-axial-unknown",
+            "position_id": "unknown",
+            "raw_request_text": "unknown profile fail closed",
+            "profile": "unknown.profile.r1",
+            "parameters": {},
+        })
+
+        missing_class = missing_body.get("result", {}).get("result_class")
+        contradiction_class = contradiction_body.get("result", {}).get("result_class")
+        if missing_status != 200 or missing_class != "TEST1_NOT_SELECTED":
+            defects.append({"scope": "web", "id": "missing_mandatory", "classification": "FAIL_CLOSED_REGRESSION"})
+        if contradiction_status != 200 or contradiction_class != "TEST1_NOT_SELECTED":
+            defects.append({"scope": "web", "id": "contradiction", "classification": "FAIL_CLOSED_REGRESSION"})
+        if unknown_status >= 500 or unknown_body.get("result_class") != "TEST1_NOT_SELECTED":
+            defects.append({"scope": "web", "id": "unknown_profile", "classification": "FAIL_CLOSED_REGRESSION"})
+
+        axial = next(r for r in positive_rows if r["profile"] == AXIAL_PROFILE)
+        frozen_rule_rows = [
+            x for x in authority.get("frozen_inputs", [])
+            if x.get("component") == "RULES"
+        ]
+        rules_authority_exact = bool(
+            len(frozen_rule_rows) == 1
+            and frozen_rule_rows[0].get("ref") == RULES_REF
+            and frozen_rule_rows[0].get("git_blob_sha1") == EXPECTED_BLOBS[(RULES_REF, RULES_PATH)]
+            and authority.get("snapshot_ids", {}).get("rules_snapshot_id") == RULES_SNAPSHOT_ID
+        )
+
+        output = {
+            "server_started": True,
+            "endpoints": {
+                "health": {"http_status": health_status, "body": health},
+                "authority": {
+                    "http_status": authority_status,
+                    "rules_authority_exact": rules_authority_exact,
+                    "snapshot_ids": authority.get("snapshot_ids"),
+                    "frozen_inputs": authority.get("frozen_inputs"),
+                    "historical_known_finding_field_preserved_from_accepted_web_source": authority.get("known_frozen_findings"),
+                },
+                "profiles": {
+                    "http_status": profiles_status,
+                    "profile_count": profiles.get("profile_count"),
+                    "eligible_real_sku": profiles.get("eligible_real_sku"),
+                },
+            },
+            "positive_profiles": positive_rows,
+            "positive_profile_count": len(positive_rows),
+            "positive_TEST1_EXACT": sum(r["result_class"] == "TEST1_EXACT" for r in positive_rows),
+            "axial_positive": axial,
+            "negative_requests": {
+                "missing_mandatory": {
+                    "http_status": missing_status,
+                    "result_class": missing_class,
+                    "removed_parameter": missing_key,
+                },
+                "contradiction": {
+                    "profile": contradiction_profile,
+                    "http_status": contradiction_status,
+                    "result_class": contradiction_class,
+                    "mutated_parameter": contradiction_key,
+                },
+                "unknown_profile": {
+                    "http_status": unknown_status,
+                    "result_class": unknown_body.get("result_class"),
+                    "warnings": unknown_body.get("warnings"),
+                },
+            },
+            "deterministic_mismatches": deterministic_mismatches,
+            "selected_with_mandatory_contradiction": unsafe,
+            "engine_crashes": engine_crashes,
+            "repaired_rules_authority_exact": rules_authority_exact,
+        }
+
+        if health_status != 200 or authority_status != 200 or profiles_status != 200:
+            raise AssertionError(f"WEB endpoint regression: {output['endpoints']}")
+        if len(positive_rows) != 11 or output["positive_TEST1_EXACT"] != 11:
+            raise AssertionError(f"WEB positive regression: {output}")
+        if axial["result_class"] != "TEST1_EXACT":
+            raise AssertionError(f"WEB axial regression: {axial}")
+        if deterministic_mismatches or unsafe or engine_crashes:
+            raise AssertionError(f"WEB safety regression: {output}")
+        if not rules_authority_exact:
+            raise AssertionError(f"WEB stale rules authority execution: {output['endpoints']['authority']}")
+        if defects:
+            raise AssertionError(f"WEB defects: {defects}")
+        return output, defects
+    finally:
+        stop_web(server, thread)
+
+
