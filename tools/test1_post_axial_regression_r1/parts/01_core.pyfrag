@@ -1,0 +1,309 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import copy
+import hashlib
+import importlib.util
+import json
+import re
+import socket
+import subprocess
+import sys
+import tempfile
+import threading
+import urllib.error
+import urllib.request
+from collections import Counter
+from pathlib import Path
+from types import ModuleType
+from typing import Any, Mapping
+
+ROOT = Path(__file__).resolve().parents[2]
+OUT_DIR = ROOT / "regression" / "r1"
+DOC_PATH = ROOT / "docs" / "TEST1_POST_AXIAL_REGRESSION_R1_HANDOFF.md"
+
+BASE_REF = "ee7ecee7b7914fd088565f25b61c900d7ce37377"
+DATA_REF = "6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80"
+RULES_REF = "0af202cf9069db0ac7952d4d07857540bfffae7a"
+RULES_SNAPSHOT_ID = "TEST1_RULES_AXIAL_SIZE_TUPLE_REPAIR_R1@PR5"
+ENGINE_REF = "e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9"
+INTEGRATION_REF = "3132e15e7651b97ebe15a27c99f71034b087ae7d"
+WEB_REF = "f4c55387a56ec1932d636c3f4659e0ee4cf9f12b"
+SCENARIO_REF = "a86e54087f69e6ffd46a13c966ed2b00a1073b31"
+START_AUTHORITY = 6011460238
+BENCHMARK_BOUNDARY = 5995371435
+AXIAL_PROFILE = "installation.tool.axial_system.r1"
+OLD_RULES_REF = "38eaac6623e934174bfdc036b36d802e7d800403"
+
+DATA_CATALOG_PATH = "data/catalog/r1/TEST1_CATALOG_R1.jsonl"
+DATA_SUFFICIENCY_PATH = "data/catalog/r1/TEST1_DATA_FACT_SUFFICIENCY_R1.json"
+RULES_PATH = "rules/r1/TEST1_GROUP_CONTRACTS_R1.json"
+ENGINE_PATH = "src/test1_engine/matcher.py"
+SCHEMA_PATH = "schemas/TEST1_SHARED_SCHEMAS_R1.json"
+WEB_APP_PATH = "web/r1/app.py"
+WEB_INDEX_PATH = "web/r1/index.html"
+SCENARIOS_PATH = "scenarios/r1/TEST1_SELECTION_SCENARIOS_R1.jsonl"
+ORACLE_PATH = "scenarios/r1/TEST1_SELECTION_SCENARIO_ORACLE_R1.jsonl"
+COVERAGE_PATH = "scenarios/r1/TEST1_SELECTION_SCENARIO_COVERAGE_R1.json"
+INTEGRATION_RUNNER_PATH = "tools/test1_integration_r1/run_test1_nonweb_integration_r1.py"
+
+EXPECTED_BLOBS = {
+    (DATA_REF, DATA_CATALOG_PATH): "013feb6d60975facf050e33869898c2a8aac0936",
+    (DATA_REF, DATA_SUFFICIENCY_PATH): "43c6f8aea80822252736a79b49884431a663505b",
+    (RULES_REF, RULES_PATH): "afcb219514eaffcb85c0bbc210f7e33bb6c3837e",
+    (ENGINE_REF, ENGINE_PATH): "47b28f6fa70bb1032e82a0d987f003368edb211a",
+    (BASE_REF, SCHEMA_PATH): "f385ecc8be6d4cda69b1be854027b8dcf9a099f2",
+    (WEB_REF, WEB_APP_PATH): "91fa691c72119d07786645d3e4f57e0de25a8b41",
+    (WEB_REF, WEB_INDEX_PATH): "bf9c628ab4cc6903f23c8a4db0f435ab78d09f79",
+    (SCENARIO_REF, SCENARIOS_PATH): "38e789b46956c9ae3231963a28ab052f3dabba6d",
+    (SCENARIO_REF, ORACLE_PATH): "8fb6404492b9cb34b70eb78e93813b13df620a6d",
+    (SCENARIO_REF, COVERAGE_PATH): "3df99f520c284ee37ee3cd9b278466aa16adf8b8",
+    (INTEGRATION_REF, INTEGRATION_RUNNER_PATH): "bcd260868b2793d16be382bf897b0bb1e0eb40ce",
+}
+
+PRIVATE_TEST1_REGRESSION_HEAD = "2e5f9c0b4f89b5efb1655205ad28c7e65c3b10af"
+PUBLIC_CARRIER_REPO = "nalsur0609/1234"
+PUBLIC_CARRIER_RESUME_AUTHORITY = 6018146028
+CARRIER_CATALOG_SUBSET_BLOB = "7a86d212cc4f81c44efbfa758b0d3b8d6e8e4cd7"
+CARRIER_CATALOG_ORIGINAL_SOURCE_BLOB = "013feb6d60975facf050e33869898c2a8aac0936"
+CARRIER_CATALOG_CHUNKS = [
+    "carrier_payload/catalog/TEST1_CATALOG_R1.part01.jsonl",
+    "carrier_payload/catalog/TEST1_CATALOG_R1.part02.jsonl",
+]
+CARRIER_EXPECTED_PROFILE_IDS = [
+    "control.temperature_switch.r1",
+    "fitting.multilayer.screw.r1",
+    "hose.flexible.water.r1",
+    "hydronic.collector_assembly.r1",
+    "hydronic.instrument.pressure_gauge.r1",
+    "hydronic.instrument.thermomanometer.r1",
+    "hydronic.instrument.thermometer.r1",
+    "hydronic.instrument_accessory.r1",
+    "hydronic.valve.ball.r1",
+    "installation.tool.axial_system.r1",
+    "mounting.fastener.screw.r1",
+    "mounting.support.pipe_clamp.r1",
+    "radiator.aluminium.r1",
+]
+CARRIER_EXPECTED_CATALOG_RECORDS = 611
+CARRIER_SOURCE_MAP = {
+    (DATA_REF, DATA_SUFFICIENCY_PATH): "carrier_payload/sources/TEST1_DATA_FACT_SUFFICIENCY_R1.json",
+    (RULES_REF, RULES_PATH): "carrier_payload/sources/TEST1_GROUP_CONTRACTS_R1.json",
+    (ENGINE_REF, ENGINE_PATH): "carrier_payload/sources/matcher.py",
+    (BASE_REF, SCHEMA_PATH): "carrier_payload/sources/TEST1_SHARED_SCHEMAS_R1.json",
+    (WEB_REF, WEB_APP_PATH): "carrier_payload/sources/web_app.py",
+    (WEB_REF, WEB_INDEX_PATH): "carrier_payload/sources/web_index.html",
+    (SCENARIO_REF, SCENARIOS_PATH): "carrier_payload/sources/TEST1_SELECTION_SCENARIOS_R1.jsonl",
+    (SCENARIO_REF, ORACLE_PATH): "carrier_payload/sources/TEST1_SELECTION_SCENARIO_ORACLE_R1.jsonl",
+    (SCENARIO_REF, COVERAGE_PATH): "carrier_payload/sources/TEST1_SELECTION_SCENARIO_COVERAGE_R1.json",
+    (INTEGRATION_REF, INTEGRATION_RUNNER_PATH): "carrier_payload/sources/run_test1_nonweb_integration_r1.py",
+}
+
+AXIAL_OVERRIDE_IDS = {
+    "T1SC-R1-049", "T1SC-R1-050", "T1SC-R1-051",
+    "T1SC-R1-052", "T1SC-R1-053", "T1SC-R1-054",
+    "T1SC-R1-112",
+}
+
+SUMMARY_PATH = OUT_DIR / "TEST1_POST_AXIAL_REGRESSION_R1.json"
+INTEGRATION_RESULTS_PATH = OUT_DIR / "TEST1_POST_AXIAL_INTEGRATION_RESULTS_R1.jsonl"
+WEB_RESULTS_PATH = OUT_DIR / "TEST1_POST_AXIAL_WEB_RESULTS_R1.json"
+SCENARIO_RESULTS_PATH = OUT_DIR / "TEST1_POST_AXIAL_SCENARIO_RESULTS_R1.jsonl"
+DEFECTS_PATH = OUT_DIR / "TEST1_POST_AXIAL_DEFECTS_R1.json"
+
+
+def git_show(ref: str, path: str) -> bytes:
+    key = (ref, path)
+    if key == (DATA_REF, DATA_CATALOG_PATH):
+        return b"".join((ROOT / p).read_bytes() for p in CARRIER_CATALOG_CHUNKS)
+    local_path = CARRIER_SOURCE_MAP.get(key)
+    if local_path is None:
+        raise RuntimeError(f"carrier payload does not materialize {ref}:{path}")
+    return (ROOT / local_path).read_bytes()
+
+
+def carrier_expected_blob(ref: str, path: str) -> str:
+    if (ref, path) == (DATA_REF, DATA_CATALOG_PATH):
+        return CARRIER_CATALOG_SUBSET_BLOB
+    return EXPECTED_BLOBS[(ref, path)]
+
+
+def git_blob_sha1(payload: bytes) -> str:
+    return hashlib.sha1(f"blob {len(payload)}\0".encode("ascii") + payload).hexdigest()
+
+
+def checked_bytes(ref: str, path: str) -> bytes:
+    payload = git_show(ref, path)
+    expected = carrier_expected_blob(ref, path)
+    actual = git_blob_sha1(payload)
+    if actual != expected:
+        raise AssertionError(f"carrier blob drift {ref}:{path}: {actual} != {expected}")
+    return payload
+
+
+def load_jsonl(ref: str, path: str) -> list[dict[str, Any]]:
+    return [
+        json.loads(line)
+        for line in checked_bytes(ref, path).decode("utf-8").splitlines()
+        if line.strip()
+    ]
+
+
+def load_module_from_bytes(name: str, payload: bytes) -> ModuleType:
+    with tempfile.TemporaryDirectory(prefix=f"{name}_") as td:
+        path = Path(td) / f"{name}.py"
+        path.write_bytes(payload)
+        spec = importlib.util.spec_from_file_location(name, path)
+        if spec is None or spec.loader is None:
+            raise RuntimeError(f"cannot load module {name}")
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[name] = module
+        spec.loader.exec_module(module)
+        return module
+
+
+def bind_repaired_rules(module: ModuleType) -> None:
+    module.ROOT = ROOT
+    module.RULES_REF = RULES_REF
+    if hasattr(module, "RULES_SNAPSHOT_ID"):
+        module.RULES_SNAPSHOT_ID = RULES_SNAPSHOT_ID
+    if hasattr(module, "git_show"):
+        module.git_show = git_show
+    if hasattr(module, "_git_show"):
+        module._git_show = git_show
+    old = getattr(module, "EXPECTED_BLOBS", None)
+    if isinstance(old, dict):
+        old.pop((OLD_RULES_REF, RULES_PATH), None)
+        old[(DATA_REF, DATA_CATALOG_PATH)] = CARRIER_CATALOG_SUBSET_BLOB
+        old[(DATA_REF, DATA_SUFFICIENCY_PATH)] = EXPECTED_BLOBS[(DATA_REF, DATA_SUFFICIENCY_PATH)]
+        old[(RULES_REF, RULES_PATH)] = EXPECTED_BLOBS[(RULES_REF, RULES_PATH)]
+        old[(ENGINE_REF, ENGINE_PATH)] = EXPECTED_BLOBS[(ENGINE_REF, ENGINE_PATH)]
+        old[(BASE_REF, SCHEMA_PATH)] = EXPECTED_BLOBS[(BASE_REF, SCHEMA_PATH)]
+
+
+def positive_payload(state: Any, profile: str, suffix: str) -> dict[str, Any]:
+    anchor = state.eligible_by_profile[profile][0]
+    contract = state.contracts[profile]
+    parameters: dict[str, Any] = {}
+    for parameter in contract["parameters"]:
+        if parameter["role"] != "MANDATORY":
+            continue
+        fact = anchor["facts"][parameter["key"]]
+        if fact["state"] != "KNOWN":
+            raise AssertionError(f"{profile}:{parameter['key']} not KNOWN")
+        parameters[parameter["key"]] = {
+            "value": copy.deepcopy(fact.get("value")),
+            "unit": fact.get("unit"),
+        }
+    return {
+        "request_id": f"post-axial-{suffix}",
+        "position_id": suffix,
+        "raw_request_text": f"post-axial regression positive {profile}",
+        "profile": profile,
+        "parameters": parameters,
+    }
+
+
+def numeric_contradiction_value(semantic: str, values: list[float | int]) -> float | int | None:
+    if not values:
+        return None
+    if semantic == "NUMERIC_EQUAL":
+        return max(values) + 1
+    if semantic == "CANDIDATE_LTE_REQUEST":
+        return min(values) - 1
+    if semantic == "CANDIDATE_GTE_REQUEST":
+        return max(values) + 1
+    return None
+
+
+def build_contradiction_payload(state: Any) -> tuple[str, dict[str, Any], str]:
+    for profile in state.profile_ids:
+        base = positive_payload(state, profile, "contradiction")
+        contract = state.contracts[profile]
+        anchor = state.eligible_by_profile[profile][0]
+        for parameter in contract["parameters"]:
+            if parameter["role"] != "MANDATORY":
+                continue
+            key = parameter["key"]
+            values = [
+                p["facts"][key]["value"]
+                for p in state.by_group[profile]
+                if p["facts"].get(key, {}).get("state") == "KNOWN"
+                and isinstance(p["facts"][key].get("value"), (int, float))
+                and not isinstance(p["facts"][key].get("value"), bool)
+            ]
+            replacement = numeric_contradiction_value(parameter["comparison_semantics"], values)
+            if replacement is not None:
+                trial = copy.deepcopy(base)
+                trial["parameters"][key] = {
+                    "value": replacement,
+                    "unit": anchor["facts"][key].get("unit"),
+                }
+                status, body = state.select(trial)
+                if int(status) == 200 and body["result"]["result_class"] == "TEST1_NOT_SELECTED":
+                    return profile, trial, key
+
+        for parameter in contract["parameters"]:
+            if parameter["role"] != "MANDATORY" or parameter["comparison_semantics"] != "EQUALS":
+                continue
+            key = parameter["key"]
+            base_value = anchor["facts"][key].get("value")
+            alternate = next((
+                p for p in state.by_group[profile]
+                if p["facts"].get(key, {}).get("state") == "KNOWN"
+                and p["facts"][key].get("value") != base_value
+            ), None)
+            if alternate is None:
+                continue
+            trial = copy.deepcopy(base)
+            trial["parameters"][key] = {
+                "value": copy.deepcopy(alternate["facts"][key].get("value")),
+                "unit": alternate["facts"][key].get("unit"),
+            }
+            status, body = state.select(trial)
+            if int(status) == 200 and body["result"]["result_class"] == "TEST1_NOT_SELECTED":
+                return profile, trial, key
+    raise AssertionError("cannot build contradiction fixture")
+
+
+def http_json(method: str, url: str, payload: Mapping[str, Any] | None = None) -> tuple[int, dict[str, Any]]:
+    data = None
+    headers: dict[str, str] = {}
+    if payload is not None:
+        data = json.dumps(payload, ensure_ascii=False, sort_keys=True).encode("utf-8")
+        headers["Content-Type"] = "application/json"
+    req = urllib.request.Request(url, data=data, headers=headers, method=method)
+    try:
+        with urllib.request.urlopen(req, timeout=20) as response:
+            return int(response.status), json.loads(response.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        raw = exc.read()
+        return int(exc.code), json.loads(raw.decode("utf-8")) if raw else {}
+
+
+def start_web() -> tuple[Any, Any, str, threading.Thread]:
+    web = load_module_from_bytes("test1_post_axial_web_r1", checked_bytes(WEB_REF, WEB_APP_PATH))
+    bind_repaired_rules(web)
+    state = web.RuntimeState()
+    server = web.Test1WebServer(("127.0.0.1", 0), state)
+    thread = threading.Thread(target=server.serve_forever, kwargs={"poll_interval": 0.05}, daemon=True)
+    thread.start()
+    host, port = server.server_address[:2]
+    base_url = f"http://{host}:{port}"
+    status, body = http_json("GET", base_url + "/health")
+    if status != 200 or body.get("status") != "ok":
+        server.shutdown()
+        server.server_close()
+        raise AssertionError(f"WEB health failed: {status} {body}")
+    return web, server, base_url, thread
+
+
+def stop_web(server: Any, thread: threading.Thread) -> None:
+    server.shutdown()
+    server.server_close()
+    thread.join(timeout=5)
+    if thread.is_alive():
+        raise RuntimeError("WEB server thread did not stop")
+
+
