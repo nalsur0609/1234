@@ -1,0 +1,193 @@
+{
+  "axial_positive": {
+    "deterministic_repeat_equal": true,
+    "http_status": 200,
+    "profile": "installation.tool.axial_system.r1",
+    "result_class": "TEST1_EXACT",
+    "selected_exact_sku": "PEX-16х2,6",
+    "selected_with_mandatory_contradiction": 0
+  },
+  "deterministic_mismatches": 0,
+  "endpoints": {
+    "authority": {
+      "frozen_inputs": [
+        {
+          "component": "DATA_CATALOG",
+          "git_blob_sha1": "7a86d212cc4f81c44efbfa758b0d3b8d6e8e4cd7",
+          "path": "data/catalog/r1/TEST1_CATALOG_R1.jsonl",
+          "ref": "6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80"
+        },
+        {
+          "component": "DATA_SUFFICIENCY",
+          "git_blob_sha1": "43c6f8aea80822252736a79b49884431a663505b",
+          "path": "data/catalog/r1/TEST1_DATA_FACT_SUFFICIENCY_R1.json",
+          "ref": "6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80"
+        },
+        {
+          "component": "RULES",
+          "git_blob_sha1": "afcb219514eaffcb85c0bbc210f7e33bb6c3837e",
+          "path": "rules/r1/TEST1_GROUP_CONTRACTS_R1.json",
+          "ref": "0af202cf9069db0ac7952d4d07857540bfffae7a"
+        },
+        {
+          "component": "ENGINE",
+          "git_blob_sha1": "47b28f6fa70bb1032e82a0d987f003368edb211a",
+          "path": "src/test1_engine/matcher.py",
+          "ref": "e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9"
+        },
+        {
+          "component": "SHARED_SCHEMA",
+          "git_blob_sha1": "f385ecc8be6d4cda69b1be854027b8dcf9a099f2",
+          "path": "schemas/TEST1_SHARED_SCHEMAS_R1.json",
+          "ref": "ee7ecee7b7914fd088565f25b61c900d7ce37377"
+        }
+      ],
+      "historical_known_finding_field_preserved_from_accepted_web_source": [
+        {
+          "behavior": "FAIL_CLOSED",
+          "profile": "installation.tool.axial_system.r1",
+          "reason": "Frozen candidate compatibility.size.tuple values are scalar strings while frozen SET_CONTAINS accepts sequence candidates only.",
+          "sku_count": 7
+        }
+      ],
+      "http_status": 200,
+      "rules_authority_exact": true,
+      "snapshot_ids": {
+        "data_snapshot_id": "TEST1_DATA_R1_FACT_MATERIALIZATION_20261005",
+        "engine_snapshot_id": "TEST1_ENGINE_GENERIC_MATCHER_R1_v2",
+        "rules_snapshot_id": "TEST1_RULES_AXIAL_SIZE_TUPLE_REPAIR_R1@PR5"
+      }
+    },
+    "health": {
+      "body": {
+        "engine_snapshot_id": "TEST1_ENGINE_GENERIC_MATCHER_R1_v2",
+        "experimental": true,
+        "profile_count": 11,
+        "service": "TEST1-WEB-1",
+        "status": "ok"
+      },
+      "http_status": 200
+    },
+    "profiles": {
+      "eligible_real_sku": 367,
+      "http_status": 200,
+      "profile_count": 11
+    }
+  },
+  "engine_crashes": 0,
+  "negative_requests": {
+    "contradiction": {
+      "http_status": 200,
+      "mutated_parameter": "measurement.temperature.min",
+      "profile": "control.temperature_switch.r1",
+      "result_class": "TEST1_NOT_SELECTED"
+    },
+    "missing_mandatory": {
+      "http_status": 200,
+      "removed_parameter": "measurement.temperature.min",
+      "result_class": "TEST1_NOT_SELECTED"
+    },
+    "unknown_profile": {
+      "http_status": 422,
+      "result_class": "TEST1_NOT_SELECTED",
+      "warnings": [
+        "UNKNOWN_OR_NONEXECUTABLE_PROFILE_FAIL_CLOSED"
+      ]
+    }
+  },
+  "positive_TEST1_EXACT": 11,
+  "positive_profile_count": 11,
+  "positive_profiles": [
+    {
+      "deterministic_repeat_equal": true,
+      "http_status": 200,
+      "profile": "control.temperature_switch.r1",
+      "result_class": "TEST1_EXACT",
+      "selected_exact_sku": "STE-1006-100590",
+      "selected_with_mandatory_contradiction": 0
+    },
+    {
+      "deterministic_repeat_equal": true,
+      "http_status": 200,
+      "profile": "fitting.multilayer.screw.r1",
+      "result_class": "TEST1_EXACT",
+      "selected_exact_sku": "SFS-0001-000126",
+      "selected_with_mandatory_contradiction": 0
+    },
+    {
+      "deterministic_repeat_equal": true,
+      "http_status": 200,
+      "profile": "hydronic.collector_assembly.r1",
+      "result_class": "TEST1_EXACT",
+      "selected_exact_sku": "SMB 0468 000003",
+      "selected_with_mandatory_contradiction": 0
+    },
+    {
+      "deterministic_repeat_equal": true,
+      "http_status": 200,
+      "profile": "hydronic.instrument.pressure_gauge.r1",
+      "result_class": "TEST1_EXACT",
+      "selected_exact_sku": "SIM-1007-500608",
+      "selected_with_mandatory_contradiction": 0
+    },
+    {
+      "deterministic_repeat_equal": true,
+      "http_status": 200,
+      "profile": "hydronic.instrument.thermomanometer.r1",
+      "result_class": "TEST1_EXACT",
+      "selected_exact_sku": "SIM-1005-100415",
+      "selected_with_mandatory_contradiction": 0
+    },
+    {
+      "deterministic_repeat_equal": true,
+      "http_status": 200,
+      "profile": "hydronic.instrument.thermometer.r1",
+      "result_class": "TEST1_EXACT",
+      "selected_exact_sku": "SIM-1001-101015",
+      "selected_with_mandatory_contradiction": 0
+    },
+    {
+      "deterministic_repeat_equal": true,
+      "http_status": 200,
+      "profile": "hydronic.instrument_accessory.r1",
+      "result_class": "TEST1_EXACT",
+      "selected_exact_sku": "SMN-0010-000215",
+      "selected_with_mandatory_contradiction": 0
+    },
+    {
+      "deterministic_repeat_equal": true,
+      "http_status": 200,
+      "profile": "installation.tool.axial_system.r1",
+      "result_class": "TEST1_EXACT",
+      "selected_exact_sku": "PEX-16х2,6",
+      "selected_with_mandatory_contradiction": 0
+    },
+    {
+      "deterministic_repeat_equal": true,
+      "http_status": 200,
+      "profile": "mounting.fastener.screw.r1",
+      "result_class": "TEST1_EXACT",
+      "selected_exact_sku": "SAC-0020-504816",
+      "selected_with_mandatory_contradiction": 0
+    },
+    {
+      "deterministic_repeat_equal": true,
+      "http_status": 200,
+      "profile": "mounting.support.pipe_clamp.r1",
+      "result_class": "TEST1_EXACT",
+      "selected_exact_sku": "SAC-0020-000001",
+      "selected_with_mandatory_contradiction": 0
+    },
+    {
+      "deterministic_repeat_equal": true,
+      "http_status": 200,
+      "profile": "radiator.aluminium.r1",
+      "result_class": "TEST1_EXACT",
+      "selected_exact_sku": "SRA-0110-180003",
+      "selected_with_mandatory_contradiction": 0
+    }
+  ],
+  "repaired_rules_authority_exact": true,
+  "selected_with_mandatory_contradiction": 0,
+  "server_started": true
+}

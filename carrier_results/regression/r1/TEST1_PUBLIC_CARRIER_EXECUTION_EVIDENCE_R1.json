@@ -1,0 +1,70 @@
+{
+  "carrier_branch": "test1-post-axial-regression-r1",
+  "carrier_head": "a574dd2e0c85d128c074ec5ebd0bed77a18404fc",
+  "carrier_repo": "nalsur0609/1234",
+  "counts": {
+    "deterministic_mismatches": 0,
+    "engine_crashes": 0,
+    "integration_positive_exact": 367,
+    "scenario_exact": 52,
+    "scenario_executed": 93,
+    "scenario_not_executed": 27,
+    "scenario_not_selected": 41,
+    "scenario_total": 120,
+    "selected_with_mandatory_contradiction": 0,
+    "unresolved_defects": 0,
+    "web_positive_exact": 11
+  },
+  "final_marker": "TEST1_POST_AXIAL_CROSS_WORKSTREAM_REGRESSION_R1 = READY_FOR_ML_TEST_REVIEW",
+  "payload_scope": {
+    "bounded_subset_blob_sha1": "7a86d212cc4f81c44efbfa758b0d3b8d6e8e4cd7",
+    "exported_profiles": [
+      "control.temperature_switch.r1",
+      "fitting.multilayer.screw.r1",
+      "hose.flexible.water.r1",
+      "hydronic.collector_assembly.r1",
+      "hydronic.instrument.pressure_gauge.r1",
+      "hydronic.instrument.thermomanometer.r1",
+      "hydronic.instrument.thermometer.r1",
+      "hydronic.instrument_accessory.r1",
+      "hydronic.valve.ball.r1",
+      "installation.tool.axial_system.r1",
+      "mounting.fastener.screw.r1",
+      "mounting.support.pipe_clamp.r1",
+      "radiator.aluminium.r1"
+    ],
+    "exported_rows": 611,
+    "original_rows": 2775,
+    "original_source_blob_sha1": "013feb6d60975facf050e33869898c2a8aac0936",
+    "row_transform": "NONE; exact original JSONL rows selected only by group_id"
+  },
+  "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+  "private_test1_regression_head": "2e5f9c0b4f89b5efb1655205ad28c7e65c3b10af",
+  "result_sha256": {
+    "docs/TEST1_POST_AXIAL_REGRESSION_R1_HANDOFF.md": "c8f234095e7a253c24bb73134f3a688f1f0b967d1eac8925f19332ef938b4760",
+    "regression/r1/TEST1_POST_AXIAL_DEFECTS_R1.json": "b2179e40843bd050030e659f9dca2da3cdcb86740953171714d50331d93a6cb8",
+    "regression/r1/TEST1_POST_AXIAL_INTEGRATION_RESULTS_R1.jsonl": "b0de80e2d701de1d425d002dbdbb070064c32d4db91f9febba663cb13c34c78e",
+    "regression/r1/TEST1_POST_AXIAL_REGRESSION_R1.json": "fa2e4df550fd56f61d01053896f670ff063f34d284799881655add2d2388bbd1",
+    "regression/r1/TEST1_POST_AXIAL_SCENARIO_RESULTS_R1.jsonl": "3c17f2d9a783f968aab1cb38b6f650a230f571babbbff80a9b9a4ca6e73644e7",
+    "regression/r1/TEST1_POST_AXIAL_WEB_RESULTS_R1.json": "80908cb8542afede3383e340f12f1a3ae2f53d79202fee8329544f2578d6ba91"
+  },
+  "runner_os": "Linux",
+  "schema_version": "TEST1_PUBLIC_CARRIER_EXECUTION_EVIDENCE_R1",
+  "sensitive_boundary": {
+    "commercial_price_discount_data_exported": false,
+    "customer_data_exported": false,
+    "email_like_values_found": 0,
+    "forbidden_customer_commercial_credential_fields_found": 0,
+    "phone_like_values_found": 0,
+    "secrets_tokens_env_exported": false
+  },
+  "source_identities": {
+    "data": "6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+    "engine": "e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+    "rules": "0af202cf9069db0ac7952d4d07857540bfffae7a",
+    "scenarios": "a86e54087f69e6ffd46a13c966ed2b00a1073b31",
+    "shared_schema": "ee7ecee7b7914fd088565f25b61c900d7ce37377",
+    "web": "f4c55387a56ec1932d636c3f4659e0ee4cf9f12b"
+  },
+  "workflow_run_id": 37480755948
+}

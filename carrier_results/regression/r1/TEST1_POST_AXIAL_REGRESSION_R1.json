@@ -1,0 +1,407 @@
+{
+  "authorities": {
+    "base": "ee7ecee7b7914fd088565f25b61c900d7ce37377",
+    "data": "6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+    "engine": "e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+    "integration_reference": "3132e15e7651b97ebe15a27c99f71034b087ae7d",
+    "rules_repaired": "0af202cf9069db0ac7952d4d07857540bfffae7a",
+    "scenario_reference": "a86e54087f69e6ffd46a13c966ed2b00a1073b31",
+    "web_reference": "f4c55387a56ec1932d636c3f4659e0ee4cf9f12b"
+  },
+  "benchmark_boundary_comment": 5995371435,
+  "consistency": {
+    "all_carrier_payload_blobs_match": true,
+    "axial_compatibility_size_tuple": {
+      "comparison_semantics": "EQUALS",
+      "value_type": "OPAQUE_TOKEN"
+    },
+    "data_projection_scope": {
+      "carrier_subset_blob_sha1": "7a86d212cc4f81c44efbfa758b0d3b8d6e8e4cd7",
+      "profiles": [
+        "control.temperature_switch.r1",
+        "fitting.multilayer.screw.r1",
+        "hose.flexible.water.r1",
+        "hydronic.collector_assembly.r1",
+        "hydronic.instrument.pressure_gauge.r1",
+        "hydronic.instrument.thermomanometer.r1",
+        "hydronic.instrument.thermometer.r1",
+        "hydronic.instrument_accessory.r1",
+        "hydronic.valve.ball.r1",
+        "installation.tool.axial_system.r1",
+        "mounting.fastener.screw.r1",
+        "mounting.support.pipe_clamp.r1",
+        "radiator.aluminium.r1"
+      ],
+      "records": 611,
+      "selection": "exact source rows for all current-WEB-executable profiles",
+      "source_original_catalog_blob_sha1": "013feb6d60975facf050e33869898c2a8aac0936"
+    },
+    "no_data_source_row_mutation": true,
+    "no_engine_drift": true,
+    "no_scenario_input_drift": true,
+    "no_web_source_drift": true,
+    "pinned_blobs": [
+      {
+        "actual_git_blob_sha1": "afcb219514eaffcb85c0bbc210f7e33bb6c3837e",
+        "carrier_expected_git_blob_sha1": "afcb219514eaffcb85c0bbc210f7e33bb6c3837e",
+        "carrier_match": true,
+        "path": "rules/r1/TEST1_GROUP_CONTRACTS_R1.json",
+        "projection": "BYTE_EXACT_SOURCE_COPY",
+        "ref": "0af202cf9069db0ac7952d4d07857540bfffae7a",
+        "source_byte_exact": true,
+        "source_original_git_blob_sha1": "afcb219514eaffcb85c0bbc210f7e33bb6c3837e"
+      },
+      {
+        "actual_git_blob_sha1": "bcd260868b2793d16be382bf897b0bb1e0eb40ce",
+        "carrier_expected_git_blob_sha1": "bcd260868b2793d16be382bf897b0bb1e0eb40ce",
+        "carrier_match": true,
+        "path": "tools/test1_integration_r1/run_test1_nonweb_integration_r1.py",
+        "projection": "BYTE_EXACT_SOURCE_COPY",
+        "ref": "3132e15e7651b97ebe15a27c99f71034b087ae7d",
+        "source_byte_exact": true,
+        "source_original_git_blob_sha1": "bcd260868b2793d16be382bf897b0bb1e0eb40ce"
+      },
+      {
+        "actual_git_blob_sha1": "7a86d212cc4f81c44efbfa758b0d3b8d6e8e4cd7",
+        "carrier_expected_git_blob_sha1": "7a86d212cc4f81c44efbfa758b0d3b8d6e8e4cd7",
+        "carrier_match": true,
+        "path": "data/catalog/r1/TEST1_CATALOG_R1.jsonl",
+        "projection": "BOUNDED_EXACT_ROW_SUBSET",
+        "ref": "6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "source_byte_exact": false,
+        "source_original_git_blob_sha1": "013feb6d60975facf050e33869898c2a8aac0936"
+      },
+      {
+        "actual_git_blob_sha1": "43c6f8aea80822252736a79b49884431a663505b",
+        "carrier_expected_git_blob_sha1": "43c6f8aea80822252736a79b49884431a663505b",
+        "carrier_match": true,
+        "path": "data/catalog/r1/TEST1_DATA_FACT_SUFFICIENCY_R1.json",
+        "projection": "BYTE_EXACT_SOURCE_COPY",
+        "ref": "6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "source_byte_exact": true,
+        "source_original_git_blob_sha1": "43c6f8aea80822252736a79b49884431a663505b"
+      },
+      {
+        "actual_git_blob_sha1": "38e789b46956c9ae3231963a28ab052f3dabba6d",
+        "carrier_expected_git_blob_sha1": "38e789b46956c9ae3231963a28ab052f3dabba6d",
+        "carrier_match": true,
+        "path": "scenarios/r1/TEST1_SELECTION_SCENARIOS_R1.jsonl",
+        "projection": "BYTE_EXACT_SOURCE_COPY",
+        "ref": "a86e54087f69e6ffd46a13c966ed2b00a1073b31",
+        "source_byte_exact": true,
+        "source_original_git_blob_sha1": "38e789b46956c9ae3231963a28ab052f3dabba6d"
+      },
+      {
+        "actual_git_blob_sha1": "3df99f520c284ee37ee3cd9b278466aa16adf8b8",
+        "carrier_expected_git_blob_sha1": "3df99f520c284ee37ee3cd9b278466aa16adf8b8",
+        "carrier_match": true,
+        "path": "scenarios/r1/TEST1_SELECTION_SCENARIO_COVERAGE_R1.json",
+        "projection": "BYTE_EXACT_SOURCE_COPY",
+        "ref": "a86e54087f69e6ffd46a13c966ed2b00a1073b31",
+        "source_byte_exact": true,
+        "source_original_git_blob_sha1": "3df99f520c284ee37ee3cd9b278466aa16adf8b8"
+      },
+      {
+        "actual_git_blob_sha1": "8fb6404492b9cb34b70eb78e93813b13df620a6d",
+        "carrier_expected_git_blob_sha1": "8fb6404492b9cb34b70eb78e93813b13df620a6d",
+        "carrier_match": true,
+        "path": "scenarios/r1/TEST1_SELECTION_SCENARIO_ORACLE_R1.jsonl",
+        "projection": "BYTE_EXACT_SOURCE_COPY",
+        "ref": "a86e54087f69e6ffd46a13c966ed2b00a1073b31",
+        "source_byte_exact": true,
+        "source_original_git_blob_sha1": "8fb6404492b9cb34b70eb78e93813b13df620a6d"
+      },
+      {
+        "actual_git_blob_sha1": "47b28f6fa70bb1032e82a0d987f003368edb211a",
+        "carrier_expected_git_blob_sha1": "47b28f6fa70bb1032e82a0d987f003368edb211a",
+        "carrier_match": true,
+        "path": "src/test1_engine/matcher.py",
+        "projection": "BYTE_EXACT_SOURCE_COPY",
+        "ref": "e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "source_byte_exact": true,
+        "source_original_git_blob_sha1": "47b28f6fa70bb1032e82a0d987f003368edb211a"
+      },
+      {
+        "actual_git_blob_sha1": "f385ecc8be6d4cda69b1be854027b8dcf9a099f2",
+        "carrier_expected_git_blob_sha1": "f385ecc8be6d4cda69b1be854027b8dcf9a099f2",
+        "carrier_match": true,
+        "path": "schemas/TEST1_SHARED_SCHEMAS_R1.json",
+        "projection": "BYTE_EXACT_SOURCE_COPY",
+        "ref": "ee7ecee7b7914fd088565f25b61c900d7ce37377",
+        "source_byte_exact": true,
+        "source_original_git_blob_sha1": "f385ecc8be6d4cda69b1be854027b8dcf9a099f2"
+      },
+      {
+        "actual_git_blob_sha1": "91fa691c72119d07786645d3e4f57e0de25a8b41",
+        "carrier_expected_git_blob_sha1": "91fa691c72119d07786645d3e4f57e0de25a8b41",
+        "carrier_match": true,
+        "path": "web/r1/app.py",
+        "projection": "BYTE_EXACT_SOURCE_COPY",
+        "ref": "f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "source_byte_exact": true,
+        "source_original_git_blob_sha1": "91fa691c72119d07786645d3e4f57e0de25a8b41"
+      },
+      {
+        "actual_git_blob_sha1": "bf9c628ab4cc6903f23c8a4db0f435ab78d09f79",
+        "carrier_expected_git_blob_sha1": "bf9c628ab4cc6903f23c8a4db0f435ab78d09f79",
+        "carrier_match": true,
+        "path": "web/r1/index.html",
+        "projection": "BYTE_EXACT_SOURCE_COPY",
+        "ref": "f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "source_byte_exact": true,
+        "source_original_git_blob_sha1": "bf9c628ab4cc6903f23c8a4db0f435ab78d09f79"
+      }
+    ],
+    "private_test1_regression_head": "2e5f9c0b4f89b5efb1655205ad28c7e65c3b10af",
+    "public_carrier_repo": "nalsur0609/1234",
+    "public_carrier_resume_authority": 6018146028,
+    "repaired_rules_blob_exact": "afcb219514eaffcb85c0bbc210f7e33bb6c3837e",
+    "repaired_rules_ref_exact": "0af202cf9069db0ac7952d4d07857540bfffae7a",
+    "repaired_rules_snapshot_id": "TEST1_RULES_AXIAL_SIZE_TUPLE_REPAIR_R1@PR5",
+    "sensitive_data_boundary": {
+      "commercial_price_data": "NOT_PRESENT",
+      "credentials_or_env": "NOT_PRESENT",
+      "customer_data": "NOT_PRESENT",
+      "email_like_matches": 0,
+      "forbidden_commercial_or_credential_keys": 0,
+      "phone_like_matches": 0
+    },
+    "stale_old_rules_ref_executed": false
+  },
+  "final_marker": "TEST1_POST_AXIAL_CROSS_WORKSTREAM_REGRESSION_R1 = READY_FOR_ML_TEST_REVIEW",
+  "integration": {
+    "contradiction_NOT_EXECUTED": 1,
+    "contradiction_NOT_SELECTED": 10,
+    "contradiction_executed": 10,
+    "deterministic_rerun_mismatches": 0,
+    "eligible_real_sku": 367,
+    "engine_crashes": 0,
+    "missing_mandatory_NOT_SELECTED": 11,
+    "missing_mandatory_executed": 11,
+    "positive_TEST1_EXACT": 367,
+    "positive_TEST1_NOT_SELECTED": 0,
+    "positive_TEST1_PROBABLE": 0,
+    "profiles_exercised": 11,
+    "selected_with_mandatory_contradiction": 0
+  },
+  "issue": 18,
+  "scenarios": {
+    "NOT_EXECUTED_CURRENT_SCOPE": 27,
+    "TEST1_EXACT": 52,
+    "TEST1_NOT_SELECTED": 41,
+    "TEST1_PROBABLE": 0,
+    "axial_override_executed_exact": 7,
+    "axial_override_ids": [
+      "T1SC-R1-049",
+      "T1SC-R1-050",
+      "T1SC-R1-051",
+      "T1SC-R1-052",
+      "T1SC-R1-053",
+      "T1SC-R1-054",
+      "T1SC-R1-112"
+    ],
+    "deterministic_mismatches": 0,
+    "engine_crashes": 0,
+    "executed": 93,
+    "selected_with_mandatory_contradiction": 0,
+    "total_scenario_rows": 120,
+    "unresolved_mismatch_defect_count": 0
+  },
+  "schema_version": "TEST1_POST_AXIAL_REGRESSION_R1",
+  "start_authority_comment": 6011460238,
+  "status": "READY_FOR_ML_TEST_REVIEW",
+  "unresolved_defect_count": 0,
+  "web": {
+    "axial_positive": {
+      "deterministic_repeat_equal": true,
+      "http_status": 200,
+      "profile": "installation.tool.axial_system.r1",
+      "result_class": "TEST1_EXACT",
+      "selected_exact_sku": "PEX-16х2,6",
+      "selected_with_mandatory_contradiction": 0
+    },
+    "deterministic_mismatches": 0,
+    "endpoints": {
+      "authority": {
+        "frozen_inputs": [
+          {
+            "component": "DATA_CATALOG",
+            "git_blob_sha1": "7a86d212cc4f81c44efbfa758b0d3b8d6e8e4cd7",
+            "path": "data/catalog/r1/TEST1_CATALOG_R1.jsonl",
+            "ref": "6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80"
+          },
+          {
+            "component": "DATA_SUFFICIENCY",
+            "git_blob_sha1": "43c6f8aea80822252736a79b49884431a663505b",
+            "path": "data/catalog/r1/TEST1_DATA_FACT_SUFFICIENCY_R1.json",
+            "ref": "6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80"
+          },
+          {
+            "component": "RULES",
+            "git_blob_sha1": "afcb219514eaffcb85c0bbc210f7e33bb6c3837e",
+            "path": "rules/r1/TEST1_GROUP_CONTRACTS_R1.json",
+            "ref": "0af202cf9069db0ac7952d4d07857540bfffae7a"
+          },
+          {
+            "component": "ENGINE",
+            "git_blob_sha1": "47b28f6fa70bb1032e82a0d987f003368edb211a",
+            "path": "src/test1_engine/matcher.py",
+            "ref": "e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9"
+          },
+          {
+            "component": "SHARED_SCHEMA",
+            "git_blob_sha1": "f385ecc8be6d4cda69b1be854027b8dcf9a099f2",
+            "path": "schemas/TEST1_SHARED_SCHEMAS_R1.json",
+            "ref": "ee7ecee7b7914fd088565f25b61c900d7ce37377"
+          }
+        ],
+        "historical_known_finding_field_preserved_from_accepted_web_source": [
+          {
+            "behavior": "FAIL_CLOSED",
+            "profile": "installation.tool.axial_system.r1",
+            "reason": "Frozen candidate compatibility.size.tuple values are scalar strings while frozen SET_CONTAINS accepts sequence candidates only.",
+            "sku_count": 7
+          }
+        ],
+        "http_status": 200,
+        "rules_authority_exact": true,
+        "snapshot_ids": {
+          "data_snapshot_id": "TEST1_DATA_R1_FACT_MATERIALIZATION_20261005",
+          "engine_snapshot_id": "TEST1_ENGINE_GENERIC_MATCHER_R1_v2",
+          "rules_snapshot_id": "TEST1_RULES_AXIAL_SIZE_TUPLE_REPAIR_R1@PR5"
+        }
+      },
+      "health": {
+        "body": {
+          "engine_snapshot_id": "TEST1_ENGINE_GENERIC_MATCHER_R1_v2",
+          "experimental": true,
+          "profile_count": 11,
+          "service": "TEST1-WEB-1",
+          "status": "ok"
+        },
+        "http_status": 200
+      },
+      "profiles": {
+        "eligible_real_sku": 367,
+        "http_status": 200,
+        "profile_count": 11
+      }
+    },
+    "engine_crashes": 0,
+    "negative_requests": {
+      "contradiction": {
+        "http_status": 200,
+        "mutated_parameter": "measurement.temperature.min",
+        "profile": "control.temperature_switch.r1",
+        "result_class": "TEST1_NOT_SELECTED"
+      },
+      "missing_mandatory": {
+        "http_status": 200,
+        "removed_parameter": "measurement.temperature.min",
+        "result_class": "TEST1_NOT_SELECTED"
+      },
+      "unknown_profile": {
+        "http_status": 422,
+        "result_class": "TEST1_NOT_SELECTED",
+        "warnings": [
+          "UNKNOWN_OR_NONEXECUTABLE_PROFILE_FAIL_CLOSED"
+        ]
+      }
+    },
+    "positive_TEST1_EXACT": 11,
+    "positive_profile_count": 11,
+    "positive_profiles": [
+      {
+        "deterministic_repeat_equal": true,
+        "http_status": 200,
+        "profile": "control.temperature_switch.r1",
+        "result_class": "TEST1_EXACT",
+        "selected_exact_sku": "STE-1006-100590",
+        "selected_with_mandatory_contradiction": 0
+      },
+      {
+        "deterministic_repeat_equal": true,
+        "http_status": 200,
+        "profile": "fitting.multilayer.screw.r1",
+        "result_class": "TEST1_EXACT",
+        "selected_exact_sku": "SFS-0001-000126",
+        "selected_with_mandatory_contradiction": 0
+      },
+      {
+        "deterministic_repeat_equal": true,
+        "http_status": 200,
+        "profile": "hydronic.collector_assembly.r1",
+        "result_class": "TEST1_EXACT",
+        "selected_exact_sku": "SMB 0468 000003",
+        "selected_with_mandatory_contradiction": 0
+      },
+      {
+        "deterministic_repeat_equal": true,
+        "http_status": 200,
+        "profile": "hydronic.instrument.pressure_gauge.r1",
+        "result_class": "TEST1_EXACT",
+        "selected_exact_sku": "SIM-1007-500608",
+        "selected_with_mandatory_contradiction": 0
+      },
+      {
+        "deterministic_repeat_equal": true,
+        "http_status": 200,
+        "profile": "hydronic.instrument.thermomanometer.r1",
+        "result_class": "TEST1_EXACT",
+        "selected_exact_sku": "SIM-1005-100415",
+        "selected_with_mandatory_contradiction": 0
+      },
+      {
+        "deterministic_repeat_equal": true,
+        "http_status": 200,
+        "profile": "hydronic.instrument.thermometer.r1",
+        "result_class": "TEST1_EXACT",
+        "selected_exact_sku": "SIM-1001-101015",
+        "selected_with_mandatory_contradiction": 0
+      },
+      {
+        "deterministic_repeat_equal": true,
+        "http_status": 200,
+        "profile": "hydronic.instrument_accessory.r1",
+        "result_class": "TEST1_EXACT",
+        "selected_exact_sku": "SMN-0010-000215",
+        "selected_with_mandatory_contradiction": 0
+      },
+      {
+        "deterministic_repeat_equal": true,
+        "http_status": 200,
+        "profile": "installation.tool.axial_system.r1",
+        "result_class": "TEST1_EXACT",
+        "selected_exact_sku": "PEX-16х2,6",
+        "selected_with_mandatory_contradiction": 0
+      },
+      {
+        "deterministic_repeat_equal": true,
+        "http_status": 200,
+        "profile": "mounting.fastener.screw.r1",
+        "result_class": "TEST1_EXACT",
+        "selected_exact_sku": "SAC-0020-504816",
+        "selected_with_mandatory_contradiction": 0
+      },
+      {
+        "deterministic_repeat_equal": true,
+        "http_status": 200,
+        "profile": "mounting.support.pipe_clamp.r1",
+        "result_class": "TEST1_EXACT",
+        "selected_exact_sku": "SAC-0020-000001",
+        "selected_with_mandatory_contradiction": 0
+      },
+      {
+        "deterministic_repeat_equal": true,
+        "http_status": 200,
+        "profile": "radiator.aluminium.r1",
+        "result_class": "TEST1_EXACT",
+        "selected_exact_sku": "SRA-0110-180003",
+        "selected_with_mandatory_contradiction": 0
+      }
+    ],
+    "repaired_rules_authority_exact": true,
+    "selected_with_mandatory_contradiction": 0,
+    "server_started": true
+  }
+}
