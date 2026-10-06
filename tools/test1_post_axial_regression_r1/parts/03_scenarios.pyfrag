@@ -1,0 +1,162 @@
+def oracle_matches(oracle: Mapping[str, Any], body: Mapping[str, Any], scenario_id: str) -> tuple[bool, str]:
+    actual = (
+        body.get("result", {}).get("result_class")
+        if isinstance(body.get("result"), Mapping)
+        else body.get("result_class")
+    )
+    selected = (
+        body.get("result", {}).get("selected_exact_sku")
+        if isinstance(body.get("result"), Mapping)
+        else body.get("selected_exact_sku")
+    )
+    if scenario_id in AXIAL_OVERRIDE_IDS:
+        return actual == "TEST1_EXACT" and selected is not None, "ML_AUTHORITY_AXIAL_SELECTABLE_OVERRIDE"
+    expected = oracle["expected_result_family"]
+    if expected == "EXPECT_SELECTABLE":
+        allowed = set(oracle.get("allowed_candidate_set", []))
+        return actual in {"TEST1_EXACT", "TEST1_PROBABLE"} and selected in allowed, "ORIGINAL_ORACLE_SELECTABLE"
+    if expected == "EXPECT_DETERMINISTIC_TIE":
+        return (
+            actual in {"TEST1_EXACT", "TEST1_PROBABLE"}
+            and selected == oracle.get("expected_tie_winner")
+        ), "ORIGINAL_ORACLE_TIE"
+    return actual in {"TEST1_NOT_SELECTED", "INVALID_STRUCTURED_INPUT"}, "ORIGINAL_ORACLE_SAFE_REFUSAL"
+
+
+def run_scenarios() -> tuple[dict[str, Any], list[dict[str, Any]], list[dict[str, Any]]]:
+    scenarios = load_jsonl(SCENARIO_REF, SCENARIOS_PATH)
+    oracles = load_jsonl(SCENARIO_REF, ORACLE_PATH)
+    coverage = json.loads(checked_bytes(SCENARIO_REF, COVERAGE_PATH).decode("utf-8"))
+    oracle_by_id = {r["scenario_id"]: r for r in oracles}
+    coverage_by_id = {r["scenario_id"]: r for r in coverage["matrix"]}
+
+    _, server, base_url, thread = start_web()
+    results: list[dict[str, Any]] = []
+    defects: list[dict[str, Any]] = []
+    deterministic_mismatches = 0
+    unsafe = 0
+    engine_crashes = 0
+    try:
+        for scenario in scenarios:
+            scenario_id = scenario["scenario_id"]
+            cov = coverage_by_id[scenario_id]
+            oracle = oracle_by_id[scenario_id]
+            if not cov["current_web_can_execute"]:
+                results.append({
+                    "scenario_id": scenario_id,
+                    "execution_status": "NOT_EXECUTED_CURRENT_SCOPE",
+                    "reason": "; ".join(oracle.get("mandatory_rejection_reasons", [])),
+                    "test1_result_class": None,
+                    "selected_exact_sku": None,
+                    "deterministic_repeat_equal": None,
+                    "selected_with_mandatory_contradiction": 0,
+                    "expectation_mode": "ORIGINAL_CURRENT_SCOPE",
+                })
+                continue
+
+            payload = copy.deepcopy(scenario["expert_structured_request"])
+            payload.pop("input_surface", None)
+            try:
+                s1, b1 = http_json("POST", base_url + "/api/select", payload)
+                s2, b2 = http_json("POST", base_url + "/api/select", payload)
+            except Exception as exc:
+                engine_crashes += 1
+                defects.append({
+                    "scope": "scenario", "id": scenario_id,
+                    "classification": "WEB_RUNTIME_EXCEPTION",
+                    "actual": f"{type(exc).__name__}: {exc}",
+                })
+                continue
+
+            same = s1 == s2 and b1 == b2
+            if not same:
+                deterministic_mismatches += 1
+            safety = int(b1.get("safety", {}).get("selected_with_mandatory_contradiction", 0))
+            unsafe += safety
+            result = b1.get("result", {}) if isinstance(b1.get("result"), Mapping) else {}
+            actual_class = result.get("result_class") or b1.get("result_class")
+            selected = result.get("selected_exact_sku") if result else b1.get("selected_exact_sku")
+            trace = b1.get("trace") if isinstance(b1.get("trace"), Mapping) else {}
+            survivors = trace.get("surviving_candidates", []) if isinstance(trace, Mapping) else []
+
+            matched, mode = oracle_matches(oracle, b1, scenario_id)
+            row = {
+                "scenario_id": scenario_id,
+                "execution_status": "EXECUTED_WEB_R1_TWICE",
+                "http_status": s1,
+                "test1_result_class": actual_class,
+                "selected_exact_sku": selected,
+                "survivor_ordering": survivors,
+                "deterministic_repeat_equal": same,
+                "selected_with_mandatory_contradiction": safety,
+                "expectation_mode": mode,
+                "expectation_matched": matched,
+            }
+            results.append(row)
+            if not matched:
+                defects.append({
+                    "scope": "scenario",
+                    "id": scenario_id,
+                    "classification": "ORACLE_MISMATCH",
+                    "expected": (
+                        "TEST1_EXACT selectable override"
+                        if scenario_id in AXIAL_OVERRIDE_IDS
+                        else oracle
+                    ),
+                    "actual": {
+                        "http_status": s1,
+                        "result_class": actual_class,
+                        "selected_exact_sku": selected,
+                    },
+                })
+
+        executed = [r for r in results if r["execution_status"] == "EXECUTED_WEB_R1_TWICE"]
+        not_exec = [r for r in results if r["execution_status"] == "NOT_EXECUTED_CURRENT_SCOPE"]
+        counts = Counter(r["test1_result_class"] for r in executed)
+        summary = {
+            "total_scenario_rows": len(results),
+            "executed": len(executed),
+            "NOT_EXECUTED_CURRENT_SCOPE": len(not_exec),
+            "TEST1_EXACT": counts.get("TEST1_EXACT", 0),
+            "TEST1_PROBABLE": counts.get("TEST1_PROBABLE", 0),
+            "TEST1_NOT_SELECTED": counts.get("TEST1_NOT_SELECTED", 0),
+            "axial_override_ids": sorted(AXIAL_OVERRIDE_IDS),
+            "axial_override_executed_exact": sum(
+                r["scenario_id"] in AXIAL_OVERRIDE_IDS
+                and r["test1_result_class"] == "TEST1_EXACT"
+                for r in executed
+            ),
+            "deterministic_mismatches": deterministic_mismatches,
+            "selected_with_mandatory_contradiction": unsafe,
+            "engine_crashes": engine_crashes,
+            "unresolved_mismatch_defect_count": len(defects),
+        }
+
+        expected = {
+            "total_scenario_rows": 120,
+            "executed": 93,
+            "NOT_EXECUTED_CURRENT_SCOPE": 27,
+            "TEST1_EXACT": 52,
+            "TEST1_NOT_SELECTED": 41,
+        }
+        for key, value in expected.items():
+            if summary[key] != value:
+                defects.append({
+                    "scope": "scenario",
+                    "id": "aggregate",
+                    "classification": "AGGREGATE_MISMATCH",
+                    "metric": key,
+                    "expected": value,
+                    "actual": summary[key],
+                })
+        summary["unresolved_mismatch_defect_count"] = len(defects)
+
+        if deterministic_mismatches or unsafe or engine_crashes:
+            raise AssertionError(f"scenario safety regression: {summary}")
+        if defects:
+            raise AssertionError(f"scenario defects: {defects[:3]}")
+        return summary, results, defects
+    finally:
+        stop_web(server, thread)
+
+
