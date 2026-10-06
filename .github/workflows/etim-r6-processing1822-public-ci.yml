@@ -1,0 +1,100 @@
+name: ETIM R6 PROCESSING-1822 Public Compute Gate
+
+on:
+  push:
+    branches:
+      - etim-r6-processing1822-ci
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  SOURCE_REPOSITORY: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
+  SOURCE_HEAD: 8281de09bf0fab3a1393fa5289c468d637403e67
+  SOURCE_BASE: 2f21cf45712b6eb4acea8edce1d78c88857164cf
+
+jobs:
+  validate_r6:
+    name: ETIM R6 exact-head census gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Public carrier provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "PUBLIC_CI_CARRIER=nalsur0609/1234"
+          echo "PRIVATE_SSOT=$SOURCE_REPOSITORY"
+          echo "SOURCE_HEAD=$SOURCE_HEAD"
+          echo "SOURCE_BASE=$SOURCE_BASE"
+          echo "ARTIFACT_RETENTION=NONE"
+
+      - name: Checkout private STOUT exact head
+        uses: actions/checkout@v4
+        with:
+          repository: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
+          ref: ${{ env.SOURCE_HEAD }}
+          token: ${{ secrets.DEV2_READ_TOKEN }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify exact head and R5 base ancestry
+        shell: bash
+        run: |
+          set -euo pipefail
+          actual="$(git rev-parse HEAD)"
+          test "$actual" = "$SOURCE_HEAD"
+          merge_base="$(git merge-base "$SOURCE_BASE" HEAD)"
+          test "$merge_base" = "$SOURCE_BASE"
+          test "$(git rev-list --count "HEAD..$SOURCE_BASE")" = "0"
+          echo "EXACT_HEAD=$actual"
+          echo "MERGE_BASE=$merge_base"
+
+      - name: Verify bounded R6 diff
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --name-only "$SOURCE_BASE"...HEAD > /tmp/r6-paths.txt
+          cat /tmp/r6-paths.txt
+          python - <<'PY'
+          from pathlib import Path
+          allowed = (
+              "data/etim_selection_tiers/r6_processing1822/",
+              "tools/etim_selection_tiers_r6/",
+              "docs/etim_selection_tiers/ETIM_TIERS_R6_PROCESSING1822_CENSUS_HANDOFF.md",
+              ".github/workflows/etim_selection_tiers_r6.yml",
+          )
+          paths=[p for p in Path("/tmp/r6-paths.txt").read_text().splitlines() if p]
+          bad=[p for p in paths if not any(p == a or p.startswith(a) for a in allowed)]
+          assert len(paths) == 19, paths
+          assert not bad, bad
+          print("BOUNDED_DIFF=PASS")
+          print("CHANGED_PATHS=19")
+          PY
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Deterministic census validation twice
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/etim_selection_tiers_r6/validate_processing1822_census_r6.py > /tmp/r6-a.json
+          python tools/etim_selection_tiers_r6/validate_processing1822_census_r6.py > /tmp/r6-b.json
+          cmp /tmp/r6-a.json /tmp/r6-b.json
+          cat /tmp/r6-a.json
+
+      - name: Negative-oracle regressions
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/etim_selection_tiers_r6/test_processing1822_census_r6.py
+
+      - name: Confirm no public artifact retention
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "PUBLIC_COMPUTE_ONLY=PASS"
+          echo "ARTIFACT_UPLOADS=0"
