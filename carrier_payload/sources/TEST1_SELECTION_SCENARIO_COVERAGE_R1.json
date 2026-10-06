@@ -1,0 +1,3419 @@
+{
+  "SYNTHETIC_TEST_SCENARIO": true,
+  "authority": {
+    "benchmark_boundary_comment": 5995371435,
+    "exact_refs": {
+      "base": "ee7ecee7b7914fd088565f25b61c900d7ce37377",
+      "data": "6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+      "engine": "e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+      "inventory": "0e71177dea64d911665f364901848e31e6deb529",
+      "master_standard": "6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+      "rules": "38eaac6623e934174bfdc036b36d802e7d800403",
+      "web": "f4c55387a56ec1932d636c3f4659e0ee4cf9f12b"
+    },
+    "issue": 16,
+    "start_comment": 6000612866
+  },
+  "matrix": [
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "measurement.temperature.max",
+        "measurement.temperature.min",
+        "mounting.form",
+        "sensor.form",
+        "switching.logic"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_DETERMINISTIC_TIE",
+      "expected_shape": "set",
+      "profile_or_group": "control.temperature_switch.r1",
+      "safety_or_gap_dimension": "MULTIPLE_ELIGIBLE_DETERMINISTIC_TIE",
+      "scenario_id": "T1SC-R1-001",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "measurement.temperature.max",
+        "measurement.temperature.min",
+        "mounting.form",
+        "sensor.form",
+        "switching.logic"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "control.temperature_switch.r1",
+      "safety_or_gap_dimension": "DOMAIN_COMBINATION_VALID_SELECTION",
+      "scenario_id": "T1SC-R1-002",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "measurement.temperature.max",
+        "measurement.temperature.min",
+        "mounting.form",
+        "sensor.form",
+        "switching.logic"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "control.temperature_switch.r1",
+      "safety_or_gap_dimension": "DOMAIN_COMBINATION_VALID_SELECTION",
+      "scenario_id": "T1SC-R1-003",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "measurement.temperature.max",
+        "measurement.temperature.min",
+        "mounting.form",
+        "sensor.form",
+        "switching.logic"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "control.temperature_switch.r1",
+      "safety_or_gap_dimension": "DOMAIN_COMBINATION_VALID_SELECTION",
+      "scenario_id": "T1SC-R1-004",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "measurement.temperature.max",
+        "measurement.temperature.min",
+        "mounting.form",
+        "sensor.form",
+        "switching.logic"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "control.temperature_switch.r1",
+      "safety_or_gap_dimension": "EXECUTABLE_SCOPE_NO_SURVIVOR_BOUNDARY",
+      "scenario_id": "T1SC-R1-005",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "measurement.temperature.max",
+        "measurement.temperature.min",
+        "mounting.form",
+        "sensor.form",
+        "switching.logic"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "control.temperature_switch.r1",
+      "safety_or_gap_dimension": "EXECUTABLE_SCOPE_NO_SURVIVOR_BOUNDARY",
+      "scenario_id": "T1SC-R1-006",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "measurement.temperature.max",
+        "measurement.temperature.min",
+        "mounting.form",
+        "sensor.form",
+        "switching.logic"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "control.temperature_switch.r1",
+      "safety_or_gap_dimension": "EXECUTABLE_SCOPE_NO_SURVIVOR_BOUNDARY",
+      "scenario_id": "T1SC-R1-007",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "geometry",
+        "pipe.material.family",
+        "pipe.outer_diameter",
+        "product.function",
+        "system.compatibility_id"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "fitting.multilayer.screw.r1",
+      "safety_or_gap_dimension": "ORDINARY_VALID_MULTI_CONSTRAINT",
+      "scenario_id": "T1SC-R1-008",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "geometry",
+        "pipe.material.family",
+        "pipe.outer_diameter",
+        "product.function",
+        "system.compatibility_id"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "fitting.multilayer.screw.r1",
+      "safety_or_gap_dimension": "DOMAIN_COMBINATION_VALID_SELECTION",
+      "scenario_id": "T1SC-R1-009",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "geometry",
+        "pipe.material.family",
+        "pipe.outer_diameter",
+        "product.function",
+        "system.compatibility_id"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "fitting.multilayer.screw.r1",
+      "safety_or_gap_dimension": "DOMAIN_COMBINATION_VALID_SELECTION",
+      "scenario_id": "T1SC-R1-010",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "geometry",
+        "pipe.material.family",
+        "pipe.outer_diameter",
+        "product.function",
+        "system.compatibility_id"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "fitting.multilayer.screw.r1",
+      "safety_or_gap_dimension": "DOMAIN_COMBINATION_VALID_SELECTION",
+      "scenario_id": "T1SC-R1-011",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "geometry",
+        "pipe.material.family",
+        "pipe.outer_diameter",
+        "product.function",
+        "system.compatibility_id"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "fitting.multilayer.screw.r1",
+      "safety_or_gap_dimension": "DOMAIN_COMBINATION_VALID_SELECTION",
+      "scenario_id": "T1SC-R1-012",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "geometry",
+        "pipe.material.family",
+        "pipe.outer_diameter",
+        "product.function",
+        "system.compatibility_id"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "fitting.multilayer.screw.r1",
+      "safety_or_gap_dimension": "DOMAIN_COMBINATION_VALID_SELECTION",
+      "scenario_id": "T1SC-R1-013",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "geometry",
+        "pipe.material.family",
+        "pipe.outer_diameter",
+        "product.function",
+        "system.compatibility_id"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "fitting.multilayer.screw.r1",
+      "safety_or_gap_dimension": "DOMAIN_COMBINATION_VALID_SELECTION",
+      "scenario_id": "T1SC-R1-014",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "collector.circuit_count",
+        "collector.subtype",
+        "connection.main.interface",
+        "connection.outlet.interface"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "hydronic.collector_assembly.r1",
+      "safety_or_gap_dimension": "ORDINARY_VALID_MULTI_CONSTRAINT",
+      "scenario_id": "T1SC-R1-015",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "collector.circuit_count",
+        "collector.subtype",
+        "connection.main.interface",
+        "connection.outlet.interface"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "hydronic.collector_assembly.r1",
+      "safety_or_gap_dimension": "DOMAIN_COMBINATION_VALID_SELECTION",
+      "scenario_id": "T1SC-R1-016",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "collector.circuit_count",
+        "collector.subtype",
+        "connection.main.interface",
+        "connection.outlet.interface"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "hydronic.collector_assembly.r1",
+      "safety_or_gap_dimension": "DOMAIN_COMBINATION_VALID_SELECTION",
+      "scenario_id": "T1SC-R1-017",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "collector.circuit_count",
+        "collector.subtype",
+        "connection.main.interface",
+        "connection.outlet.interface"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "hydronic.collector_assembly.r1",
+      "safety_or_gap_dimension": "DOMAIN_COMBINATION_VALID_SELECTION",
+      "scenario_id": "T1SC-R1-018",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "collector.circuit_count",
+        "collector.subtype",
+        "connection.main.interface",
+        "connection.outlet.interface"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "hydronic.collector_assembly.r1",
+      "safety_or_gap_dimension": "DOMAIN_COMBINATION_VALID_SELECTION",
+      "scenario_id": "T1SC-R1-019",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "collector.circuit_count",
+        "collector.subtype",
+        "connection.main.interface",
+        "connection.outlet.interface"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "hydronic.collector_assembly.r1",
+      "safety_or_gap_dimension": "DOMAIN_COMBINATION_VALID_SELECTION",
+      "scenario_id": "T1SC-R1-020",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "collector.circuit_count",
+        "collector.subtype",
+        "connection.main.interface",
+        "connection.outlet.interface"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "hydronic.collector_assembly.r1",
+      "safety_or_gap_dimension": "DOMAIN_COMBINATION_VALID_SELECTION",
+      "scenario_id": "T1SC-R1-021",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "measurement.pressure.max",
+        "measurement.pressure.min",
+        "mounting.form"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_DETERMINISTIC_TIE",
+      "expected_shape": "set",
+      "profile_or_group": "hydronic.instrument.pressure_gauge.r1",
+      "safety_or_gap_dimension": "MULTIPLE_ELIGIBLE_DETERMINISTIC_TIE",
+      "scenario_id": "T1SC-R1-022",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "measurement.pressure.max",
+        "measurement.pressure.min",
+        "mounting.form"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_DETERMINISTIC_TIE",
+      "expected_shape": "set",
+      "profile_or_group": "hydronic.instrument.pressure_gauge.r1",
+      "safety_or_gap_dimension": "MULTIPLE_ELIGIBLE_DETERMINISTIC_TIE",
+      "scenario_id": "T1SC-R1-023",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "measurement.pressure.max",
+        "measurement.pressure.min",
+        "mounting.form"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_DETERMINISTIC_TIE",
+      "expected_shape": "set",
+      "profile_or_group": "hydronic.instrument.pressure_gauge.r1",
+      "safety_or_gap_dimension": "MULTIPLE_ELIGIBLE_DETERMINISTIC_TIE",
+      "scenario_id": "T1SC-R1-024",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "measurement.pressure.max",
+        "measurement.pressure.min",
+        "mounting.form"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "hydronic.instrument.pressure_gauge.r1",
+      "safety_or_gap_dimension": "DOMAIN_COMBINATION_VALID_SELECTION",
+      "scenario_id": "T1SC-R1-025",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "measurement.pressure.max",
+        "measurement.pressure.min",
+        "mounting.form"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_DETERMINISTIC_TIE",
+      "expected_shape": "set",
+      "profile_or_group": "hydronic.instrument.pressure_gauge.r1",
+      "safety_or_gap_dimension": "MULTIPLE_ELIGIBLE_DETERMINISTIC_TIE",
+      "scenario_id": "T1SC-R1-026",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "measurement.pressure.max",
+        "measurement.pressure.min",
+        "mounting.form"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_DETERMINISTIC_TIE",
+      "expected_shape": "set",
+      "profile_or_group": "hydronic.instrument.pressure_gauge.r1",
+      "safety_or_gap_dimension": "MULTIPLE_ELIGIBLE_DETERMINISTIC_TIE",
+      "scenario_id": "T1SC-R1-027",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "measurement.pressure.max",
+        "measurement.pressure.min",
+        "mounting.form"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_DETERMINISTIC_TIE",
+      "expected_shape": "set",
+      "profile_or_group": "hydronic.instrument.pressure_gauge.r1",
+      "safety_or_gap_dimension": "MULTIPLE_ELIGIBLE_DETERMINISTIC_TIE",
+      "scenario_id": "T1SC-R1-028",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface.code",
+        "measurement.pressure.max",
+        "measurement.pressure.min",
+        "measurement.temperature.max",
+        "measurement.temperature.min"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_DETERMINISTIC_TIE",
+      "expected_shape": "set",
+      "profile_or_group": "hydronic.instrument.thermomanometer.r1",
+      "safety_or_gap_dimension": "MULTIPLE_ELIGIBLE_DETERMINISTIC_TIE",
+      "scenario_id": "T1SC-R1-029",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface.code",
+        "measurement.pressure.max",
+        "measurement.pressure.min",
+        "measurement.temperature.max",
+        "measurement.temperature.min"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_DETERMINISTIC_TIE",
+      "expected_shape": "set",
+      "profile_or_group": "hydronic.instrument.thermomanometer.r1",
+      "safety_or_gap_dimension": "MULTIPLE_ELIGIBLE_DETERMINISTIC_TIE",
+      "scenario_id": "T1SC-R1-030",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface.code",
+        "measurement.pressure.max",
+        "measurement.pressure.min",
+        "measurement.temperature.max",
+        "measurement.temperature.min"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_DETERMINISTIC_TIE",
+      "expected_shape": "set",
+      "profile_or_group": "hydronic.instrument.thermomanometer.r1",
+      "safety_or_gap_dimension": "MULTIPLE_ELIGIBLE_DETERMINISTIC_TIE",
+      "scenario_id": "T1SC-R1-031",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface.code",
+        "measurement.pressure.max",
+        "measurement.pressure.min",
+        "measurement.temperature.max",
+        "measurement.temperature.min"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_DETERMINISTIC_TIE",
+      "expected_shape": "set",
+      "profile_or_group": "hydronic.instrument.thermomanometer.r1",
+      "safety_or_gap_dimension": "MULTIPLE_ELIGIBLE_DETERMINISTIC_TIE",
+      "scenario_id": "T1SC-R1-032",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface.code",
+        "measurement.pressure.max",
+        "measurement.pressure.min",
+        "measurement.temperature.max",
+        "measurement.temperature.min"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.instrument.thermomanometer.r1",
+      "safety_or_gap_dimension": "EXECUTABLE_SCOPE_NO_SURVIVOR_BOUNDARY",
+      "scenario_id": "T1SC-R1-033",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface.code",
+        "measurement.pressure.max",
+        "measurement.pressure.min",
+        "measurement.temperature.max",
+        "measurement.temperature.min"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.instrument.thermomanometer.r1",
+      "safety_or_gap_dimension": "EXECUTABLE_SCOPE_NO_SURVIVOR_BOUNDARY",
+      "scenario_id": "T1SC-R1-034",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface.code",
+        "measurement.pressure.max",
+        "measurement.pressure.min",
+        "measurement.temperature.max",
+        "measurement.temperature.min"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.instrument.thermomanometer.r1",
+      "safety_or_gap_dimension": "EXECUTABLE_SCOPE_NO_SURVIVOR_BOUNDARY",
+      "scenario_id": "T1SC-R1-035",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "measurement.temperature.max",
+        "measurement.temperature.min",
+        "mounting.form",
+        "sensor.form"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_DETERMINISTIC_TIE",
+      "expected_shape": "set",
+      "profile_or_group": "hydronic.instrument.thermometer.r1",
+      "safety_or_gap_dimension": "MULTIPLE_ELIGIBLE_DETERMINISTIC_TIE",
+      "scenario_id": "T1SC-R1-036",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "measurement.temperature.max",
+        "measurement.temperature.min",
+        "mounting.form",
+        "sensor.form"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_DETERMINISTIC_TIE",
+      "expected_shape": "set",
+      "profile_or_group": "hydronic.instrument.thermometer.r1",
+      "safety_or_gap_dimension": "MULTIPLE_ELIGIBLE_DETERMINISTIC_TIE",
+      "scenario_id": "T1SC-R1-037",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "measurement.temperature.max",
+        "measurement.temperature.min",
+        "mounting.form",
+        "sensor.form"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.instrument.thermometer.r1",
+      "safety_or_gap_dimension": "EXECUTABLE_SCOPE_NO_SURVIVOR_BOUNDARY",
+      "scenario_id": "T1SC-R1-038",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "measurement.temperature.max",
+        "measurement.temperature.min",
+        "mounting.form",
+        "sensor.form"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.instrument.thermometer.r1",
+      "safety_or_gap_dimension": "EXECUTABLE_SCOPE_NO_SURVIVOR_BOUNDARY",
+      "scenario_id": "T1SC-R1-039",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "measurement.temperature.max",
+        "measurement.temperature.min",
+        "mounting.form",
+        "sensor.form"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.instrument.thermometer.r1",
+      "safety_or_gap_dimension": "EXECUTABLE_SCOPE_NO_SURVIVOR_BOUNDARY",
+      "scenario_id": "T1SC-R1-040",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "measurement.temperature.max",
+        "measurement.temperature.min",
+        "mounting.form",
+        "sensor.form"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.instrument.thermometer.r1",
+      "safety_or_gap_dimension": "EXECUTABLE_SCOPE_NO_SURVIVOR_BOUNDARY",
+      "scenario_id": "T1SC-R1-041",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "measurement.temperature.max",
+        "measurement.temperature.min",
+        "mounting.form",
+        "sensor.form"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.instrument.thermometer.r1",
+      "safety_or_gap_dimension": "EXECUTABLE_SCOPE_NO_SURVIVOR_BOUNDARY",
+      "scenario_id": "T1SC-R1-042",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "accessory.interface.id",
+        "accessory.target.instrument.type",
+        "product.subtype"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "hydronic.instrument_accessory.r1",
+      "safety_or_gap_dimension": "ORDINARY_VALID_MULTI_CONSTRAINT",
+      "scenario_id": "T1SC-R1-043",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "accessory.interface.id",
+        "accessory.target.instrument.type",
+        "product.subtype"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.instrument_accessory.r1",
+      "safety_or_gap_dimension": "EXECUTABLE_SCOPE_NO_SURVIVOR_BOUNDARY",
+      "scenario_id": "T1SC-R1-044",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "accessory.interface.id",
+        "accessory.target.instrument.type",
+        "product.subtype"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.instrument_accessory.r1",
+      "safety_or_gap_dimension": "EXECUTABLE_SCOPE_NO_SURVIVOR_BOUNDARY",
+      "scenario_id": "T1SC-R1-045",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "accessory.interface.id",
+        "accessory.target.instrument.type",
+        "product.subtype"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.instrument_accessory.r1",
+      "safety_or_gap_dimension": "EXECUTABLE_SCOPE_NO_SURVIVOR_BOUNDARY",
+      "scenario_id": "T1SC-R1-046",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "accessory.interface.id",
+        "accessory.target.instrument.type",
+        "product.subtype"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.instrument_accessory.r1",
+      "safety_or_gap_dimension": "EXECUTABLE_SCOPE_NO_SURVIVOR_BOUNDARY",
+      "scenario_id": "T1SC-R1-047",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "accessory.interface.id",
+        "accessory.target.instrument.type",
+        "product.subtype"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.instrument_accessory.r1",
+      "safety_or_gap_dimension": "EXECUTABLE_SCOPE_NO_SURVIVOR_BOUNDARY",
+      "scenario_id": "T1SC-R1-048",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "SET_CONTAINS"
+      ],
+      "contract_parameters_exercised": [
+        "compatibility.platform",
+        "compatibility.size.tuple",
+        "tool.operation"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "installation.tool.axial_system.r1",
+      "safety_or_gap_dimension": "KNOWN_SCALAR_VS_SEQUENCE_SET_CONTAINS_SEAM",
+      "scenario_id": "T1SC-R1-049",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "SET_CONTAINS"
+      ],
+      "contract_parameters_exercised": [
+        "compatibility.platform",
+        "compatibility.size.tuple",
+        "tool.operation"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "installation.tool.axial_system.r1",
+      "safety_or_gap_dimension": "KNOWN_SCALAR_VS_SEQUENCE_SET_CONTAINS_SEAM",
+      "scenario_id": "T1SC-R1-050",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "SET_CONTAINS"
+      ],
+      "contract_parameters_exercised": [
+        "compatibility.platform",
+        "compatibility.size.tuple",
+        "tool.operation"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "installation.tool.axial_system.r1",
+      "safety_or_gap_dimension": "KNOWN_SCALAR_VS_SEQUENCE_SET_CONTAINS_SEAM",
+      "scenario_id": "T1SC-R1-051",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "SET_CONTAINS"
+      ],
+      "contract_parameters_exercised": [
+        "compatibility.platform",
+        "compatibility.size.tuple",
+        "tool.operation"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "installation.tool.axial_system.r1",
+      "safety_or_gap_dimension": "KNOWN_SCALAR_VS_SEQUENCE_SET_CONTAINS_SEAM",
+      "scenario_id": "T1SC-R1-052",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "SET_CONTAINS"
+      ],
+      "contract_parameters_exercised": [
+        "compatibility.platform",
+        "compatibility.size.tuple",
+        "tool.operation"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "installation.tool.axial_system.r1",
+      "safety_or_gap_dimension": "KNOWN_SCALAR_VS_SEQUENCE_SET_CONTAINS_SEAM",
+      "scenario_id": "T1SC-R1-053",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "SET_CONTAINS"
+      ],
+      "contract_parameters_exercised": [
+        "compatibility.platform",
+        "compatibility.size.tuple",
+        "tool.operation"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "installation.tool.axial_system.r1",
+      "safety_or_gap_dimension": "KNOWN_SCALAR_VS_SEQUENCE_SET_CONTAINS_SEAM",
+      "scenario_id": "T1SC-R1-054",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "diameter",
+        "length",
+        "screw.kind"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "mounting.fastener.screw.r1",
+      "safety_or_gap_dimension": "ORDINARY_VALID_MULTI_CONSTRAINT",
+      "scenario_id": "T1SC-R1-055",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "diameter",
+        "length",
+        "screw.kind"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "mounting.fastener.screw.r1",
+      "safety_or_gap_dimension": "EXECUTABLE_SCOPE_NO_SURVIVOR_BOUNDARY",
+      "scenario_id": "T1SC-R1-056",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "diameter",
+        "length",
+        "screw.kind"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "mounting.fastener.screw.r1",
+      "safety_or_gap_dimension": "EXECUTABLE_SCOPE_NO_SURVIVOR_BOUNDARY",
+      "scenario_id": "T1SC-R1-057",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "diameter",
+        "length",
+        "screw.kind"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "mounting.fastener.screw.r1",
+      "safety_or_gap_dimension": "EXECUTABLE_SCOPE_NO_SURVIVOR_BOUNDARY",
+      "scenario_id": "T1SC-R1-058",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "diameter",
+        "length",
+        "screw.kind"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "mounting.fastener.screw.r1",
+      "safety_or_gap_dimension": "EXECUTABLE_SCOPE_NO_SURVIVOR_BOUNDARY",
+      "scenario_id": "T1SC-R1-059",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "diameter",
+        "length",
+        "screw.kind"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "mounting.fastener.screw.r1",
+      "safety_or_gap_dimension": "EXECUTABLE_SCOPE_NO_SURVIVOR_BOUNDARY",
+      "scenario_id": "T1SC-R1-060",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "product.subtype",
+        "support.pipe.diameter.max",
+        "support.pipe.diameter.min"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "mounting.support.pipe_clamp.r1",
+      "safety_or_gap_dimension": "ORDINARY_VALID_MULTI_CONSTRAINT",
+      "scenario_id": "T1SC-R1-061",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "product.subtype",
+        "support.pipe.diameter.max",
+        "support.pipe.diameter.min"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "mounting.support.pipe_clamp.r1",
+      "safety_or_gap_dimension": "DOMAIN_COMBINATION_VALID_SELECTION",
+      "scenario_id": "T1SC-R1-062",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "product.subtype",
+        "support.pipe.diameter.max",
+        "support.pipe.diameter.min"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "mounting.support.pipe_clamp.r1",
+      "safety_or_gap_dimension": "DOMAIN_COMBINATION_VALID_SELECTION",
+      "scenario_id": "T1SC-R1-063",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "product.subtype",
+        "support.pipe.diameter.max",
+        "support.pipe.diameter.min"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "mounting.support.pipe_clamp.r1",
+      "safety_or_gap_dimension": "DOMAIN_COMBINATION_VALID_SELECTION",
+      "scenario_id": "T1SC-R1-064",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "product.subtype",
+        "support.pipe.diameter.max",
+        "support.pipe.diameter.min"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "mounting.support.pipe_clamp.r1",
+      "safety_or_gap_dimension": "DOMAIN_COMBINATION_VALID_SELECTION",
+      "scenario_id": "T1SC-R1-065",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "product.subtype",
+        "support.pipe.diameter.max",
+        "support.pipe.diameter.min"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SELECTABLE",
+      "expected_shape": "exact_or_singleton_set",
+      "profile_or_group": "mounting.support.pipe_clamp.r1",
+      "safety_or_gap_dimension": "DOMAIN_COMBINATION_VALID_SELECTION",
+      "scenario_id": "T1SC-R1-066",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "dimension.center_distance",
+        "material.class",
+        "radiator.connection.type",
+        "radiator.section.count"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_DETERMINISTIC_TIE",
+      "expected_shape": "set",
+      "profile_or_group": "radiator.aluminium.r1",
+      "safety_or_gap_dimension": "MULTIPLE_ELIGIBLE_DETERMINISTIC_TIE",
+      "scenario_id": "T1SC-R1-067",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "dimension.center_distance",
+        "material.class",
+        "radiator.connection.type",
+        "radiator.section.count"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_DETERMINISTIC_TIE",
+      "expected_shape": "set",
+      "profile_or_group": "radiator.aluminium.r1",
+      "safety_or_gap_dimension": "MULTIPLE_ELIGIBLE_DETERMINISTIC_TIE",
+      "scenario_id": "T1SC-R1-068",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "dimension.center_distance",
+        "material.class",
+        "radiator.connection.type",
+        "radiator.section.count"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_DETERMINISTIC_TIE",
+      "expected_shape": "set",
+      "profile_or_group": "radiator.aluminium.r1",
+      "safety_or_gap_dimension": "MULTIPLE_ELIGIBLE_DETERMINISTIC_TIE",
+      "scenario_id": "T1SC-R1-069",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "dimension.center_distance",
+        "material.class",
+        "radiator.connection.type",
+        "radiator.section.count"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_DETERMINISTIC_TIE",
+      "expected_shape": "set",
+      "profile_or_group": "radiator.aluminium.r1",
+      "safety_or_gap_dimension": "MULTIPLE_ELIGIBLE_DETERMINISTIC_TIE",
+      "scenario_id": "T1SC-R1-070",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "dimension.center_distance",
+        "material.class",
+        "radiator.connection.type",
+        "radiator.section.count"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_DETERMINISTIC_TIE",
+      "expected_shape": "set",
+      "profile_or_group": "radiator.aluminium.r1",
+      "safety_or_gap_dimension": "MULTIPLE_ELIGIBLE_DETERMINISTIC_TIE",
+      "scenario_id": "T1SC-R1-071",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "A",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "dimension.center_distance",
+        "material.class",
+        "radiator.connection.type",
+        "radiator.section.count"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_DETERMINISTIC_TIE",
+      "expected_shape": "set",
+      "profile_or_group": "radiator.aluminium.r1",
+      "safety_or_gap_dimension": "MULTIPLE_ELIGIBLE_DETERMINISTIC_TIE",
+      "scenario_id": "T1SC-R1-072",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "measurement.temperature.max",
+        "mounting.form",
+        "sensor.form",
+        "switching.logic"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_MISSING_INPUT",
+      "expected_shape": "refusal",
+      "profile_or_group": "control.temperature_switch.r1",
+      "safety_or_gap_dimension": "MISSING_MANDATORY_REQUEST_FACT:measurement.temperature.min",
+      "scenario_id": "T1SC-R1-073",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "geometry",
+        "pipe.material.family",
+        "pipe.outer_diameter",
+        "system.compatibility_id"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_MISSING_INPUT",
+      "expected_shape": "refusal",
+      "profile_or_group": "fitting.multilayer.screw.r1",
+      "safety_or_gap_dimension": "MISSING_MANDATORY_REQUEST_FACT:product.function",
+      "scenario_id": "T1SC-R1-074",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "collector.circuit_count",
+        "connection.main.interface",
+        "connection.outlet.interface"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_MISSING_INPUT",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.collector_assembly.r1",
+      "safety_or_gap_dimension": "MISSING_MANDATORY_REQUEST_FACT:collector.subtype",
+      "scenario_id": "T1SC-R1-075",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "dimension.center_distance",
+        "radiator.connection.type",
+        "radiator.section.count"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_MISSING_INPUT",
+      "expected_shape": "refusal",
+      "profile_or_group": "radiator.aluminium.r1",
+      "safety_or_gap_dimension": "MISSING_MANDATORY_REQUEST_FACT:material.class",
+      "scenario_id": "T1SC-R1-076",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "measurement.pressure.max",
+        "measurement.pressure.min",
+        "mounting.form"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.instrument.pressure_gauge.r1",
+      "safety_or_gap_dimension": "EXPLICIT_MANDATORY_CONTRADICTION",
+      "scenario_id": "T1SC-R1-077",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "measurement.temperature.max",
+        "measurement.temperature.min",
+        "mounting.form",
+        "sensor.form"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.instrument.thermometer.r1",
+      "safety_or_gap_dimension": "EXPLICIT_MANDATORY_CONTRADICTION",
+      "scenario_id": "T1SC-R1-078",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "product.subtype",
+        "support.pipe.diameter.max",
+        "support.pipe.diameter.min"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "mounting.support.pipe_clamp.r1",
+      "safety_or_gap_dimension": "EXPLICIT_MANDATORY_CONTRADICTION",
+      "scenario_id": "T1SC-R1-079",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "diameter",
+        "length",
+        "screw.kind"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "mounting.fastener.screw.r1",
+      "safety_or_gap_dimension": "EXPLICIT_MANDATORY_CONTRADICTION",
+      "scenario_id": "T1SC-R1-080",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "measurement.temperature.max",
+        "measurement.temperature.min",
+        "mounting.form",
+        "sensor.form",
+        "switching.logic",
+        "unknown.synthetic.param.1"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "control.temperature_switch.r1",
+      "safety_or_gap_dimension": "UNKNOWN_REQUEST_PARAMETER",
+      "scenario_id": "T1SC-R1-081",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "geometry",
+        "pipe.material.family",
+        "pipe.outer_diameter",
+        "product.function",
+        "system.compatibility_id",
+        "unknown.synthetic.param.2"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "fitting.multilayer.screw.r1",
+      "safety_or_gap_dimension": "UNKNOWN_REQUEST_PARAMETER",
+      "scenario_id": "T1SC-R1-082",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "collector.circuit_count",
+        "collector.subtype",
+        "connection.main.interface",
+        "connection.outlet.interface",
+        "unknown.synthetic.param.3"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.collector_assembly.r1",
+      "safety_or_gap_dimension": "UNKNOWN_REQUEST_PARAMETER",
+      "scenario_id": "T1SC-R1-083",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "dimension.center_distance",
+        "material.class",
+        "radiator.connection.type",
+        "radiator.section.count",
+        "unknown.synthetic.param.4"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "radiator.aluminium.r1",
+      "safety_or_gap_dimension": "UNKNOWN_REQUEST_PARAMETER",
+      "scenario_id": "T1SC-R1-084",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "measurement.temperature.max",
+        "measurement.temperature.min",
+        "mounting.form",
+        "sensor.form",
+        "switching.logic"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "control.temperature_switch.r1",
+      "safety_or_gap_dimension": "WRONG_VALUE_TYPE:measurement.temperature.min",
+      "scenario_id": "T1SC-R1-085",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "measurement.pressure.max",
+        "measurement.pressure.min",
+        "mounting.form"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.instrument.pressure_gauge.r1",
+      "safety_or_gap_dimension": "WRONG_VALUE_TYPE:measurement.pressure.max",
+      "scenario_id": "T1SC-R1-086",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "product.subtype",
+        "support.pipe.diameter.max",
+        "support.pipe.diameter.min"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "mounting.support.pipe_clamp.r1",
+      "safety_or_gap_dimension": "WRONG_VALUE_TYPE:support.pipe.diameter.min",
+      "scenario_id": "T1SC-R1-087",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "dimension.center_distance",
+        "material.class",
+        "radiator.connection.type",
+        "radiator.section.count"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "radiator.aluminium.r1",
+      "safety_or_gap_dimension": "WRONG_VALUE_TYPE:dimension.center_distance",
+      "scenario_id": "T1SC-R1-088",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "measurement.temperature.max",
+        "measurement.temperature.min",
+        "mounting.form",
+        "sensor.form",
+        "switching.logic"
+      ],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_DATA_GAP",
+      "expected_shape": "refusal",
+      "profile_or_group": "control.temperature_switch.r1",
+      "safety_or_gap_dimension": "CANDIDATE_MANDATORY_FACT_MISSING",
+      "scenario_id": "T1SC-R1-089",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "geometry",
+        "pipe.material.family",
+        "pipe.outer_diameter",
+        "product.function",
+        "system.compatibility_id"
+      ],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_DATA_GAP",
+      "expected_shape": "refusal",
+      "profile_or_group": "fitting.multilayer.screw.r1",
+      "safety_or_gap_dimension": "CANDIDATE_MANDATORY_FACT_MISSING",
+      "scenario_id": "T1SC-R1-090",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "collector.circuit_count",
+        "collector.subtype",
+        "connection.main.interface",
+        "connection.outlet.interface"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.collector_assembly.r1",
+      "safety_or_gap_dimension": "NO_ADMISSIBLE_CANDIDATES",
+      "scenario_id": "T1SC-R1-091",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "dimension.center_distance",
+        "material.class",
+        "radiator.connection.type",
+        "radiator.section.count"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_CONTRADICTION",
+      "expected_shape": "refusal",
+      "profile_or_group": "radiator.aluminium.r1",
+      "safety_or_gap_dimension": "NO_ADMISSIBLE_CANDIDATES",
+      "scenario_id": "T1SC-R1-092",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [],
+      "contract_parameters_exercised": [],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_PROFILE",
+      "expected_shape": "refusal",
+      "profile_or_group": "hose.flexible.water.r1",
+      "safety_or_gap_dimension": "UNSUPPORTED_OR_NONEXECUTABLE_PROFILE",
+      "scenario_id": "T1SC-R1-093",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [],
+      "contract_parameters_exercised": [],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_PROFILE",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.valve.ball.r1",
+      "safety_or_gap_dimension": "UNSUPPORTED_OR_NONEXECUTABLE_PROFILE",
+      "scenario_id": "T1SC-R1-094",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "NUMERIC_EQUAL"
+      ],
+      "contract_parameters_exercised": [
+        "dimension.center_distance",
+        "material.class",
+        "radiator.connection.type",
+        "radiator.section.count"
+      ],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_PROFILE",
+      "expected_shape": "refusal",
+      "profile_or_group": "radiator.aluminium.r1",
+      "safety_or_gap_dimension": "REQUEST_PROFILE_CONFLICT_NOT_EXPRESSIBLE_IN_WEB_R1",
+      "scenario_id": "T1SC-R1-095",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "B",
+      "comparator_semantics_exercised": [
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "collector.circuit_count",
+        "collector.subtype",
+        "connection.main.interface",
+        "connection.outlet.interface"
+      ],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_PROFILE",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.collector_assembly.r1",
+      "safety_or_gap_dimension": "REQUEST_PROFILE_CONFLICT_NOT_EXPRESSIBLE_IN_WEB_R1",
+      "scenario_id": "T1SC-R1-096",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "C",
+      "comparator_semantics_exercised": [
+        "BLOCKED_FOR_ENGINE_SEMANTICS::STRUCTURED_ROLE_SIZE_GENDER_MATCH",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "connection.thread.ports",
+        "product.function"
+      ],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.valve.ball.r1",
+      "safety_or_gap_dimension": "REUSE_ACCEPTED_APP_PRIMITIVE:STRUCTURED_PORT_PRIMITIVE_REUSE",
+      "scenario_id": "T1SC-R1-097",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "C",
+      "comparator_semantics_exercised": [
+        "BLOCKED_FOR_ENGINE_SEMANTICS::STRUCTURED_ROLE_SIZE_GENDER_MATCH",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "connection.thread.ports",
+        "product.function"
+      ],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.valve.ball.r1",
+      "safety_or_gap_dimension": "REUSE_ACCEPTED_APP_PRIMITIVE:PORT_ROLE_SIZE_GENDER_SEMANTIC",
+      "scenario_id": "T1SC-R1-098",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "C",
+      "comparator_semantics_exercised": [
+        "BLOCKED_FOR_ENGINE_SEMANTICS::STRUCTURED_ROLE_SIZE_GENDER_MATCH",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "connection.thread.ports",
+        "product.function"
+      ],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.valve.ball.r1",
+      "safety_or_gap_dimension": "REUSE_ACCEPTED_APP_PRIMITIVE:OPERATING_ENVELOPE_CONDITIONAL",
+      "scenario_id": "T1SC-R1-099",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "C",
+      "comparator_semantics_exercised": [
+        "BLOCKED_FOR_ENGINE_SEMANTICS::STRUCTURED_ROLE_SIZE_GENDER_MATCH",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "connection.interface_spec",
+        "connection.thread.ports",
+        "product.function"
+      ],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.valve.ball.r1",
+      "safety_or_gap_dimension": "REUSE_ACCEPTED_APP_PRIMITIVE:MATERIAL_OR_FINISH_CONDITIONAL",
+      "scenario_id": "T1SC-R1-100",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "C",
+      "comparator_semantics_exercised": [
+        "BLOCKED_FOR_ENGINE_SEMANTICS::EXACT_OR_MIN",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "hose.end.a.interface",
+        "hose.end.b.interface",
+        "hose.length"
+      ],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "hose.flexible.water.r1",
+      "safety_or_gap_dimension": "GENERIC_SEMANTIC_EXTENSION_REQUIRED:EXACT_OR_MIN_LENGTH_SEMANTIC",
+      "scenario_id": "T1SC-R1-101",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "C",
+      "comparator_semantics_exercised": [
+        "BLOCKED_FOR_ENGINE_SEMANTICS::MAX_OR_EXACT",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "cabinet.installation.type",
+        "dimension.depth",
+        "dimension.height",
+        "dimension.width"
+      ],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.collector_cabinet.r1",
+      "safety_or_gap_dimension": "GENERIC_SEMANTIC_EXTENSION_REQUIRED:MAX_OR_EXACT_DIMENSION_SEMANTIC",
+      "scenario_id": "T1SC-R1-102",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "C",
+      "comparator_semantics_exercised": [
+        "BLOCKED_FOR_ENGINE_SEMANTICS::range_contains_requirement",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "fastener.length",
+        "fastener.metric.thread",
+        "product.subtype"
+      ],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "mounting.fastener.metric.r1",
+      "safety_or_gap_dimension": "GENERIC_SEMANTIC_EXTENSION_REQUIRED:REQUEST_SHAPED_RANGE_SEMANTIC",
+      "scenario_id": "T1SC-R1-103",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "C",
+      "comparator_semantics_exercised": [
+        "BLOCKED_FOR_ENGINE_SEMANTICS::EXPLICIT_RELATION_REQUIRED",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "compatibility.target.interface",
+        "compatibility.target.product.scope",
+        "control.signal.type",
+        "electrical.supply_voltage"
+      ],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "hydronic.rotary_actuator.r1",
+      "safety_or_gap_dimension": "GENERIC_SEMANTIC_EXTENSION_REQUIRED:EXPLICIT_RELATION_REQUIRED",
+      "scenario_id": "T1SC-R1-104",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "C",
+      "comparator_semantics_exercised": [
+        "BLOCKED_FOR_ENGINE_SEMANTICS::CONDITION_COMPATIBLE",
+        "CANDIDATE_GTE_REQUEST",
+        "CANDIDATE_LTE_REQUEST",
+        "EQUALS"
+      ],
+      "contract_parameters_exercised": [
+        "convector.convection.type",
+        "dimension.depth",
+        "thermal.output",
+        "thermal.rating.condition"
+      ],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "convector.trench.natural.r1",
+      "safety_or_gap_dimension": "ENGINEERING_SOLVER_REQUIRED:THERMAL_OUTPUT_AT_RATING_CONDITION",
+      "scenario_id": "T1SC-R1-105",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "C",
+      "comparator_semantics_exercised": [
+        "BLOCKED_FOR_ENGINE_SEMANTICS::EXACT_OR_ALLOWED_SET",
+        "BLOCKED_FOR_ENGINE_SEMANTICS::EXACT_OR_TOLERANCE",
+        "CANDIDATE_GTE_REQUEST"
+      ],
+      "contract_parameters_exercised": [
+        "connection.nominal_size.dn",
+        "hydraulic.design_flow",
+        "hydraulic.head.design",
+        "installation.length"
+      ],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "pump.circulation.r1",
+      "safety_or_gap_dimension": "ENGINEERING_SOLVER_REQUIRED:HYDRAULIC_DUTY_CURVE_QH",
+      "scenario_id": "T1SC-R1-106",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "C",
+      "comparator_semantics_exercised": [],
+      "contract_parameters_exercised": [],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "radiator.bimetallic.r1",
+      "safety_or_gap_dimension": "ENGINEERING_SOLVER_REQUIRED:THERMAL_SIZING_SOLVER",
+      "scenario_id": "T1SC-R1-107",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "C",
+      "comparator_semantics_exercised": [
+        "BLOCKED_FOR_ENGINE_SEMANTICS::CURVE_COVERS_REQUIRED_QH_POINT",
+        "BLOCKED_FOR_ENGINE_SEMANTICS::EXACT_OR_ALLOWED_SET",
+        "SET_CONTAINS"
+      ],
+      "contract_parameters_exercised": [
+        "application.medium",
+        "hydraulic.duty.curve",
+        "pump.surface.subtype"
+      ],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "pump.surface.r1",
+      "safety_or_gap_dimension": "ENGINEERING_SOLVER_REQUIRED:CURVE_COVERS_REQUIRED_QH_POINT",
+      "scenario_id": "T1SC-R1-108",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "C",
+      "comparator_semantics_exercised": [],
+      "contract_parameters_exercised": [
+        "dimension.height",
+        "dimension.width",
+        "radiator.heat.output.reference",
+        "thermal.heat_output"
+      ],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_PROFILE",
+      "expected_shape": "refusal",
+      "profile_or_group": "radiator.tubular_steel.r1",
+      "safety_or_gap_dimension": "SOURCE_PROFILE_OR_CONTRACT_BLOCKED:NO_TEST1_CONTRACT",
+      "scenario_id": "T1SC-R1-109",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "C",
+      "comparator_semantics_exercised": [],
+      "contract_parameters_exercised": [
+        "heat.exchanger.count",
+        "heater.electric.power",
+        "pressure.max_working",
+        "volume.nominal"
+      ],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_PROFILE",
+      "expected_shape": "refusal",
+      "profile_or_group": "water_heater.combined.r1",
+      "safety_or_gap_dimension": "SOURCE_PROFILE_OR_CONTRACT_BLOCKED:NO_TEST1_CONTRACT",
+      "scenario_id": "T1SC-R1-110",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "C",
+      "comparator_semantics_exercised": [],
+      "contract_parameters_exercised": [
+        "connection.end1.size",
+        "connection.end1.type",
+        "pressure.nominal.class",
+        "product.subtype"
+      ],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_PROFILE",
+      "expected_shape": "refusal",
+      "profile_or_group": "fitting.hdpe.compression.r1",
+      "safety_or_gap_dimension": "SOURCE_PROFILE_OR_CONTRACT_BLOCKED:NO_TEST1_CONTRACT",
+      "scenario_id": "T1SC-R1-111",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "C",
+      "comparator_semantics_exercised": [
+        "EQUALS",
+        "SET_CONTAINS"
+      ],
+      "contract_parameters_exercised": [
+        "compatibility.platform",
+        "compatibility.size.tuple",
+        "tool.operation"
+      ],
+      "current_web_can_execute": true,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_SEMANTIC",
+      "expected_shape": "refusal",
+      "profile_or_group": "installation.tool.axial_system.r1",
+      "safety_or_gap_dimension": "KNOWN_FROZEN_SEAM:SCALAR_VS_SEQUENCE_SET_CONTAINS",
+      "scenario_id": "T1SC-R1-112",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "D",
+      "comparator_semantics_exercised": [],
+      "contract_parameters_exercised": [],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_MISSING_INPUT",
+      "expected_shape": "refusal",
+      "profile_or_group": "__AMBIGUOUS_GROUP__",
+      "safety_or_gap_dimension": "AMBIGUOUS_PRODUCT_IDENTITY",
+      "scenario_id": "T1SC-R1-113",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "D",
+      "comparator_semantics_exercised": [],
+      "contract_parameters_exercised": [],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_MISSING_INPUT",
+      "expected_shape": "refusal",
+      "profile_or_group": "__INSUFFICIENT_IDENTITY__",
+      "safety_or_gap_dimension": "INSUFFICIENT_PRODUCT_IDENTITY",
+      "scenario_id": "T1SC-R1-114",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "D",
+      "comparator_semantics_exercised": [],
+      "contract_parameters_exercised": [],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_MISSING_INPUT",
+      "expected_shape": "refusal",
+      "profile_or_group": "__CONFLICTING_INTENT__",
+      "safety_or_gap_dimension": "CONFLICTING_PRODUCT_INTENT",
+      "scenario_id": "T1SC-R1-115",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "D",
+      "comparator_semantics_exercised": [],
+      "contract_parameters_exercised": [],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_PROFILE",
+      "expected_shape": "refusal",
+      "profile_or_group": "__OUT_OF_SCOPE_GROUP__",
+      "safety_or_gap_dimension": "GROUP_OUTSIDE_EXECUTABLE_SCOPE",
+      "scenario_id": "T1SC-R1-116",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "D",
+      "comparator_semantics_exercised": [],
+      "contract_parameters_exercised": [],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_MISSING_INPUT",
+      "expected_shape": "refusal",
+      "profile_or_group": "__MULTIPLE_GROUP_CANDIDATES__",
+      "safety_or_gap_dimension": "MULTIPLE_ROUTING_CANDIDATES",
+      "scenario_id": "T1SC-R1-117",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "D",
+      "comparator_semantics_exercised": [],
+      "contract_parameters_exercised": [],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_MISSING_INPUT",
+      "expected_shape": "refusal",
+      "profile_or_group": "__TARGET_RELATION_REQUIRED__",
+      "safety_or_gap_dimension": "UNRESOLVED_COMPATIBILITY_TARGET",
+      "scenario_id": "T1SC-R1-118",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "D",
+      "comparator_semantics_exercised": [],
+      "contract_parameters_exercised": [],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_MISSING_INPUT",
+      "expected_shape": "refusal",
+      "profile_or_group": "__RAW_TEXT_ONLY__",
+      "safety_or_gap_dimension": "NLP_NOT_AUTHORIZED",
+      "scenario_id": "T1SC-R1-119",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    },
+    {
+      "bucket": "D",
+      "comparator_semantics_exercised": [],
+      "contract_parameters_exercised": [],
+      "current_web_can_execute": false,
+      "expected_oracle_class": "EXPECT_SAFE_REFUSAL_UNSUPPORTED_PROFILE",
+      "expected_shape": "refusal",
+      "profile_or_group": "__SEMANTICALLY_VALID_BUT_UNSUPPORTED__",
+      "safety_or_gap_dimension": "TECHNICALLY_MEANINGFUL_OUT_OF_SCOPE",
+      "scenario_id": "T1SC-R1-120",
+      "source_authorities": [
+        "DATA:6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+        "RULES:38eaac6623e934174bfdc036b36d802e7d800403",
+        "ENGINE:e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+        "INVENTORY:0e71177dea64d911665f364901848e31e6deb529",
+        "WEB:f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+        "MASTER_STANDARD:6c406cf91b03e366eaffc8385f7f1866ac5a6a74",
+        "BENCHMARK_BOUNDARY:5995371435"
+      ]
+    }
+  ],
+  "schema_version": "TEST1_SELECTION_SCENARIO_COVERAGE_R1",
+  "summary": {
+    "buckets": {
+      "A": 72,
+      "B": 24,
+      "C": 16,
+      "D": 8
+    },
+    "current_web_executable": 93,
+    "expected_fail_closed": 75,
+    "scenario_count_per_profile": {
+      "__AMBIGUOUS_GROUP__": 1,
+      "__CONFLICTING_INTENT__": 1,
+      "__INSUFFICIENT_IDENTITY__": 1,
+      "__MULTIPLE_GROUP_CANDIDATES__": 1,
+      "__OUT_OF_SCOPE_GROUP__": 1,
+      "__RAW_TEXT_ONLY__": 1,
+      "__SEMANTICALLY_VALID_BUT_UNSUPPORTED__": 1,
+      "__TARGET_RELATION_REQUIRED__": 1,
+      "control.temperature_switch.r1": 11,
+      "convector.trench.natural.r1": 1,
+      "fitting.hdpe.compression.r1": 1,
+      "fitting.multilayer.screw.r1": 10,
+      "hose.flexible.water.r1": 2,
+      "hydronic.collector_assembly.r1": 11,
+      "hydronic.collector_cabinet.r1": 1,
+      "hydronic.instrument.pressure_gauge.r1": 9,
+      "hydronic.instrument.thermomanometer.r1": 7,
+      "hydronic.instrument.thermometer.r1": 8,
+      "hydronic.instrument_accessory.r1": 6,
+      "hydronic.rotary_actuator.r1": 1,
+      "hydronic.valve.ball.r1": 5,
+      "installation.tool.axial_system.r1": 7,
+      "mounting.fastener.metric.r1": 1,
+      "mounting.fastener.screw.r1": 7,
+      "mounting.support.pipe_clamp.r1": 8,
+      "pump.circulation.r1": 1,
+      "pump.surface.r1": 1,
+      "radiator.aluminium.r1": 11,
+      "radiator.bimetallic.r1": 1,
+      "radiator.tubular_steel.r1": 1,
+      "water_heater.combined.r1": 1
+    },
+    "scenario_count_per_safety_condition": {
+      "AMBIGUOUS_PRODUCT_IDENTITY": 1,
+      "CANDIDATE_MANDATORY_FACT_MISSING": 2,
+      "CONFLICTING_PRODUCT_INTENT": 1,
+      "DOMAIN_COMBINATION_VALID_SELECTION": 21,
+      "ENGINEERING_SOLVER_REQUIRED:CURVE_COVERS_REQUIRED_QH_POINT": 1,
+      "ENGINEERING_SOLVER_REQUIRED:HYDRAULIC_DUTY_CURVE_QH": 1,
+      "ENGINEERING_SOLVER_REQUIRED:THERMAL_OUTPUT_AT_RATING_CONDITION": 1,
+      "ENGINEERING_SOLVER_REQUIRED:THERMAL_SIZING_SOLVER": 1,
+      "EXECUTABLE_SCOPE_NO_SURVIVOR_BOUNDARY": 21,
+      "EXPLICIT_MANDATORY_CONTRADICTION": 4,
+      "GENERIC_SEMANTIC_EXTENSION_REQUIRED:EXACT_OR_MIN_LENGTH_SEMANTIC": 1,
+      "GENERIC_SEMANTIC_EXTENSION_REQUIRED:EXPLICIT_RELATION_REQUIRED": 1,
+      "GENERIC_SEMANTIC_EXTENSION_REQUIRED:MAX_OR_EXACT_DIMENSION_SEMANTIC": 1,
+      "GENERIC_SEMANTIC_EXTENSION_REQUIRED:REQUEST_SHAPED_RANGE_SEMANTIC": 1,
+      "GROUP_OUTSIDE_EXECUTABLE_SCOPE": 1,
+      "INSUFFICIENT_PRODUCT_IDENTITY": 1,
+      "KNOWN_FROZEN_SEAM:SCALAR_VS_SEQUENCE_SET_CONTAINS": 1,
+      "KNOWN_SCALAR_VS_SEQUENCE_SET_CONTAINS_SEAM": 6,
+      "MISSING_MANDATORY_REQUEST_FACT:collector.subtype": 1,
+      "MISSING_MANDATORY_REQUEST_FACT:material.class": 1,
+      "MISSING_MANDATORY_REQUEST_FACT:measurement.temperature.min": 1,
+      "MISSING_MANDATORY_REQUEST_FACT:product.function": 1,
+      "MULTIPLE_ELIGIBLE_DETERMINISTIC_TIE": 19,
+      "MULTIPLE_ROUTING_CANDIDATES": 1,
+      "NLP_NOT_AUTHORIZED": 1,
+      "NO_ADMISSIBLE_CANDIDATES": 2,
+      "ORDINARY_VALID_MULTI_CONSTRAINT": 5,
+      "REQUEST_PROFILE_CONFLICT_NOT_EXPRESSIBLE_IN_WEB_R1": 2,
+      "REUSE_ACCEPTED_APP_PRIMITIVE:MATERIAL_OR_FINISH_CONDITIONAL": 1,
+      "REUSE_ACCEPTED_APP_PRIMITIVE:OPERATING_ENVELOPE_CONDITIONAL": 1,
+      "REUSE_ACCEPTED_APP_PRIMITIVE:PORT_ROLE_SIZE_GENDER_SEMANTIC": 1,
+      "REUSE_ACCEPTED_APP_PRIMITIVE:STRUCTURED_PORT_PRIMITIVE_REUSE": 1,
+      "SOURCE_PROFILE_OR_CONTRACT_BLOCKED:NO_TEST1_CONTRACT": 3,
+      "TECHNICALLY_MEANINGFUL_OUT_OF_SCOPE": 1,
+      "UNKNOWN_REQUEST_PARAMETER": 4,
+      "UNRESOLVED_COMPATIBILITY_TARGET": 1,
+      "UNSUPPORTED_OR_NONEXECUTABLE_PROFILE": 2,
+      "WRONG_VALUE_TYPE:dimension.center_distance": 1,
+      "WRONG_VALUE_TYPE:measurement.pressure.max": 1,
+      "WRONG_VALUE_TYPE:measurement.temperature.min": 1,
+      "WRONG_VALUE_TYPE:support.pipe.diameter.min": 1
+    },
+    "scenario_count_per_semantic": {
+      "BLOCKED_FOR_ENGINE_SEMANTICS::CONDITION_COMPATIBLE": 1,
+      "BLOCKED_FOR_ENGINE_SEMANTICS::CURVE_COVERS_REQUIRED_QH_POINT": 1,
+      "BLOCKED_FOR_ENGINE_SEMANTICS::EXACT_OR_ALLOWED_SET": 2,
+      "BLOCKED_FOR_ENGINE_SEMANTICS::EXACT_OR_MIN": 1,
+      "BLOCKED_FOR_ENGINE_SEMANTICS::EXACT_OR_TOLERANCE": 1,
+      "BLOCKED_FOR_ENGINE_SEMANTICS::EXPLICIT_RELATION_REQUIRED": 1,
+      "BLOCKED_FOR_ENGINE_SEMANTICS::MAX_OR_EXACT": 1,
+      "BLOCKED_FOR_ENGINE_SEMANTICS::STRUCTURED_ROLE_SIZE_GENDER_MATCH": 4,
+      "BLOCKED_FOR_ENGINE_SEMANTICS::range_contains_requirement": 1,
+      "CANDIDATE_GTE_REQUEST": 45,
+      "CANDIDATE_LTE_REQUEST": 43,
+      "EQUALS": 104,
+      "NUMERIC_EQUAL": 28,
+      "SET_CONTAINS": 8
+    },
+    "total": 120,
+    "unique_profiles_touched": 31
+  }
+}
