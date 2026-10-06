@@ -1,0 +1,59 @@
+{
+  "schema_version": "TEST1_PUBLIC_CARRIER_PAYLOAD_R1",
+  "private_ssot_repo": "nalsur0609/PROGRAMMA_PODBORA_TEST1_SANDBOX",
+  "private_regression_head": "2e5f9c0b4f89b5efb1655205ad28c7e65c3b10af",
+  "carrier_repo": "nalsur0609/1234",
+  "carrier_branch": "test1-post-axial-regression-r1",
+  "resume_authority": 6018146028,
+  "authorities": {
+    "base": "ee7ecee7b7914fd088565f25b61c900d7ce37377",
+    "data": "6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80",
+    "rules": "0af202cf9069db0ac7952d4d07857540bfffae7a",
+    "engine": "e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9",
+    "integration": "3132e15e7651b97ebe15a27c99f71034b087ae7d",
+    "web": "f4c55387a56ec1932d636c3f4659e0ee4cf9f12b",
+    "scenarios": "a86e54087f69e6ffd46a13c966ed2b00a1073b31"
+  },
+  "catalog_projection": {
+    "original_source_blob_sha1": "013feb6d60975facf050e33869898c2a8aac0936",
+    "bounded_subset_blob_sha1": "7a86d212cc4f81c44efbfa758b0d3b8d6e8e4cd7",
+    "original_rows": 2775,
+    "exported_rows": 611,
+    "exported_profiles": [
+      "control.temperature_switch.r1",
+      "fitting.multilayer.screw.r1",
+      "hose.flexible.water.r1",
+      "hydronic.collector_assembly.r1",
+      "hydronic.instrument.pressure_gauge.r1",
+      "hydronic.instrument.thermomanometer.r1",
+      "hydronic.instrument.thermometer.r1",
+      "hydronic.instrument_accessory.r1",
+      "hydronic.valve.ball.r1",
+      "installation.tool.axial_system.r1",
+      "mounting.fastener.screw.r1",
+      "mounting.support.pipe_clamp.r1",
+      "radiator.aluminium.r1"
+    ],
+    "row_transform": "NONE; exact original JSONL rows selected only by group_id"
+  },
+  "exact_source_blobs": {
+    "data_sufficiency": "43c6f8aea80822252736a79b49884431a663505b",
+    "repaired_rules": "afcb219514eaffcb85c0bbc210f7e33bb6c3837e",
+    "engine": "47b28f6fa70bb1032e82a0d987f003368edb211a",
+    "shared_schema": "f385ecc8be6d4cda69b1be854027b8dcf9a099f2",
+    "web_app": "91fa691c72119d07786645d3e4f57e0de25a8b41",
+    "web_index": "bf9c628ab4cc6903f23c8a4db0f435ab78d09f79",
+    "scenarios": "38e789b46956c9ae3231963a28ab052f3dabba6d",
+    "oracle": "8fb6404492b9cb34b70eb78e93813b13df620a6d",
+    "coverage": "3df99f520c284ee37ee3cd9b278466aa16adf8b8",
+    "integration_runner": "bcd260868b2793d16be382bf897b0bb1e0eb40ce"
+  },
+  "sensitive_boundary": {
+    "forbidden_customer_commercial_credential_fields_found": 0,
+    "email_like_values_found": 0,
+    "phone_like_values_found": 0,
+    "secrets_tokens_env_exported": false,
+    "customer_data_exported": false,
+    "commercial_price_discount_data_exported": false
+  }
+}
