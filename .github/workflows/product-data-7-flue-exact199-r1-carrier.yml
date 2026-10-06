@@ -1,4 +1,4 @@
-name: PRODUCT-DATA-7 Flue Exact199 Public Carrier R1
+name: PRODUCT-DATA-7 Flue Exact199 Public Carrier R2
 
 on:
   push:
@@ -13,18 +13,14 @@ permissions:
 
 env:
   PRIVATE_SSOT: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
-  PRIVATE_HEAD: 643ae3f4e4cd63674c884152e9c5f2f0019c0d79
-  PRODUCT_DATA_BASE: ca164f551b1af94e56563885c13a702978c40df4
-  LEDGER_HEAD: f369bedac24709abf0c29a30c4ffcf21429647bc
-  FLUE_B1_HEAD: b7623a31c4713b3237b093c7d6384875fceb4108
-  FLUE_B2_HEAD: c1898a8ec6fff89bf9107c39a6a6d568821c6765
-  MASTER_HEAD: 6c406cf91b03e366eaffc8385f7f1866ac5a6a74
+  PRIVATE_HEAD: b8ae3e304895e37e00c374ac0ffa06dbebfd09f2
+  ARTIFACT_RETENTION: NONE
 
 jobs:
   exact_head_gate:
-    name: Flue exact199 deterministic gate
+    name: Flue exact199 private-action deterministic gate
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
     steps:
       - name: Public carrier provenance
         shell: bash
@@ -33,78 +29,9 @@ jobs:
           echo "PUBLIC_CI_CARRIER=nalsur0609/1234"
           echo "PRIVATE_SSOT=$PRIVATE_SSOT"
           echo "PRIVATE_HEAD=$PRIVATE_HEAD"
-          echo "PRODUCT_DATA_BASE=$PRODUCT_DATA_BASE"
-          echo "ARTIFACT_RETENTION=NONE"
-
-      - name: Checkout exact private PRODUCT-DATA-7 head
-        uses: actions/checkout@v4
-        with:
-          repository: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
-          ref: ${{ env.PRIVATE_HEAD }}
-          token: ${{ secrets.DEV2_READ_TOKEN }}
-          fetch-depth: 0
-          persist-credentials: false
-
-      - name: Assert private exact-head and lineage
-        shell: bash
-        run: |
-          set -euo pipefail
-          test "$(git rev-parse HEAD)" = "$PRIVATE_HEAD"
-          test "$(git merge-base "$PRODUCT_DATA_BASE" HEAD)" = "$PRODUCT_DATA_BASE"
-          test "$(git rev-list --count "HEAD..$PRODUCT_DATA_BASE")" = "0"
-          changed="$(git diff --name-only "$PRODUCT_DATA_BASE...$PRIVATE_HEAD" | wc -l | tr -d ' ')"
-          test "$changed" = "13"
-          echo "PRIVATE_EXACT_HEAD=$PRIVATE_HEAD"
-          echo "CHANGED_PATH_COUNT=$changed"
-
-      - name: Checkout accepted current ledger
-        uses: actions/checkout@v4
-        with:
-          repository: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
-          ref: ${{ env.LEDGER_HEAD }}
-          path: _ledger267
-          token: ${{ secrets.DEV2_READ_TOKEN }}
-          fetch-depth: 1
-          persist-credentials: false
-
-      - name: Checkout accepted flue B1
-        uses: actions/checkout@v4
-        with:
-          repository: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
-          ref: ${{ env.FLUE_B1_HEAD }}
-          path: _flue_b1
-          token: ${{ secrets.DEV2_READ_TOKEN }}
-          fetch-depth: 1
-          persist-credentials: false
-
-      - name: Checkout accepted flue B2
-        uses: actions/checkout@v4
-        with:
-          repository: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
-          ref: ${{ env.FLUE_B2_HEAD }}
-          path: _flue_b2
-          token: ${{ secrets.DEV2_READ_TOKEN }}
-          fetch-depth: 1
-          persist-credentials: false
-
-      - name: Checkout accepted current master
-        uses: actions/checkout@v4
-        with:
-          repository: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
-          ref: ${{ env.MASTER_HEAD }}
-          path: _master386
-          token: ${{ secrets.DEV2_READ_TOKEN }}
-          fetch-depth: 1
-          persist-credentials: false
-
-      - name: Assert external exact heads
-        shell: bash
-        run: |
-          set -euo pipefail
-          test "$(git -C _ledger267 rev-parse HEAD)" = "$LEDGER_HEAD"
-          test "$(git -C _flue_b1 rev-parse HEAD)" = "$FLUE_B1_HEAD"
-          test "$(git -C _flue_b2 rev-parse HEAD)" = "$FLUE_B2_HEAD"
-          test "$(git -C _master386 rev-parse HEAD)" = "$MASTER_HEAD"
+          echo "PRIVATE_ACTION_REF=$PRIVATE_HEAD"
+          echo "ARTIFACT_RETENTION=$ARTIFACT_RETENTION"
+          echo "PUBLIC_STOUT_ARTIFACT_UPLOAD=NONE"
 
       - uses: actions/setup-python@v5
         with:
@@ -113,60 +40,14 @@ jobs:
       - name: Install bounded test dependency
         run: python -m pip install --disable-pip-version-check pytest
 
-      - name: Run bounded PRODUCT-DATA-7 regressions
-        run: python -m pytest -q tests/product_data_r2/test_flue_exact199_current_master_r1.py
+      - name: Execute pinned private exact-head evidence gate
+        uses: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX/.github/actions/product-data-7-flue-exact199-carrier@b8ae3e304895e37e00c374ac0ffa06dbebfd09f2
 
-      - name: Run strict exact199 validation
-        run: |
-          python tools/product_data_r2/flue_exact199_current_master_r1.py \
-            --root . \
-            --ledger-root _ledger267 \
-            --source-b1-root _flue_b1 \
-            --source-b2-root _flue_b2 \
-            --standard-root _master386 \
-            --out /tmp/FLUE_EXACT199_RUNTIME_VALIDATION_R1.json
-
-      - name: Deterministic repeat
-        run: |
-          python tools/product_data_r2/flue_exact199_current_master_r1.py \
-            --root . \
-            --ledger-root _ledger267 \
-            --source-b1-root _flue_b1 \
-            --source-b2-root _flue_b2 \
-            --standard-root _master386 \
-            --out /tmp/FLUE_EXACT199_RUNTIME_VALIDATION_R1_REPEAT.json
-          cmp /tmp/FLUE_EXACT199_RUNTIME_VALIDATION_R1.json /tmp/FLUE_EXACT199_RUNTIME_VALIDATION_R1_REPEAT.json
-
-      - name: Bounded final evidence
+      - name: Carrier boundary
         shell: bash
         run: |
           set -euo pipefail
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          value = json.loads(Path("/tmp/FLUE_EXACT199_RUNTIME_VALIDATION_R1.json").read_text(encoding="utf-8"))
-          assert value["run_head"] == "643ae3f4e4cd63674c884152e9c5f2f0019c0d79"
-          assert value["result"] == "PASS"
-          assert value["preflight"]["flue_ledger_exact"] == 199
-          assert value["preflight"]["source_union_exact"] == 199
-          assert value["dispositions"]["pass"]["count"] == 0
-          assert value["dispositions"]["exception_fail_closed"]["count"] == 40
-          assert value["dispositions"]["standard_repair_required"]["count"] == 159
-          assert value["invariants"]["identity_normalization"] == 0
-          assert value["invariants"]["readiness_mutation"] == 0
-          print(json.dumps({
-              "private_exact_head": value["run_head"],
-              "result": value["result"],
-              "full_count": value["dispositions"]["full_exact199"]["count"],
-              "full_sha256": value["dispositions"]["full_exact199"]["sha256"],
-              "pass_count": value["dispositions"]["pass"]["count"],
-              "pass_sha256": value["dispositions"]["pass"]["sha256"],
-              "exception_count": value["dispositions"]["exception_fail_closed"]["count"],
-              "exception_sha256": value["dispositions"]["exception_fail_closed"]["sha256"],
-              "standard_repair_count": value["dispositions"]["standard_repair_required"]["count"],
-              "standard_repair_sha256": value["dispositions"]["standard_repair_required"]["sha256"],
-              "identity_normalization": 0,
-              "readiness_mutation": 0,
-              "artifact_retention": "NONE"
-          }, sort_keys=True))
-          PY
+          echo "PRIVATE_HEAD=b8ae3e304895e37e00c374ac0ffa06dbebfd09f2"
+          echo "ARTIFACT_RETENTION=NONE"
+          echo "PUBLIC_STOUT_SOURCE_COPY=NONE"
+          echo "PRODUCT_DATA_FLUE_EXACT199_PUBLIC_CARRIER=PASS"
