@@ -1,0 +1,129 @@
+name: TEST1 POST-AXIAL REGRESSION Public Carrier
+
+on:
+  push:
+    branches:
+      - test1-post-axial-regression-r1
+    paths:
+      - '.github/workflows/test1-post-axial-regression-public-carrier.yml'
+      - 'tools/test1_post_axial_regression_r1/**'
+      - 'carrier_payload/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test1-post-axial-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PRIVATE_TEST1_REGRESSION_HEAD: 2e5f9c0b4f89b5efb1655205ad28c7e65c3b10af
+      DATA_HEAD: 6ffbef9b38f3d79bcb23a5c9b3b42e451dc22e80
+      RULES_HEAD: 0af202cf9069db0ac7952d4d07857540bfffae7a
+      ENGINE_HEAD: e72f9d8ef0ba6fb61f21b432a189ff692b8ebfd9
+      WEB_HEAD: f4c55387a56ec1932d636c3f4659e0ee4cf9f12b
+      SCENARIO_HEAD: a86e54087f69e6ffd46a13c966ed2b00a1073b31
+      SHARED_SCHEMA_HEAD: ee7ecee7b7914fd088565f25b61c900d7ce37377
+    steps:
+      - name: Checkout carrier HEAD
+        uses: actions/checkout@v4
+
+      - name: Record runtime identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "carrier_sha=$GITHUB_SHA"
+          echo "run_id=$GITHUB_RUN_ID"
+          echo "runner_os=$RUNNER_OS"
+          python --version
+
+      - name: Install pinned matcher dependency
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --quiet 'jsonschema==4.25.1'
+          python -c "import jsonschema; print('jsonschema import PASS')"
+
+      - name: Execute factual regression twice
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/test1_post_axial_regression_r1/run.py --write
+          python tools/test1_post_axial_regression_r1/run.py --check
+
+      - name: Emit carrier evidence and hashes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, os, platform
+          from pathlib import Path
+          root = Path(".")
+          result_paths = [
+              "regression/r1/TEST1_POST_AXIAL_REGRESSION_R1.json",
+              "regression/r1/TEST1_POST_AXIAL_INTEGRATION_RESULTS_R1.jsonl",
+              "regression/r1/TEST1_POST_AXIAL_WEB_RESULTS_R1.json",
+              "regression/r1/TEST1_POST_AXIAL_SCENARIO_RESULTS_R1.jsonl",
+              "regression/r1/TEST1_POST_AXIAL_DEFECTS_R1.json",
+              "docs/TEST1_POST_AXIAL_REGRESSION_R1_HANDOFF.md",
+          ]
+          def sha256(rel):
+              return hashlib.sha256((root / rel).read_bytes()).hexdigest()
+          summary = json.loads((root / result_paths[0]).read_text(encoding="utf-8"))
+          manifest = json.loads((root / "carrier_payload/TEST1_POST_AXIAL_PUBLIC_CARRIER_MANIFEST_R1.json").read_text(encoding="utf-8"))
+          evidence = {
+              "schema_version": "TEST1_PUBLIC_CARRIER_EXECUTION_EVIDENCE_R1",
+              "carrier_repo": "nalsur0609/1234",
+              "carrier_branch": "test1-post-axial-regression-r1",
+              "carrier_head": os.environ["GITHUB_SHA"],
+              "workflow_run_id": int(os.environ["GITHUB_RUN_ID"]),
+              "runner_os": os.environ.get("RUNNER_OS"),
+              "platform": platform.platform(),
+              "private_test1_regression_head": os.environ["PRIVATE_TEST1_REGRESSION_HEAD"],
+              "source_identities": {
+                  "data": os.environ["DATA_HEAD"],
+                  "rules": os.environ["RULES_HEAD"],
+                  "engine": os.environ["ENGINE_HEAD"],
+                  "web": os.environ["WEB_HEAD"],
+                  "scenarios": os.environ["SCENARIO_HEAD"],
+                  "shared_schema": os.environ["SHARED_SCHEMA_HEAD"],
+              },
+              "payload_scope": manifest["catalog_projection"],
+              "sensitive_boundary": manifest["sensitive_boundary"],
+              "counts": {
+                  "integration_positive_exact": summary["integration"]["positive_TEST1_EXACT"],
+                  "web_positive_exact": summary["web"]["positive_TEST1_EXACT"],
+                  "scenario_total": summary["scenarios"]["total_scenario_rows"],
+                  "scenario_executed": summary["scenarios"]["executed"],
+                  "scenario_not_executed": summary["scenarios"]["NOT_EXECUTED_CURRENT_SCOPE"],
+                  "scenario_exact": summary["scenarios"]["TEST1_EXACT"],
+                  "scenario_not_selected": summary["scenarios"]["TEST1_NOT_SELECTED"],
+                  "deterministic_mismatches": summary["integration"]["deterministic_rerun_mismatches"] + summary["web"]["deterministic_mismatches"] + summary["scenarios"]["deterministic_mismatches"],
+                  "selected_with_mandatory_contradiction": summary["integration"]["selected_with_mandatory_contradiction"] + summary["web"]["selected_with_mandatory_contradiction"] + summary["scenarios"]["selected_with_mandatory_contradiction"],
+                  "engine_crashes": summary["integration"]["engine_crashes"] + summary["web"]["engine_crashes"] + summary["scenarios"]["engine_crashes"],
+                  "unresolved_defects": summary["unresolved_defect_count"],
+              },
+              "result_sha256": {rel: sha256(rel) for rel in result_paths},
+              "final_marker": summary["final_marker"],
+          }
+          path = root / "regression/r1/TEST1_PUBLIC_CARRIER_EXECUTION_EVIDENCE_R1.json"
+          path.write_text(json.dumps(evidence, ensure_ascii=False, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+          print(json.dumps(evidence, ensure_ascii=False, sort_keys=True))
+          PY
+
+      - name: Upload bounded regression evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test1-post-axial-regression-r1-${{ github.sha }}
+          if-no-files-found: error
+          retention-days: 7
+          path: |
+            regression/r1/TEST1_POST_AXIAL_REGRESSION_R1.json
+            regression/r1/TEST1_POST_AXIAL_INTEGRATION_RESULTS_R1.jsonl
+            regression/r1/TEST1_POST_AXIAL_WEB_RESULTS_R1.json
+            regression/r1/TEST1_POST_AXIAL_SCENARIO_RESULTS_R1.jsonl
+            regression/r1/TEST1_POST_AXIAL_DEFECTS_R1.json
+            regression/r1/TEST1_PUBLIC_CARRIER_EXECUTION_EVIDENCE_R1.json
+            docs/TEST1_POST_AXIAL_REGRESSION_R1_HANDOFF.md
