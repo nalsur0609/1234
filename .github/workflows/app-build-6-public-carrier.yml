@@ -2,6 +2,11 @@ name: APP-BUILD-6 Public Carrier Exact-Head Gate
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".ci/triggers/app-build-6.txt"
 
 permissions:
   contents: read
