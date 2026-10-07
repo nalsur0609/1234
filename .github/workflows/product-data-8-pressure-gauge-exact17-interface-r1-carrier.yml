@@ -1,0 +1,176 @@
+name: PRODUCT-DATA-8 Pressure Gauge Exact17 Public Carrier R1
+
+on:
+  push:
+    branches:
+      - product-data-8-pressure-gauge-exact17-interface-r1-carrier
+    paths:
+      - ".github/workflows/product-data-8-pressure-gauge-exact17-interface-r1-carrier.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  PRIVATE_SSOT: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
+  PRIVATE_HEAD: 4e4d6bf71efa20355aec94597750bbe23ea95a9b
+  PRODUCT_DATA_BASE: 18e8d66e33438b430c5dc7334b90f3cd419f3523
+  LEDGER_HEAD: f369bedac24709abf0c29a30c4ffcf21429647bc
+  R5_HEAD: 741cf5a72a3dbeacc11c99a3d152d440cf3fcf2b
+  SOURCE_HEAD: a43d7bd77f6345ace5b9a911e338fbadf1f3aa94
+  MASTER_HEAD: 6c406cf91b03e366eaffc8385f7f1866ac5a6a74
+
+jobs:
+  exact_head_gate:
+    name: Pressure gauge exact17 deterministic gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Public carrier provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "PUBLIC_CI_CARRIER=nalsur0609/1234"
+          echo "PRIVATE_SSOT=$PRIVATE_SSOT"
+          echo "PRIVATE_HEAD=$PRIVATE_HEAD"
+          echo "PRODUCT_DATA_BASE=$PRODUCT_DATA_BASE"
+          echo "ARTIFACT_RETENTION=NONE"
+          echo "PUBLIC_STOUT_ARTIFACT_UPLOAD=NONE"
+
+      - name: Checkout exact private PRODUCT-DATA-8 head
+        uses: actions/checkout@v4
+        with:
+          repository: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
+          ref: ${{ env.PRIVATE_HEAD }}
+          token: ${{ secrets.DEV2_READ_TOKEN }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Assert private exact-head and lineage
+        shell: bash
+        run: |
+          set -euo pipefail
+          actual="$(git rev-parse HEAD)"
+          test "$actual" = "$PRIVATE_HEAD"
+          test "$(git merge-base "$PRODUCT_DATA_BASE" HEAD)" = "$PRODUCT_DATA_BASE"
+          test "$(git rev-list --count "$PRODUCT_DATA_BASE..HEAD")" = "16"
+          test "$(git diff --name-only "$PRODUCT_DATA_BASE...$PRIVATE_HEAD" | wc -l | tr -d ' ')" = "16"
+          echo "PRIVATE_EXACT_HEAD=$actual"
+          echo "PRIVATE_CHANGED_PATH_COUNT=16"
+
+      - name: Checkout accepted current ledger
+        uses: actions/checkout@v4
+        with:
+          repository: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
+          ref: ${{ env.LEDGER_HEAD }}
+          path: _ledger267
+          token: ${{ secrets.DEV2_READ_TOKEN }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Checkout accepted R5 pressure-gauge recovery
+        uses: actions/checkout@v4
+        with:
+          repository: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
+          ref: ${{ env.R5_HEAD }}
+          path: _r5
+          token: ${{ secrets.DEV2_READ_TOKEN }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Checkout accepted PR193 pressure-gauge source
+        uses: actions/checkout@v4
+        with:
+          repository: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
+          ref: ${{ env.SOURCE_HEAD }}
+          path: _source193
+          token: ${{ secrets.DEV2_READ_TOKEN }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Checkout accepted current master
+        uses: actions/checkout@v4
+        with:
+          repository: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
+          ref: ${{ env.MASTER_HEAD }}
+          path: _master386
+          token: ${{ secrets.DEV2_READ_TOKEN }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Assert all external exact heads
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git -C _ledger267 rev-parse HEAD)" = "$LEDGER_HEAD"
+          test "$(git -C _r5 rev-parse HEAD)" = "$R5_HEAD"
+          test "$(git -C _source193 rev-parse HEAD)" = "$SOURCE_HEAD"
+          test "$(git -C _master386 rev-parse HEAD)" = "$MASTER_HEAD"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install bounded test dependency
+        run: python -m pip install --disable-pip-version-check pytest
+
+      - name: Run bounded PRODUCT-DATA-8 regressions
+        run: python -m pytest -q tests/product_data_r2/test_pressure_gauge_exact17_interface_r1.py
+
+      - name: Run exact17 interface validator
+        run: |
+          python tools/product_data_r2/pressure_gauge_exact17_interface_r1.py \
+            --root . \
+            --ledger-root _ledger267 \
+            --r5-root _r5 \
+            --source-root _source193 \
+            --standard-root _master386 \
+            --out /tmp/PRESSURE_GAUGE_EXACT17_RUNTIME_VALIDATION_R1.json
+
+      - name: Deterministic repeat
+        run: |
+          python tools/product_data_r2/pressure_gauge_exact17_interface_r1.py \
+            --root . \
+            --ledger-root _ledger267 \
+            --r5-root _r5 \
+            --source-root _source193 \
+            --standard-root _master386 \
+            --out /tmp/PRESSURE_GAUGE_EXACT17_RUNTIME_VALIDATION_R1_REPEAT.json
+          cmp /tmp/PRESSURE_GAUGE_EXACT17_RUNTIME_VALIDATION_R1.json /tmp/PRESSURE_GAUGE_EXACT17_RUNTIME_VALIDATION_R1_REPEAT.json
+
+      - name: Bounded final evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          value=json.loads(Path("/tmp/PRESSURE_GAUGE_EXACT17_RUNTIME_VALIDATION_R1.json").read_text(encoding="utf-8"))
+          assert value["run_head"] == "4e4d6bf71efa20355aec94597750bbe23ea95a9b"
+          assert value["result"] == "PASS_BOUNDED_FAIL_CLOSED"
+          assert value["membership"]["count"] == 17
+          assert value["membership"]["unique"] == 17
+          assert value["membership"]["current_processing"] == 17
+          assert value["membership"]["ready_overlap"] == 0
+          assert value["membership"]["problem_overlap"] == 0
+          assert value["dispositions"]["FACT_BEARING_VALIDATOR_NEXT"]["count"] == 0
+          assert value["dispositions"]["UNRESOLVED_FAIL_CLOSED"]["count"] == 17
+          assert value["dispositions"]["CONFLICTING_EVIDENCE_FAIL_CLOSED"]["count"] == 0
+          assert value["invariants"]["readiness_mutation"] == 0
+          assert value["invariants"]["master_ledger_mutation"] == 0
+          assert value["invariants"]["master_standard_mutation"] == 0
+          print(json.dumps({
+              "private_exact_head": value["run_head"],
+              "result": value["result"],
+              "exact17_count": value["membership"]["count"],
+              "exact17_sha256": value["membership"]["sha256"],
+              "candidate_count": value["dispositions"]["FACT_BEARING_VALIDATOR_NEXT"]["count"],
+              "candidate_sha256": value["dispositions"]["FACT_BEARING_VALIDATOR_NEXT"]["sha256"],
+              "unresolved_count": value["dispositions"]["UNRESOLVED_FAIL_CLOSED"]["count"],
+              "unresolved_sha256": value["dispositions"]["UNRESOLVED_FAIL_CLOSED"]["sha256"],
+              "conflict_count": value["dispositions"]["CONFLICTING_EVIDENCE_FAIL_CLOSED"]["count"],
+              "conflict_sha256": value["dispositions"]["CONFLICTING_EVIDENCE_FAIL_CLOSED"]["sha256"],
+              "readiness_mutation": value["invariants"]["readiness_mutation"],
+              "artifact_retention": "NONE"
+          }, sort_keys=True))
+          PY
