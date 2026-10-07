@@ -11,7 +11,7 @@ permissions:
 
 env:
   SOURCE_REPOSITORY: nalsur0609/PROGRAMMA_PODBORA_DEV2_SANDBOX
-  SOURCE_HEAD: 505cf8a9c9825abb4c6cdaddf9697c87eb0008ec
+  SOURCE_HEAD: bd427bbb3b6ff44de4b4ce2f3b978cbc7ad48c0e
   EXACT_BASE: 1da016563d3b783eb6f3cbeaccbf09395fb832ab
 
 jobs:
@@ -288,7 +288,7 @@ jobs:
           print(json.dumps({
             "schema":"APP_BUILD_7_PUBLIC_CARRIER_FINAL_EVIDENCE",
             "result":"PASS",
-            "private_source_head":"505cf8a9c9825abb4c6cdaddf9697c87eb0008ec",
+            "private_source_head":"bd427bbb3b6ff44de4b4ce2f3b978cbc7ad48c0e",
             "counts":{"linked":1543,"selectable":1031,"bounded":171,"engineering":341,"blocked":512},
             "regression":{"manifest":"1083/1083","mismatch":0,"unsafe":0,"false_reject":0,"fail_closed":"26/26","deterministic_repeat":"PASS"},
             "windows_web_parity":"PASS",
