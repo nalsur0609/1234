@@ -13,7 +13,7 @@ permissions:
 
 env:
   SOURCE_REPOSITORY: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
-  SOURCE_HEAD: 8e71c1881e38da15cf1363dc7b91aecd42db050d
+  SOURCE_HEAD: ab10f38095c236e7ce0c69dcc470a65dd628b0b2
   SOURCE_BASE: 2f21cf45712b6eb4acea8edce1d78c88857164cf
 
 jobs:
@@ -63,6 +63,7 @@ jobs:
           verify_pr 386 6c406cf91b03e366eaffc8385f7f1866ac5a6a74
           verify_pr 381 2247095f41069a3ea9b57f5a05ed883b77cf0002
           verify_pr 392 2f21cf45712b6eb4acea8edce1d78c88857164cf
+          verify_pr 405 18e8d66e33438b430c5dc7334b90f3cd419f3523
           verify_pr 329 fe788b76b2927bc1e643af539f4b470101f65e23
           verify_pr 296 475d3461cb7ebc35c4866266f16cab7f47b1ec3f
 
