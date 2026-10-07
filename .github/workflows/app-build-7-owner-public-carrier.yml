@@ -9,7 +9,7 @@ permissions:
   contents: read
 env:
   SOURCE_REPOSITORY: nalsur0609/PROGRAMMA_PODBORA_DEV2_SANDBOX
-  SOURCE_HEAD: 505cf8a9c9825abb4c6cdaddf9697c87eb0008ec
+  SOURCE_HEAD: bd427bbb3b6ff44de4b4ce2f3b978cbc7ad48c0e
   EXACT_BASE: 1da016563d3b783eb6f3cbeaccbf09395fb832ab
 jobs:
   web:
