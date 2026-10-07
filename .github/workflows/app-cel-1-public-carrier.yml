@@ -59,7 +59,7 @@ jobs:
           ref: ${{ env.SOURCE_HEAD }}
           token: ${{ secrets.DEV2_READ_TOKEN }}
           fetch-depth: 0
-          persist-credentials: false
+          persist-credentials: true
 
       - name: Verify exact task ancestry
         shell: bash
@@ -143,6 +143,37 @@ jobs:
         run: |
           set -euo pipefail
           python APP_CORE_R3_PILOT/cel_shadow_r1/shadow.py             --binary APP_CORE_R3_PILOT/cel_shadow_r1/bin/app-cel-shadow-r1             --evidence-dir release/issue_201/evidence             --summary-out WEB_CEL_SHADOW_SUMMARY.json
+          second="$RUNNER_TEMP/app-cel-shadow-web-evidence-generation-2"
+          python APP_CORE_R3_PILOT/cel_shadow_r1/shadow.py             --binary APP_CORE_R3_PILOT/cel_shadow_r1/bin/app-cel-shadow-r1             --evidence-dir "$second"             --summary-out "$RUNNER_TEMP/WEB_CEL_SHADOW_SUMMARY_GENERATION_2.json"
+          for name in REQUEST_CASE_MANIFEST.json CURRENT_MATCHER_RESULT_LEDGER.json CEL_RESULT_LEDGER.json; do
+            cmp "release/issue_201/evidence/$name" "$second/$name"
+          done
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          root=Path("release/issue_201/evidence")
+          first=json.loads(Path("WEB_CEL_SHADOW_SUMMARY.json").read_text(encoding="utf-8"))
+          second=json.loads(Path(os.environ["RUNNER_TEMP"]).joinpath("WEB_CEL_SHADOW_SUMMARY_GENERATION_2.json").read_text(encoding="utf-8"))
+          keys=("manifest_sha256","current_ledger_sha256","cel_ledger_sha256")
+          assert all(first[k] == second[k] for k in keys)
+          d=json.loads(root.joinpath("DETERMINISTIC_VALIDATION.json").read_text(encoding="utf-8"))
+          d["full_payload_generation_count"]=2
+          d["full_payload_byte_identity"]={
+              "REQUEST_CASE_MANIFEST.json": True,
+              "CURRENT_MATCHER_RESULT_LEDGER.json": True,
+              "CEL_RESULT_LEDGER.json": True,
+          }
+          d["independent_generation_sha256"]={
+              "generation_1": {k:first[k] for k in keys},
+              "generation_2": {k:second[k] for k in keys},
+          }
+          d["retention_repair"]="FULL_MANIFEST_AND_RESULT_LEDGER_PRIVATE_SSOT_R1"
+          root.joinpath("DETERMINISTIC_VALIDATION.json").write_text(
+              json.dumps(d,ensure_ascii=False,sort_keys=True,separators=(",",":"))+"\n",
+              encoding="utf-8",newline="\n"
+          )
+          print("FULL_PAYLOAD_X2_BYTE_IDENTITY=PASS")
+          PY
           python - <<'PY'
           import json, os
           from pathlib import Path
@@ -193,6 +224,30 @@ jobs:
           PY
           kill "$(cat WEB_APP_CEL_SHADOW.pid)" || true
           wait "$(cat WEB_APP_CEL_SHADOW.pid)" 2>/dev/null || true
+
+      - name: Commit full retained corpus to private SSOT
+        shell: bash
+        run: |
+          set -euo pipefail
+          branch="app-cel/shadow-pilot-r1"
+          remote_head="$(git ls-remote origin "refs/heads/$branch" | awk '{print $1}')"
+          test "$remote_head" = "$SOURCE_HEAD"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$branch" "$SOURCE_HEAD"
+          git add \
+            release/issue_201/evidence/REQUEST_CASE_MANIFEST.json \
+            release/issue_201/evidence/REQUEST_CASE_MANIFEST.sha256 \
+            release/issue_201/evidence/CURRENT_MATCHER_RESULT_LEDGER.json \
+            release/issue_201/evidence/CEL_RESULT_LEDGER.json \
+            release/issue_201/evidence/PARITY_LEDGER.json \
+            release/issue_201/evidence/DETERMINISTIC_VALIDATION.json \
+            release/issue_201/evidence/DECISION_TRACE_EVIDENCE.json \
+            release/issue_201/evidence/CURRENT_MATCHER_SEMANTIC_INVENTORY.json \
+            release/issue_201/evidence/MISMATCH_BLOCKER_TAXONOMY.json
+          test -n "$(git status --porcelain -- release/issue_201/evidence)"
+          git commit -m "APP-CEL-1: retain full 1083-case shadow corpus"
+          git push origin "HEAD:refs/heads/$branch"
 
 
 
