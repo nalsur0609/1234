@@ -1,0 +1,121 @@
+name: STANDARD-REPAIR-1 FLUE exact159 Public Carrier
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".ci/triggers/standard-repair-flue-exact159-r1.txt"
+
+permissions:
+  contents: read
+
+env:
+  SOURCE_REPOSITORY: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
+  SOURCE_HEAD: d7b848f884c487b6f90c1e9175858d13245958d9
+  SOURCE_BASE: 6c406cf91b03e366eaffc8385f7f1866ac5a6a74
+
+jobs:
+  validate_flue_exact159:
+    name: Private STOUT FLUE exact159 compute-only validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Public carrier provenance
+        run: |
+          echo "PUBLIC_CI_CARRIER=nalsur0609/1234"
+          echo "PRIVATE_SSOT=$SOURCE_REPOSITORY"
+          echo "SOURCE_HEAD=$SOURCE_HEAD"
+          echo "SOURCE_BASE=$SOURCE_BASE"
+          echo "ARTIFACT_RETENTION=NONE"
+
+      - name: Checkout private STOUT exact head
+        uses: actions/checkout@v4
+        with:
+          repository: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
+          ref: ${{ env.SOURCE_HEAD }}
+          token: ${{ secrets.DEV2_READ_TOKEN }}
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Verify exact head and accepted base
+        run: |
+          set -euo pipefail
+          actual="$(git rev-parse HEAD)"
+          test "$actual" = "$SOURCE_HEAD"
+          test "$(git merge-base HEAD "$SOURCE_BASE")" = "$SOURCE_BASE"
+          test "$(git rev-list --count "$SOURCE_BASE..HEAD")" = "10"
+
+      - name: Fetch and verify immutable authority refs
+        run: |
+          set -euo pipefail
+          verify_pr() {
+            pr="$1"
+            expected="$2"
+            ref="refs/remotes/origin/standard-repair-authority-pr-$pr"
+            git fetch --no-tags origin "+refs/pull/$pr/head:$ref" >/dev/null 2>&1
+            actual="$(git rev-parse "$ref")"
+            test "$actual" = "$expected"
+          }
+          verify_pr 267 f369bedac24709abf0c29a30c4ffcf21429647bc
+          verify_pr 386 6c406cf91b03e366eaffc8385f7f1866ac5a6a74
+          verify_pr 405 18e8d66e33438b430c5dc7334b90f3cd419f3523
+          verify_pr 407 ab10f38095c236e7ce0c69dcc470a65dd628b0b2
+          test "$(git rev-parse HEAD)" = "$SOURCE_HEAD"
+
+      - name: Assert bounded exact-head diff
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import subprocess
+          base = "6c406cf91b03e366eaffc8385f7f1866ac5a6a74"
+          paths = subprocess.check_output(
+              ["git", "diff", "--name-only", f"{base}...HEAD"], text=True
+          ).splitlines()
+          allowed = {
+              ".github/workflows/standard_repair_flue_exact159_r1.yml",
+              "artifacts/issue_414/FLUE_EXACT159_STANDARD_OUTCOME_LEDGER_R1.json",
+              "data/product_characteristic_standards/master_r1/MASTER_CHARACTERISTIC_DICTIONARY_R1.json",
+              "data/product_characteristic_standards/master_r1/MASTER_PRODUCT_CHARACTERISTIC_STANDARDS_R1.json",
+              "data/product_characteristic_standards/master_r1/MASTER_PRODUCT_CHARACTERISTIC_STANDARDS_VALIDATION_R1.json",
+              "data/product_characteristic_standards/r9_flue_exact159/STANDARD_REPAIR_FLUE_EXACT159_SEMANTIC_CONTRACT_R1.json",
+              "docs/product_characteristic_standards/STANDARD_REPAIR_FLUE_EXACT159_R1_HANDOFF.md",
+              "tests/product_characteristic_standards/test_flue_exact159_r1.py",
+              "tools/product_characteristic_standards/validate_flue_exact159_r1.py",
+          }
+          assert set(paths) == allowed, paths
+          print("BOUNDED_CHANGED_PATHS=9")
+          PY
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run bounded regression
+        run: |
+          set -euo pipefail
+          python tests/product_characteristic_standards/test_flue_exact159_r1.py
+
+      - name: Deterministic validator run 1
+        run: |
+          set -euo pipefail
+          python tools/product_characteristic_standards/validate_flue_exact159_r1.py --output /tmp/flue-exact159-a.json
+
+      - name: Deterministic validator run 2
+        run: |
+          set -euo pipefail
+          python tools/product_characteristic_standards/validate_flue_exact159_r1.py --output /tmp/flue-exact159-b.json
+
+      - name: Prove byte-identical outputs
+        run: |
+          set -euo pipefail
+          cmp /tmp/flue-exact159-a.json /tmp/flue-exact159-b.json
+          sha256sum /tmp/flue-exact159-a.json
+          sha256sum /tmp/flue-exact159-b.json
+          echo "FLUE_EXACT159_DETERMINISTIC_X2=PASS"
+
+      - name: Public carrier no-artifact guard
+        run: |
+          set -euo pipefail
+          echo "PUBLIC_CARRIER_ARTIFACT_UPLOAD=NONE"
