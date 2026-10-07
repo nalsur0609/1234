@@ -1,0 +1,495 @@
+name: APP-CEL-2 Public Carrier Exact-Head Gate
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  SOURCE_REPOSITORY: nalsur0609/PROGRAMMA_PODBORA_DEV2_SANDBOX
+  SOURCE_HEAD: 1da016563d3b783eb6f3cbeaccbf09395fb832ab
+  TASK_BASE: 063e42b192538d731ebb08fbd0e8be7b1e993f3d
+  ACCEPTED_MANIFEST_SHA: 903900d345110d036c42294035d51519cc4c83417fa413b1238c55d166c63283
+
+jobs:
+  web_tier_router:
+    name: Web Tier Router integration
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    outputs:
+      linked: ${{ steps.evidence.outputs.linked }}
+      ordinary: ${{ steps.evidence.outputs.ordinary }}
+      bounded: ${{ steps.evidence.outputs.bounded }}
+      engineering: ${{ steps.evidence.outputs.engineering }}
+      blocked: ${{ steps.evidence.outputs.blocked }}
+      linked_sha: ${{ steps.evidence.outputs.linked_sha }}
+      ordinary_sha: ${{ steps.evidence.outputs.ordinary_sha }}
+      bounded_sha: ${{ steps.evidence.outputs.bounded_sha }}
+      engineering_sha: ${{ steps.evidence.outputs.engineering_sha }}
+      blocked_sha: ${{ steps.evidence.outputs.blocked_sha }}
+      ledger_sha: ${{ steps.evidence.outputs.ledger_sha }}
+      mismatch: ${{ steps.evidence.outputs.mismatch }}
+      unsafe: ${{ steps.evidence.outputs.unsafe }}
+      false_reject: ${{ steps.evidence.outputs.false_reject }}
+      fail_closed: ${{ steps.evidence.outputs.fail_closed }}
+      deterministic: ${{ steps.evidence.outputs.deterministic }}
+
+    services:
+      meilisearch:
+        image: getmeili/meilisearch:v1.54.0
+        env:
+          MEILI_MASTER_KEY: app-cel-tier-router-r1-key
+          MEILI_NO_ANALYTICS: "true"
+        ports:
+          - 7700:7700
+
+    env:
+      APP_CORE_MEILI_URL: http://127.0.0.1:7700
+      APP_CORE_MEILI_MASTER_KEY: app-cel-tier-router-r1-key
+      APP_WEB_HOST: 127.0.0.1
+      APP_WEB_PORT: "8765"
+
+    steps:
+      - name: Public carrier provenance
+        shell: bash
+        run: |
+          echo "PUBLIC_CI_CARRIER=nalsur0609/1234"
+          echo "PRIVATE_SSOT=$SOURCE_REPOSITORY"
+          echo "SOURCE_HEAD=$SOURCE_HEAD"
+          echo "TASK_BASE=$TASK_BASE"
+          echo "ARTIFACT_RETENTION=NONE"
+      - name: Checkout pinned private SSOT
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.SOURCE_REPOSITORY }}
+          ref: ${{ env.SOURCE_HEAD }}
+          token: ${{ secrets.DEV2_READ_TOKEN }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify exact task ancestry and bounded diff
+        shell: bash
+        run: |
+          set -euo pipefail
+          actual="$(git rev-parse HEAD)"
+          test "$actual" = "${{ env.SOURCE_HEAD }}"
+          test "$(git merge-base "$TASK_BASE" HEAD)" = "$TASK_BASE"
+          test "$(git rev-list --count "HEAD..$TASK_BASE")" = "0"
+          test -z "$(git diff --name-only "$TASK_BASE" -- APP_CORE_R3_PILOT/machine_selection.py)"
+          test -z "$(git diff --name-only "$TASK_BASE" -- release/issue_197/materialize_stout_ready_1543_shared_binding.py)"
+          echo "EXACT_HEAD=$actual"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.10"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.3"
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23.12"
+          cache-dependency-path: APP_CORE_R3_PILOT/cel_shadow_r1/go.sum
+
+      - name: Build accepted CEL runtime
+        working-directory: APP_CORE_R3_PILOT/cel_shadow_r1
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p bin
+          CGO_ENABLED=0 go build -trimpath -o bin/app-cel-shadow-r1 .
+          ./bin/app-cel-shadow-r1 </dev/null | head -n 1
+
+      - name: Install accepted Web dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check "jsonschema==4.25.1"
+          python -m pip install --disable-pip-version-check --require-hashes -r PILOT_READY/units_engine/requirements-r1.lock
+          python -m pip install --disable-pip-version-check -r tools/pdf_factory_r1/requirements-r1.txt
+
+      - name: Source regressions
+        shell: bash
+        run: |
+          set -euo pipefail
+          python APP_CORE_R3_PILOT/tests/test_machine_selection_r1.py
+          python APP_CORE_R3_PILOT/tests/test_machine_selection_profile_conflict_r1.py
+          python APP_CORE_R3_PILOT/tests/test_stout_ball_valve_114_adapter_r1.py
+          python APP_CORE_R3_PILOT/tests/test_stout_ready_1543_shared_core_r1.py
+          python APP_CORE_R3_PILOT/tests/test_cel_shadow_pilot_r1.py
+          python APP_CORE_R3_PILOT/tests/test_tier_router_integration_r1.py
+
+      - name: Full committed 1083 corpus through CEL-primary
+        id: evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python release/issue_203/validate_tier_router_integration_r1.py             --binary APP_CORE_R3_PILOT/cel_shadow_r1/bin/app-cel-shadow-r1             --output-dir WEB_TIER_ROUTER_EVIDENCE             --platform WEB
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          s=json.loads(Path("WEB_TIER_ROUTER_EVIDENCE/VALIDATION_SUMMARY.json").read_text(encoding="utf-8"))
+          c=s["route_manifest"]["counts"]; h=s["route_manifest"]["hashes"]; r=s["integration_regression"]
+          assert s["result"]=="PASS"
+          assert r["mismatch_count"]==0 and r["unsafe_selection_count"]==0 and r["false_reject_count"]==0
+          assert r["fail_closed_parity"] and r["deterministic_repeat_pass"]
+          with open(os.environ["GITHUB_OUTPUT"],"a",encoding="utf-8") as f:
+              for k,v in {
+                  "linked":c["linked"],"ordinary":c["ordinary_cel"],"bounded":c["bounded_fail_closed"],
+                  "engineering":c["engineering_fail_closed"],"blocked":c["blocked"],
+                  "linked_sha":h["linked_sha256"],"ordinary_sha":h["ordinary_cel_sha256"],
+                  "bounded_sha":h["bounded_fail_closed_sha256"],"engineering_sha":h["engineering_fail_closed_sha256"],
+                  "blocked_sha":h["blocked_sha256"],"ledger_sha":r["router_result_ledger_sha256"],
+                  "mismatch":r["mismatch_count"],"unsafe":r["unsafe_selection_count"],
+                  "false_reject":r["false_reject_count"],"fail_closed":str(r["fail_closed_parity"]).lower(),
+                  "deterministic":str(r["deterministic_repeat_pass"]).lower(),
+              }.items(): f.write(f"{k}={v}\n")
+          PY
+
+      - name: Start real Web shared path with Tier Router enabled
+        shell: bash
+        run: |
+          set -euo pipefail
+          export APP_CORE_NODE_BINARY="$(command -v node)"
+          export APP_CORE_BUILD_HEAD="$(git rev-parse HEAD)"
+          export APP_CORE_SELECTION_ENGINE="cel"
+          export APP_CORE_CEL_BINARY="$PWD/APP_CORE_R3_PILOT/cel_shadow_r1/bin/app-cel-shadow-r1"
+          python APP_CORE_R3_PILOT/web_runtime.py > WEB_TIER_ROUTER.log 2>&1 &
+          echo $! > WEB_TIER_ROUTER.pid
+          ok=0
+          for i in $(seq 1 180); do
+            if curl -fsS http://127.0.0.1:8765/ready > WEB_TIER_ROUTER_READY.json 2>/dev/null; then
+              ok=1
+              break
+            fi
+            if ! kill -0 "$(cat WEB_TIER_ROUTER.pid)" 2>/dev/null; then break; fi
+            sleep 1
+          done
+          if [ "$ok" -ne 1 ]; then cat WEB_TIER_ROUTER.log || true; exit 1; fi
+          python - <<'PY'
+          import json, urllib.request
+          from pathlib import Path
+          health=json.loads(Path("WEB_TIER_ROUTER_READY.json").read_text(encoding="utf-8"))
+          ms=health["machine_selection"]
+          assert health["ready"] is True
+          assert ms["selection_engine"]=="CEL_PRIMARY"
+          assert ms["tier_router"]=={"linked":1543,"selectable":1031,"blocked":512,"bounded":171,"engineering":341,"fail_closed":True,"rollback_available":True}
+          manifest=json.loads(Path("release/issue_201/evidence/REQUEST_CASE_MANIFEST.json").read_text(encoding="utf-8"))
+          case=next(x for x in manifest["cases"] if x["kind"]=="REAL_SELECTABLE_SELF_REQUIRED" and x["profile_id"]=="hydronic.collector_assembly.r1")
+          payload=json.dumps({"row_id":"R1","profile_id":case["profile_id"],"facts":case["facts"]},ensure_ascii=False).encode("utf-8")
+          req=urllib.request.Request("http://127.0.0.1:8765/api/machine-select",data=payload,headers={"Content-Type":"application/json"})
+          selected=json.loads(urllib.request.urlopen(req,timeout=20).read().decode("utf-8"))
+          print(json.dumps({"runtime_selected":selected},ensure_ascii=False,sort_keys=True))
+          assert case["target_article_exact"] in [x.get("article") for x in selected.get("items",[])]
+          search_body=json.dumps({"mode":"name","query":"муфта","limit":5},ensure_ascii=False).encode("utf-8")
+          req=urllib.request.Request("http://127.0.0.1:8765/api/search",data=search_body,headers={"Content-Type":"application/json"})
+          search=json.loads(urllib.request.urlopen(req,timeout=20).read().decode("utf-8"))
+          assert search.get("status")!="SEARCH_UNAVAILABLE"
+          evidence={"schema":"APP_CEL_TIER_ROUTER_INTEGRATION_R1_WEB_EVIDENCE","result":"PASS","health":health,"ordinary_target_article":case["target_article_exact"],"ordinary_status":selected.get("status"),"search_status":search.get("status")}
+          Path("WEB_RUNTIME_EVIDENCE.json").write_text(json.dumps(evidence,ensure_ascii=False,indent=2,sort_keys=True)+"\n",encoding="utf-8")
+          print(json.dumps(evidence,ensure_ascii=False,indent=2,sort_keys=True))
+          PY
+          kill "$(cat WEB_TIER_ROUTER.pid)" || true
+          wait "$(cat WEB_TIER_ROUTER.pid)" 2>/dev/null || true
+
+  windows_tier_router:
+    name: Windows offline no-bootstrap Tier Router
+    runs-on: windows-latest
+    timeout-minutes: 150
+    outputs:
+      linked: ${{ steps.evidence.outputs.linked }}
+      ordinary: ${{ steps.evidence.outputs.ordinary }}
+      bounded: ${{ steps.evidence.outputs.bounded }}
+      engineering: ${{ steps.evidence.outputs.engineering }}
+      blocked: ${{ steps.evidence.outputs.blocked }}
+      linked_sha: ${{ steps.evidence.outputs.linked_sha }}
+      ordinary_sha: ${{ steps.evidence.outputs.ordinary_sha }}
+      bounded_sha: ${{ steps.evidence.outputs.bounded_sha }}
+      engineering_sha: ${{ steps.evidence.outputs.engineering_sha }}
+      blocked_sha: ${{ steps.evidence.outputs.blocked_sha }}
+      ledger_sha: ${{ steps.evidence.outputs.ledger_sha }}
+      mismatch: ${{ steps.evidence.outputs.mismatch }}
+      unsafe: ${{ steps.evidence.outputs.unsafe }}
+      false_reject: ${{ steps.evidence.outputs.false_reject }}
+      fail_closed: ${{ steps.evidence.outputs.fail_closed }}
+      deterministic: ${{ steps.evidence.outputs.deterministic }}
+
+    steps:
+      - name: Checkout pinned private SSOT
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.SOURCE_REPOSITORY }}
+          ref: ${{ env.SOURCE_HEAD }}
+          token: ${{ secrets.DEV2_READ_TOKEN }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Preserve exact Git bytes and verify ancestry
+        shell: pwsh
+        run: |
+          $ErrorActionPreference="Stop"
+          git config core.autocrlf false
+          git config core.eol lf
+          git reset --hard HEAD
+          git clean -fdx
+          $actual=(git rev-parse HEAD).Trim()
+          if ($actual -ne "${{ env.SOURCE_HEAD }}") { throw "EXACT_HEAD_MISMATCH" }
+          $mergeBase=(git merge-base $env:TASK_BASE HEAD).Trim()
+          if ($mergeBase -ne $env:TASK_BASE) { throw "TASK_BASE_MERGE_BASE_MISMATCH:$mergeBase" }
+          if ((git diff --name-only $env:TASK_BASE -- APP_CORE_R3_PILOT/machine_selection.py)) { throw "CURRENT_MATCHER_MUTATED" }
+          Write-Host "EXACT_HEAD=$actual"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.10"
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23.12"
+          cache-dependency-path: APP_CORE_R3_PILOT/cel_shadow_r1/go.sum
+
+      - name: Build Windows accepted CEL runtime
+        shell: pwsh
+        run: |
+          $ErrorActionPreference="Stop"
+          Push-Location APP_CORE_R3_PILOT/cel_shadow_r1
+          New-Item -ItemType Directory -Force bin | Out-Null
+          $env:CGO_ENABLED="0"
+          go build -trimpath -o bin/app-cel-shadow-r1.exe .
+          if ($LASTEXITCODE -ne 0) { throw "CEL_GO_BUILD_FAILED" }
+          Pop-Location
+
+      - name: Source regressions
+        shell: pwsh
+        run: |
+          $ErrorActionPreference="Stop"
+          python APP_CORE_R3_PILOT/tests/test_machine_selection_r1.py
+          python APP_CORE_R3_PILOT/tests/test_machine_selection_profile_conflict_r1.py
+          python APP_CORE_R3_PILOT/tests/test_stout_ball_valve_114_adapter_r1.py
+          python APP_CORE_R3_PILOT/tests/test_stout_ready_1543_shared_core_r1.py
+          python APP_CORE_R3_PILOT/tests/test_cel_shadow_pilot_r1.py
+          python APP_CORE_R3_PILOT/tests/test_tier_router_integration_r1.py
+
+      - name: Full committed 1083 corpus through CEL-primary
+        id: evidence
+        shell: pwsh
+        run: |
+          $ErrorActionPreference="Stop"
+          python release/issue_203/validate_tier_router_integration_r1.py --binary APP_CORE_R3_PILOT/cel_shadow_r1/bin/app-cel-shadow-r1.exe --output-dir WINDOWS_TIER_ROUTER_EVIDENCE --platform WINDOWS
+          if ($LASTEXITCODE -ne 0) { throw "WINDOWS_TIER_ROUTER_VALIDATION_FAILED" }
+          $s=Get-Content "WINDOWS_TIER_ROUTER_EVIDENCE/VALIDATION_SUMMARY.json" -Raw | ConvertFrom-Json
+          $c=$s.route_manifest.counts; $h=$s.route_manifest.hashes; $r=$s.integration_regression
+          if ($s.result -ne "PASS" -or $r.mismatch_count -ne 0 -or $r.unsafe_selection_count -ne 0 -or $r.false_reject_count -ne 0) { throw "WINDOWS_REGRESSION_GATE_FAILED" }
+          "linked=$($c.linked)" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "ordinary=$($c.ordinary_cel)" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "bounded=$($c.bounded_fail_closed)" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "engineering=$($c.engineering_fail_closed)" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "blocked=$($c.blocked)" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "linked_sha=$($h.linked_sha256)" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "ordinary_sha=$($h.ordinary_cel_sha256)" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "bounded_sha=$($h.bounded_fail_closed_sha256)" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "engineering_sha=$($h.engineering_fail_closed_sha256)" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "blocked_sha=$($h.blocked_sha256)" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "ledger_sha=$($r.router_result_ledger_sha256)" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "mismatch=$($r.mismatch_count)" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "unsafe=$($r.unsafe_selection_count)" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "false_reject=$($r.false_reject_count)" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "fail_closed=$($r.fail_closed_parity.ToString().ToLowerInvariant())" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "deterministic=$($r.deterministic_repeat_pass.ToString().ToLowerInvariant())" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+
+      - name: Materialize pinned Owner runtime at build time
+        shell: pwsh
+        run: |
+          $ErrorActionPreference="Stop"
+          $rt=Join-Path $PWD "runtime_input"
+          New-Item -ItemType Directory -Force "$rt/python","$rt/node","$rt/meilisearch" | Out-Null
+          $pyUrl="https://www.python.org/ftp/python/3.12.10/python-3.12.10-embed-amd64.zip"
+          $pyZip=Join-Path $env:RUNNER_TEMP "python-3.12.10-embed-amd64.zip"
+          Invoke-WebRequest -Uri $pyUrl -OutFile $pyZip
+          $pySha=(Get-FileHash $pyZip -Algorithm SHA256).Hash.ToLowerInvariant()
+          if ($pySha -ne "4acbed6dd1c744b0376e3b1cf57ce906f9dc9e95e68824584c8099a63025a3c3") { throw "PYTHON_SHA256_MISMATCH" }
+          Expand-Archive $pyZip "$rt/python" -Force
+          $pth=Get-ChildItem "$rt/python" -Filter "python*._pth" | Select-Object -First 1
+          (Get-Content $pth.FullName) -replace '^#import site$','import site' | Set-Content $pth.FullName -Encoding ascii
+          $getPip=Join-Path $env:RUNNER_TEMP "get-pip.py"
+          Invoke-WebRequest -Uri "https://bootstrap.pypa.io/get-pip.py" -OutFile $getPip
+          & "$rt/python/python.exe" $getPip --disable-pip-version-check
+          if ($LASTEXITCODE -ne 0) { throw "GET_PIP_FAILED" }
+
+          $nodeVersion="22.23.3"
+          $nodeName="node-v$nodeVersion-win-x64.zip"
+          $nodeBase="https://nodejs.org/download/release/v$nodeVersion"
+          $nodeZip=Join-Path $env:RUNNER_TEMP $nodeName
+          $sums=Join-Path $env:RUNNER_TEMP "node-SHASUMS256.txt"
+          Invoke-WebRequest -Uri "$nodeBase/$nodeName" -OutFile $nodeZip
+          Invoke-WebRequest -Uri "$nodeBase/SHASUMS256.txt" -OutFile $sums
+          $expectedLine=Get-Content $sums | Where-Object { $_ -match [regex]::Escape($nodeName) } | Select-Object -First 1
+          $nodeExpected=($expectedLine -split '\s+')[0].ToLowerInvariant()
+          $nodeSha=(Get-FileHash $nodeZip -Algorithm SHA256).Hash.ToLowerInvariant()
+          if ($nodeSha -ne $nodeExpected) { throw "NODE_SHA256_MISMATCH" }
+          $nodeTmp=Join-Path $env:RUNNER_TEMP "node-unpack"
+          Expand-Archive $nodeZip $nodeTmp -Force
+          $nodeExe=Get-ChildItem $nodeTmp -Recurse -Filter node.exe | Select-Object -First 1
+          Copy-Item $nodeExe.FullName "$rt/node/node.exe"
+
+          $meili="$rt/meilisearch/meilisearch-windows-amd64.exe"
+          Invoke-WebRequest -Uri "https://github.com/meilisearch/meilisearch/releases/download/v1.54.0/meilisearch-windows-amd64.exe" -OutFile $meili
+          $meiliSha=(Get-FileHash $meili -Algorithm SHA256).Hash.ToLowerInvariant()
+          if ($meiliSha -ne "1a3a3f2fa249b2a471eca479d37b1d3bbb9bda1aacae3eaf7839218105810125") { throw "MEILI_SHA256_MISMATCH" }
+
+      - name: Build fresh Owner integration package
+        shell: pwsh
+        run: |
+          $ErrorActionPreference="Stop"
+          $head=(git rev-parse HEAD).Trim()
+          & "runtime_input/python/python.exe" "release/issue_199/build_owner_package_stout_1031_r1.py" --repo-root "$PWD" --offline-runtime-root "$PWD/runtime_input" --output "$PWD/APP_CEL_TIER_ROUTER_OWNER_R1" --build-head $head --zip
+          if ($LASTEXITCODE -ne 0) { throw "OWNER_PACKAGE_BUILD_FAILED" }
+
+      - name: Fresh extract and prove offline no-bootstrap CEL-primary runtime
+        shell: pwsh
+        run: |
+          $ErrorActionPreference="Stop"
+          $fresh=Join-Path $env:RUNNER_TEMP "app-cel-tier-router-owner-fresh"
+          if (Test-Path $fresh) { Remove-Item $fresh -Recurse -Force }
+          Expand-Archive "APP_CEL_TIER_ROUTER_OWNER_R1.zip" $fresh
+          $cel=Join-Path $fresh "APP_CORE_R3_PILOT/cel_shadow_r1/bin/app-cel-shadow-r1.exe"
+          if (-not (Test-Path $cel)) { throw "PACKAGE_CEL_BINARY_MISSING" }
+          $dep=Get-Content (Join-Path $fresh "DEPENDENCY_HASH_MANIFEST.json") -Raw | ConvertFrom-Json
+          $routerEntry=$dep.files | Where-Object { $_.path -eq "APP_CORE_R3_PILOT/tier_router_r1.py" }
+          if (-not $routerEntry) { throw "PACKAGE_ROUTER_HASH_ENTRY_MISSING" }
+
+          $env:PIP_NO_INDEX="1"
+          $env:PIP_DISABLE_PIP_VERSION_CHECK="1"
+          $env:PYTHONNOUSERSITE="1"
+          $env:APP_CORE_SELECTION_ENGINE="cel"
+          $env:APP_CORE_CEL_BINARY=$cel
+          $launcher=Join-Path $fresh "START_STOUT_MACHINE_SELECTION.cmd"
+          $launcherText=Get-Content $launcher -Raw
+          if ($launcherText.IndexOf("pip install",[System.StringComparison]::OrdinalIgnoreCase) -ge 0) { throw "RUNTIME_PIP_INSTALL_FORBIDDEN" }
+          if ($launcherText.IndexOf("Invoke-WebRequest",[System.StringComparison]::OrdinalIgnoreCase) -ge 0) { throw "RUNTIME_DOWNLOAD_FORBIDDEN" }
+
+          $proc=Start-Process -FilePath "cmd.exe" -ArgumentList "/c","START_STOUT_MACHINE_SELECTION.cmd > OWNER_TIER_ROUTER.log 2>&1" -WorkingDirectory $fresh -PassThru -WindowStyle Hidden
+          $ok=$false
+          for ($i=0; $i -lt 180; $i++) {
+            Start-Sleep -Seconds 1
+            try {
+              $h=Invoke-RestMethod -Uri "http://127.0.0.1:8765/health" -TimeoutSec 2
+              if ($h) { $ok=$true; break }
+            } catch {}
+            if ($proc.HasExited) { break }
+          }
+          if (-not $ok) {
+            Get-Content (Join-Path $fresh "OWNER_TIER_ROUTER.log") -ErrorAction SilentlyContinue
+            throw "OWNER_OFFLINE_NO_BOOTSTRAP_HEALTH_FAILED"
+          }
+          if ($h.machine_selection.selection_engine -ne "CEL_PRIMARY") { throw "OWNER_NOT_CEL_PRIMARY" }
+          if ($h.machine_selection.tier_router.linked -ne 1543 -or $h.machine_selection.tier_router.selectable -ne 1031 -or $h.machine_selection.tier_router.blocked -ne 512) { throw "OWNER_ROUTER_ACCOUNTING_MISMATCH" }
+
+          $manifest=Get-Content "release/issue_201/evidence/REQUEST_CASE_MANIFEST.json" -Raw | ConvertFrom-Json
+          $case=$manifest.cases | Where-Object { $_.kind -eq "REAL_SELECTABLE_SELF_REQUIRED" -and $_.profile_id -eq "hydronic.collector_assembly.r1" } | Select-Object -First 1
+          $body=@{row_id="R1";profile_id=$case.profile_id;facts=$case.facts} | ConvertTo-Json -Depth 20
+          $selected=Invoke-RestMethod -Uri "http://127.0.0.1:8765/api/machine-select" -Method Post -ContentType "application/json; charset=utf-8" -Body ([Text.Encoding]::UTF8.GetBytes($body)) -TimeoutSec 20
+          $selected | ConvertTo-Json -Depth 20 | Write-Host
+          if (-not ($selected.items.article -contains $case.target_article_exact)) { throw "OWNER_ORDINARY_CEL_TARGET_MISSING" }
+
+          $searchBody=@{mode="name";query="муфта";limit=5} | ConvertTo-Json
+          $search=Invoke-RestMethod -Uri "http://127.0.0.1:8765/api/search" -Method Post -ContentType "application/json; charset=utf-8" -Body ([Text.Encoding]::UTF8.GetBytes($searchBody)) -TimeoutSec 20
+          if ($search.status -eq "SEARCH_UNAVAILABLE") { throw "OWNER_MEILI_SEARCH_UNAVAILABLE" }
+
+          [ordered]@{
+            schema="APP_CEL_TIER_ROUTER_INTEGRATION_R1_WINDOWS_EVIDENCE"
+            result="PASS"
+            fresh_extract="PASS"
+            package_local_cel="PASS"
+            offline_no_bootstrap="PASS"
+            runtime_dependency_download="FORBIDDEN_AND_NOT_USED"
+            meilisearch_search_status=$search.status
+            ordinary_target_article=$case.target_article_exact
+            ordinary_status=$selected.status
+            machine_selection=$h.machine_selection
+            clean_shutdown="PASS"
+          } | ConvertTo-Json -Depth 20 | Set-Content "WINDOWS_RUNTIME_EVIDENCE.json" -Encoding utf8
+          taskkill /PID $proc.Id /T /F | Out-Null
+          Get-Content "WINDOWS_RUNTIME_EVIDENCE.json"
+
+  windows_web_parity:
+    name: Windows Web Tier Router parity
+    needs:
+      - web_tier_router
+      - windows_tier_router
+    runs-on: ubuntu-latest
+    steps:
+      - name: Compare exact routing and result corpus
+        shell: bash
+        env:
+          W_LINKED: ${{ needs.web_tier_router.outputs.linked }}
+          X_LINKED: ${{ needs.windows_tier_router.outputs.linked }}
+          W_ORDINARY: ${{ needs.web_tier_router.outputs.ordinary }}
+          X_ORDINARY: ${{ needs.windows_tier_router.outputs.ordinary }}
+          W_BOUNDED: ${{ needs.web_tier_router.outputs.bounded }}
+          X_BOUNDED: ${{ needs.windows_tier_router.outputs.bounded }}
+          W_ENGINEERING: ${{ needs.web_tier_router.outputs.engineering }}
+          X_ENGINEERING: ${{ needs.windows_tier_router.outputs.engineering }}
+          W_BLOCKED: ${{ needs.web_tier_router.outputs.blocked }}
+          X_BLOCKED: ${{ needs.windows_tier_router.outputs.blocked }}
+          W_LINKED_SHA: ${{ needs.web_tier_router.outputs.linked_sha }}
+          X_LINKED_SHA: ${{ needs.windows_tier_router.outputs.linked_sha }}
+          W_ORDINARY_SHA: ${{ needs.web_tier_router.outputs.ordinary_sha }}
+          X_ORDINARY_SHA: ${{ needs.windows_tier_router.outputs.ordinary_sha }}
+          W_BOUNDED_SHA: ${{ needs.web_tier_router.outputs.bounded_sha }}
+          X_BOUNDED_SHA: ${{ needs.windows_tier_router.outputs.bounded_sha }}
+          W_ENGINEERING_SHA: ${{ needs.web_tier_router.outputs.engineering_sha }}
+          X_ENGINEERING_SHA: ${{ needs.windows_tier_router.outputs.engineering_sha }}
+          W_BLOCKED_SHA: ${{ needs.web_tier_router.outputs.blocked_sha }}
+          X_BLOCKED_SHA: ${{ needs.windows_tier_router.outputs.blocked_sha }}
+          W_LEDGER: ${{ needs.web_tier_router.outputs.ledger_sha }}
+          X_LEDGER: ${{ needs.windows_tier_router.outputs.ledger_sha }}
+          W_MISMATCH: ${{ needs.web_tier_router.outputs.mismatch }}
+          X_MISMATCH: ${{ needs.windows_tier_router.outputs.mismatch }}
+          W_UNSAFE: ${{ needs.web_tier_router.outputs.unsafe }}
+          X_UNSAFE: ${{ needs.windows_tier_router.outputs.unsafe }}
+          W_FALSE: ${{ needs.web_tier_router.outputs.false_reject }}
+          X_FALSE: ${{ needs.windows_tier_router.outputs.false_reject }}
+          W_FAIL: ${{ needs.web_tier_router.outputs.fail_closed }}
+          X_FAIL: ${{ needs.windows_tier_router.outputs.fail_closed }}
+          W_DET: ${{ needs.web_tier_router.outputs.deterministic }}
+          X_DET: ${{ needs.windows_tier_router.outputs.deterministic }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          pairs=[
+            ("linked","W_LINKED","X_LINKED"),("ordinary","W_ORDINARY","X_ORDINARY"),
+            ("bounded","W_BOUNDED","X_BOUNDED"),("engineering","W_ENGINEERING","X_ENGINEERING"),
+            ("blocked","W_BLOCKED","X_BLOCKED"),("linked_sha","W_LINKED_SHA","X_LINKED_SHA"),
+            ("ordinary_sha","W_ORDINARY_SHA","X_ORDINARY_SHA"),("bounded_sha","W_BOUNDED_SHA","X_BOUNDED_SHA"),
+            ("engineering_sha","W_ENGINEERING_SHA","X_ENGINEERING_SHA"),("blocked_sha","W_BLOCKED_SHA","X_BLOCKED_SHA"),
+            ("ledger_sha","W_LEDGER","X_LEDGER"),
+          ]
+          values={}
+          for name,a,b in pairs:
+              assert os.environ[a] and os.environ[a]==os.environ[b], (name,os.environ[a],os.environ[b])
+              values[name]=os.environ[a]
+          assert [int(values[k]) for k in ("linked","ordinary","bounded","engineering","blocked")]==[1543,1031,171,341,512]
+          assert values["linked_sha"]=="0a4a390d6d4e13b5cc073fc7f9fe5f431312e9002c4a0a5e5f75fcdaba6bbdac"
+          assert values["ordinary_sha"]=="993b5b3473f48bcb2d1e907927e620bd78ce6845cd8ede92e98dc15d18bc4c2c"
+          for a,b in [("W_MISMATCH","X_MISMATCH"),("W_UNSAFE","X_UNSAFE"),("W_FALSE","X_FALSE")]:
+              assert os.environ[a]==os.environ[b]=="0"
+          assert os.environ["W_FAIL"]==os.environ["X_FAIL"]=="true"
+          assert os.environ["W_DET"]==os.environ["X_DET"]=="true"
+          result={
+              "schema":"APP_CEL_TIER_ROUTER_INTEGRATION_R1_WINDOWS_WEB_PARITY",
+              "result":"PASS",
+              "counts":{"linked":1543,"ordinary_cel":1031,"bounded_fail_closed":171,"engineering_fail_closed":341,"blocked":512},
+              "hashes":{k:values[k] for k in ("linked_sha","ordinary_sha","bounded_sha","engineering_sha","blocked_sha")},
+              "router_result_ledger_sha256":values["ledger_sha"],
+              "mismatch_count":0,"unsafe_selection_count":0,"false_reject_count":0,
+              "fail_closed_parity":True,"deterministic_repeat_pass":True,
+          }
+          print(json.dumps(result,ensure_ascii=False,indent=2,sort_keys=True))
+          PY
