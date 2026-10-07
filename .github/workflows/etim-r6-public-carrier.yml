@@ -37,7 +37,7 @@ jobs:
           ref: ${{ env.SOURCE_HEAD }}
           token: ${{ secrets.DEV2_READ_TOKEN }}
           fetch-depth: 0
-          persist-credentials: false
+          persist-credentials: true
 
       - name: Verify exact head and accepted R5 ancestry
         run: |
