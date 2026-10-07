@@ -1,5 +1,7 @@
 name: APP-BUILD-7 Owner Public Carrier
 on:
+  push:
+    branches: [app-build-7-cel-tier-router-owner-carrier-r1]
   pull_request:
     branches: [main]
   workflow_dispatch:
