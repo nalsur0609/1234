@@ -1,0 +1,5 @@
+APP-BUILD-7 public carrier trigger
+Private SSOT: nalsur0609/PROGRAMMA_PODBORA_DEV2_SANDBOX
+Private exact HEAD: 505cf8a9c9825abb4c6cdaddf9697c87eb0008ec
+Purpose: ephemeral build/test only
+Public retained artifacts: NONE

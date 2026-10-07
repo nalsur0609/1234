@@ -1,0 +1,302 @@
+name: APP-BUILD-7 Public Carrier Owner Package Validation
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  SOURCE_REPOSITORY: nalsur0609/PROGRAMMA_PODBORA_DEV2_SANDBOX
+  SOURCE_HEAD: bd427bbb3b6ff44de4b4ce2f3b978cbc7ad48c0e
+  EXACT_BASE: 1da016563d3b783eb6f3cbeaccbf09395fb832ab
+
+jobs:
+  web_regression:
+    name: Web full 1083 Tier Router regression
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    outputs:
+      linked: ${{ steps.e.outputs.linked }}
+      ordinary: ${{ steps.e.outputs.ordinary }}
+      bounded: ${{ steps.e.outputs.bounded }}
+      engineering: ${{ steps.e.outputs.engineering }}
+      blocked: ${{ steps.e.outputs.blocked }}
+      linked_sha: ${{ steps.e.outputs.linked_sha }}
+      ordinary_sha: ${{ steps.e.outputs.ordinary_sha }}
+      bounded_sha: ${{ steps.e.outputs.bounded_sha }}
+      engineering_sha: ${{ steps.e.outputs.engineering_sha }}
+      blocked_sha: ${{ steps.e.outputs.blocked_sha }}
+      ledger_sha: ${{ steps.e.outputs.ledger_sha }}
+      mismatch: ${{ steps.e.outputs.mismatch }}
+      unsafe: ${{ steps.e.outputs.unsafe }}
+      false_reject: ${{ steps.e.outputs.false_reject }}
+      fail_closed: ${{ steps.e.outputs.fail_closed }}
+      deterministic: ${{ steps.e.outputs.deterministic }}
+
+    steps:
+      - name: Public carrier provenance
+        shell: bash
+        run: |
+          echo "PUBLIC_CI_CARRIER=nalsur0609/1234"
+          echo "PRIVATE_SSOT=$SOURCE_REPOSITORY"
+          echo "SOURCE_HEAD=$SOURCE_HEAD"
+          echo "EXACT_BASE=$EXACT_BASE"
+          echo "PUBLIC_ARTIFACTS=NONE"
+
+      - name: Checkout pinned private SSOT
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.SOURCE_REPOSITORY }}
+          ref: ${{ env.SOURCE_HEAD }}
+          token: ${{ secrets.DEV2_READ_TOKEN }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify exact accepted base and bounded package-only delta
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config core.autocrlf false
+          git config core.eol lf
+          git reset --hard HEAD
+          git clean -fdx
+          test "$(git rev-parse HEAD)" = "$SOURCE_HEAD"
+          test "$(git merge-base "$EXACT_BASE" HEAD)" = "$EXACT_BASE"
+          test -z "$(git diff --name-only "$EXACT_BASE" -- APP_CORE_R3_PILOT/machine_selection.py APP_CORE_R3_PILOT/tier_router_r1.py release/issue_197/authority)"
+          echo "EXACT_PRIVATE_HEAD=$SOURCE_HEAD"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.10"
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23.12"
+          cache-dependency-path: APP_CORE_R3_PILOT/cel_shadow_r1/go.sum
+
+      - name: Build accepted CEL and source guards
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p APP_CORE_R3_PILOT/cel_shadow_r1/bin
+          (cd APP_CORE_R3_PILOT/cel_shadow_r1 && CGO_ENABLED=0 go build -trimpath -o bin/app-cel-shadow-r1 .)
+          python APP_CORE_R3_PILOT/tests/test_machine_selection_r1.py
+          python APP_CORE_R3_PILOT/tests/test_machine_selection_profile_conflict_r1.py
+          python APP_CORE_R3_PILOT/tests/test_stout_ready_1543_shared_core_r1.py
+          python APP_CORE_R3_PILOT/tests/test_cel_shadow_pilot_r1.py
+          python APP_CORE_R3_PILOT/tests/test_tier_router_integration_r1.py
+
+      - name: Full committed 1083 corpus
+        id: e
+        shell: bash
+        run: |
+          set -euo pipefail
+          python release/issue_203/validate_tier_router_integration_r1.py             --binary APP_CORE_R3_PILOT/cel_shadow_r1/bin/app-cel-shadow-r1             --output-dir WEB_BUILD_7_REGRESSION             --platform WEB
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          s=json.loads(Path("WEB_BUILD_7_REGRESSION/VALIDATION_SUMMARY.json").read_text(encoding="utf-8"))
+          c=s["route_manifest"]["counts"]; h=s["route_manifest"]["hashes"]; r=s["integration_regression"]
+          assert [c["linked"],c["ordinary_cel"],c["bounded_fail_closed"],c["engineering_fail_closed"],c["blocked"]]==[1543,1031,171,341,512]
+          assert r["mismatch_count"]==r["unsafe_selection_count"]==r["false_reject_count"]==0
+          assert r["fail_closed_case_count"]==r["fail_closed_parity_count"]==26
+          assert r["deterministic_repeat_pass"] is True
+          values={
+            "linked":c["linked"],"ordinary":c["ordinary_cel"],"bounded":c["bounded_fail_closed"],
+            "engineering":c["engineering_fail_closed"],"blocked":c["blocked"],
+            "linked_sha":h["linked_sha256"],"ordinary_sha":h["ordinary_cel_sha256"],
+            "bounded_sha":h["bounded_fail_closed_sha256"],"engineering_sha":h["engineering_fail_closed_sha256"],
+            "blocked_sha":h["blocked_sha256"],"ledger_sha":r["router_result_ledger_sha256"],
+            "mismatch":r["mismatch_count"],"unsafe":r["unsafe_selection_count"],
+            "false_reject":r["false_reject_count"],"fail_closed":"true","deterministic":"true",
+          }
+          with open(os.environ["GITHUB_OUTPUT"],"a",encoding="utf-8") as f:
+              for k,v in values.items(): f.write(f"{k}={v}\n")
+          print(json.dumps({
+            "result":"PASS","manifest":1083,"mismatch":0,"unsafe":0,"false_reject":0,
+            "fail_closed":"26/26","deterministic_repeat":"PASS","route_counts":c,"route_hashes":h,
+            "router_result_ledger_sha256":r["router_result_ledger_sha256"],
+          },indent=2,sort_keys=True))
+          PY
+
+  windows_owner_package:
+    name: Windows fresh ZIP physical package validation
+    runs-on: windows-latest
+    timeout-minutes: 180
+    outputs:
+      linked: ${{ steps.w.outputs.linked }}
+      ordinary: ${{ steps.w.outputs.ordinary }}
+      bounded: ${{ steps.w.outputs.bounded }}
+      engineering: ${{ steps.w.outputs.engineering }}
+      blocked: ${{ steps.w.outputs.blocked }}
+      linked_sha: ${{ steps.w.outputs.linked_sha }}
+      ordinary_sha: ${{ steps.w.outputs.ordinary_sha }}
+      bounded_sha: ${{ steps.w.outputs.bounded_sha }}
+      engineering_sha: ${{ steps.w.outputs.engineering_sha }}
+      blocked_sha: ${{ steps.w.outputs.blocked_sha }}
+      ledger_sha: ${{ steps.w.outputs.ledger_sha }}
+      mismatch: ${{ steps.w.outputs.mismatch }}
+      unsafe: ${{ steps.w.outputs.unsafe }}
+      false_reject: ${{ steps.w.outputs.false_reject }}
+      fail_closed: ${{ steps.w.outputs.fail_closed }}
+      deterministic: ${{ steps.w.outputs.deterministic }}
+      package_filename: ${{ steps.w.outputs.package_filename }}
+      package_bytes: ${{ steps.w.outputs.package_bytes }}
+      package_sha256: ${{ steps.w.outputs.package_sha256 }}
+      dependency_manifest_sha256: ${{ steps.w.outputs.dependency_manifest_sha256 }}
+      file_manifest_sha256: ${{ steps.w.outputs.file_manifest_sha256 }}
+      build_timestamp_utc: ${{ steps.w.outputs.build_timestamp_utc }}
+
+    steps:
+      - name: Public carrier provenance
+        shell: pwsh
+        run: |
+          Write-Host "PUBLIC_CI_CARRIER=nalsur0609/1234"
+          Write-Host "PRIVATE_SSOT=$env:SOURCE_REPOSITORY"
+          Write-Host "SOURCE_HEAD=$env:SOURCE_HEAD"
+          Write-Host "EXACT_BASE=$env:EXACT_BASE"
+          Write-Host "PUBLIC_ARTIFACTS=NONE"
+
+      - name: Checkout pinned private SSOT
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.SOURCE_REPOSITORY }}
+          ref: ${{ env.SOURCE_HEAD }}
+          token: ${{ secrets.DEV2_READ_TOKEN }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify exact accepted base and bounded package-only delta
+        shell: pwsh
+        run: |
+          $ErrorActionPreference="Stop"
+          git config core.autocrlf false
+          git config core.eol lf
+          git reset --hard HEAD
+          git clean -fdx
+          $actual=(git rev-parse HEAD).Trim()
+          if($actual -ne $env:SOURCE_HEAD){throw "EXACT_HEAD_MISMATCH:$actual"}
+          if((git merge-base $env:EXACT_BASE HEAD).Trim() -ne $env:EXACT_BASE){throw "EXACT_BASE_MERGE_BASE_MISMATCH"}
+          $bad=@(git diff --name-only $env:EXACT_BASE -- APP_CORE_R3_PILOT/machine_selection.py APP_CORE_R3_PILOT/tier_router_r1.py release/issue_197/authority)
+          if($bad.Count -ne 0){throw ("FORBIDDEN_SEMANTIC_PATH_MUTATION:" + ($bad -join ","))}
+          Write-Host "EXACT_PRIVATE_HEAD=$actual"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.10"
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23.12"
+          cache-dependency-path: APP_CORE_R3_PILOT/cel_shadow_r1/go.sum
+
+      - name: Build, regress, package, fresh-extract and physically validate
+        id: w
+        shell: pwsh
+        run: |
+          $ErrorActionPreference="Stop"
+          & "$PWD/release/issue_205/ci_windows_owner_package_r1.ps1" -RepoRoot "$PWD" -ExpectedHead $env:SOURCE_HEAD
+          if($LASTEXITCODE -ne 0){throw "APP_BUILD_7_WINDOWS_DRIVER_FAILED"}
+          Write-Host "PUBLIC_ARTIFACTS=NONE"
+          Write-Host "DELIVERY_FROM_PUBLIC_CARRIER=FORBIDDEN"
+          Get-Content "$PWD/APP_BUILD_7_CI_EVIDENCE.json"
+
+      - name: Confirm no public artifact retention
+        if: always()
+        shell: pwsh
+        run: |
+          Write-Host "PUBLIC_ARTIFACTS=NONE"
+          Write-Host "Owner ZIP remains ephemeral on runner only."
+
+  windows_web_parity:
+    name: Windows Web exact parity
+    needs:
+      - web_regression
+      - windows_owner_package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Compare exact route/result identities and package facts
+        shell: bash
+        env:
+          W_LINKED: ${{ needs.web_regression.outputs.linked }}
+          X_LINKED: ${{ needs.windows_owner_package.outputs.linked }}
+          W_ORDINARY: ${{ needs.web_regression.outputs.ordinary }}
+          X_ORDINARY: ${{ needs.windows_owner_package.outputs.ordinary }}
+          W_BOUNDED: ${{ needs.web_regression.outputs.bounded }}
+          X_BOUNDED: ${{ needs.windows_owner_package.outputs.bounded }}
+          W_ENGINEERING: ${{ needs.web_regression.outputs.engineering }}
+          X_ENGINEERING: ${{ needs.windows_owner_package.outputs.engineering }}
+          W_BLOCKED: ${{ needs.web_regression.outputs.blocked }}
+          X_BLOCKED: ${{ needs.windows_owner_package.outputs.blocked }}
+          W_LINKED_SHA: ${{ needs.web_regression.outputs.linked_sha }}
+          X_LINKED_SHA: ${{ needs.windows_owner_package.outputs.linked_sha }}
+          W_ORDINARY_SHA: ${{ needs.web_regression.outputs.ordinary_sha }}
+          X_ORDINARY_SHA: ${{ needs.windows_owner_package.outputs.ordinary_sha }}
+          W_BOUNDED_SHA: ${{ needs.web_regression.outputs.bounded_sha }}
+          X_BOUNDED_SHA: ${{ needs.windows_owner_package.outputs.bounded_sha }}
+          W_ENGINEERING_SHA: ${{ needs.web_regression.outputs.engineering_sha }}
+          X_ENGINEERING_SHA: ${{ needs.windows_owner_package.outputs.engineering_sha }}
+          W_BLOCKED_SHA: ${{ needs.web_regression.outputs.blocked_sha }}
+          X_BLOCKED_SHA: ${{ needs.windows_owner_package.outputs.blocked_sha }}
+          W_LEDGER: ${{ needs.web_regression.outputs.ledger_sha }}
+          X_LEDGER: ${{ needs.windows_owner_package.outputs.ledger_sha }}
+          W_MISMATCH: ${{ needs.web_regression.outputs.mismatch }}
+          X_MISMATCH: ${{ needs.windows_owner_package.outputs.mismatch }}
+          W_UNSAFE: ${{ needs.web_regression.outputs.unsafe }}
+          X_UNSAFE: ${{ needs.windows_owner_package.outputs.unsafe }}
+          W_FALSE: ${{ needs.web_regression.outputs.false_reject }}
+          X_FALSE: ${{ needs.windows_owner_package.outputs.false_reject }}
+          W_FAIL: ${{ needs.web_regression.outputs.fail_closed }}
+          X_FAIL: ${{ needs.windows_owner_package.outputs.fail_closed }}
+          W_DET: ${{ needs.web_regression.outputs.deterministic }}
+          X_DET: ${{ needs.windows_owner_package.outputs.deterministic }}
+          PACKAGE_FILENAME: ${{ needs.windows_owner_package.outputs.package_filename }}
+          PACKAGE_BYTES: ${{ needs.windows_owner_package.outputs.package_bytes }}
+          PACKAGE_SHA256: ${{ needs.windows_owner_package.outputs.package_sha256 }}
+          DEPENDENCY_MANIFEST_SHA256: ${{ needs.windows_owner_package.outputs.dependency_manifest_sha256 }}
+          FILE_MANIFEST_SHA256: ${{ needs.windows_owner_package.outputs.file_manifest_sha256 }}
+          BUILD_TIMESTAMP_UTC: ${{ needs.windows_owner_package.outputs.build_timestamp_utc }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          pairs=[
+            ("linked","W_LINKED","X_LINKED"),("ordinary","W_ORDINARY","X_ORDINARY"),
+            ("bounded","W_BOUNDED","X_BOUNDED"),("engineering","W_ENGINEERING","X_ENGINEERING"),
+            ("blocked","W_BLOCKED","X_BLOCKED"),("linked_sha","W_LINKED_SHA","X_LINKED_SHA"),
+            ("ordinary_sha","W_ORDINARY_SHA","X_ORDINARY_SHA"),("bounded_sha","W_BOUNDED_SHA","X_BOUNDED_SHA"),
+            ("engineering_sha","W_ENGINEERING_SHA","X_ENGINEERING_SHA"),("blocked_sha","W_BLOCKED_SHA","X_BLOCKED_SHA"),
+            ("ledger_sha","W_LEDGER","X_LEDGER"),
+          ]
+          values={}
+          for name,a,b in pairs:
+              assert os.environ[a] and os.environ[a]==os.environ[b], (name,os.environ[a],os.environ[b])
+              values[name]=os.environ[a]
+          assert [int(values[k]) for k in ("linked","ordinary","bounded","engineering","blocked")]==[1543,1031,171,341,512]
+          assert values["ordinary_sha"]=="993b5b3473f48bcb2d1e907927e620bd78ce6845cd8ede92e98dc15d18bc4c2c"
+          assert values["blocked_sha"]=="855843826b625c672d7c4d642482b4ca1f3eaf4df5416c7d2f5e39fa0bbe9ec1"
+          for a,b in (("W_MISMATCH","X_MISMATCH"),("W_UNSAFE","X_UNSAFE"),("W_FALSE","X_FALSE")):
+              assert os.environ[a]==os.environ[b]=="0"
+          assert os.environ["W_FAIL"]==os.environ["X_FAIL"]=="true"
+          assert os.environ["W_DET"]==os.environ["X_DET"]=="true"
+          required=("PACKAGE_FILENAME","PACKAGE_BYTES","PACKAGE_SHA256","DEPENDENCY_MANIFEST_SHA256","FILE_MANIFEST_SHA256","BUILD_TIMESTAMP_UTC")
+          assert all(os.environ[k] for k in required)
+          print(json.dumps({
+            "schema":"APP_BUILD_7_PUBLIC_CARRIER_FINAL_EVIDENCE",
+            "result":"PASS",
+            "private_source_head":"bd427bbb3b6ff44de4b4ce2f3b978cbc7ad48c0e",
+            "counts":{"linked":1543,"selectable":1031,"bounded":171,"engineering":341,"blocked":512},
+            "regression":{"manifest":"1083/1083","mismatch":0,"unsafe":0,"false_reject":0,"fail_closed":"26/26","deterministic_repeat":"PASS"},
+            "windows_web_parity":"PASS",
+            "package":{"filename":os.environ["PACKAGE_FILENAME"],"bytes":int(os.environ["PACKAGE_BYTES"]),"sha256":os.environ["PACKAGE_SHA256"]},
+            "dependency_manifest_sha256":os.environ["DEPENDENCY_MANIFEST_SHA256"],
+            "file_manifest_sha256":os.environ["FILE_MANIFEST_SHA256"],
+            "build_timestamp_utc":os.environ["BUILD_TIMESTAMP_UTC"],
+            "public_artifacts":"NONE",
+            "delivery_state":"OWNER_PACKAGE_VALIDATED_BUT_DELIVERY_BLOCKED"
+          },indent=2,sort_keys=True))
+          PY
