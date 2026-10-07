@@ -11,7 +11,7 @@ permissions:
 
 env:
   SOURCE_REPOSITORY: nalsur0609/PROGRAMMA_PODBORA_DEV2_SANDBOX
-  SOURCE_HEAD: 82919e56bb2903bbb55a5d674e9e9bcf55c0072d
+  SOURCE_HEAD: 549d5fed47afc2cf2afef30dbd555de6676e2f29
   TASK_BASE: 063e42b192538d731ebb08fbd0e8be7b1e993f3d
   ACCEPTED_MANIFEST_SHA: 903900d345110d036c42294035d51519cc4c83417fa413b1238c55d166c63283
 
@@ -180,10 +180,11 @@ jobs:
           assert ms["selection_engine"]=="CEL_PRIMARY"
           assert ms["tier_router"]=={"linked":1543,"selectable":1031,"blocked":512,"bounded":171,"engineering":341,"fail_closed":True,"rollback_available":True}
           manifest=json.loads(Path("release/issue_201/evidence/REQUEST_CASE_MANIFEST.json").read_text(encoding="utf-8"))
-          case=next(x for x in manifest["cases"] if x["kind"]=="REAL_SELECTABLE_SELF_REQUIRED" and x["profile_id"]=="fitting.threaded.brass.r1")
-          payload=json.dumps({"row_id":"R3","profile_id":case["profile_id"],"facts":case["facts"]},ensure_ascii=False).encode("utf-8")
+          case=next(x for x in manifest["cases"] if x["kind"]=="REAL_SELECTABLE_SELF_REQUIRED" and x["profile_id"]=="hydronic.collector_assembly.r1")
+          payload=json.dumps({"row_id":"R1","profile_id":case["profile_id"],"facts":case["facts"]},ensure_ascii=False).encode("utf-8")
           req=urllib.request.Request("http://127.0.0.1:8765/api/machine-select",data=payload,headers={"Content-Type":"application/json"})
           selected=json.loads(urllib.request.urlopen(req,timeout=20).read().decode("utf-8"))
+          print(json.dumps({"runtime_selected":selected},ensure_ascii=False,sort_keys=True))
           assert case["target_article_exact"] in [x.get("article") for x in selected.get("items",[])]
           search_body=json.dumps({"mode":"name","query":"муфта","limit":5},ensure_ascii=False).encode("utf-8")
           req=urllib.request.Request("http://127.0.0.1:8765/api/search",data=search_body,headers={"Content-Type":"application/json"})
@@ -390,9 +391,10 @@ jobs:
           if ($h.machine_selection.tier_router.linked -ne 1543 -or $h.machine_selection.tier_router.selectable -ne 1031 -or $h.machine_selection.tier_router.blocked -ne 512) { throw "OWNER_ROUTER_ACCOUNTING_MISMATCH" }
 
           $manifest=Get-Content "release/issue_201/evidence/REQUEST_CASE_MANIFEST.json" -Raw | ConvertFrom-Json
-          $case=$manifest.cases | Where-Object { $_.kind -eq "REAL_SELECTABLE_SELF_REQUIRED" -and $_.profile_id -eq "fitting.threaded.brass.r1" } | Select-Object -First 1
-          $body=@{row_id="R3";profile_id=$case.profile_id;facts=$case.facts} | ConvertTo-Json -Depth 20
+          $case=$manifest.cases | Where-Object { $_.kind -eq "REAL_SELECTABLE_SELF_REQUIRED" -and $_.profile_id -eq "hydronic.collector_assembly.r1" } | Select-Object -First 1
+          $body=@{row_id="R1";profile_id=$case.profile_id;facts=$case.facts} | ConvertTo-Json -Depth 20
           $selected=Invoke-RestMethod -Uri "http://127.0.0.1:8765/api/machine-select" -Method Post -ContentType "application/json; charset=utf-8" -Body ([Text.Encoding]::UTF8.GetBytes($body)) -TimeoutSec 20
+          $selected | ConvertTo-Json -Depth 20 | Write-Host
           if (-not ($selected.items.article -contains $case.target_article_exact)) { throw "OWNER_ORDINARY_CEL_TARGET_MISSING" }
 
           $searchBody=@{mode="name";query="муфта";limit=5} | ConvertTo-Json
