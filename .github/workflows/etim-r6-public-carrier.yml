@@ -1,0 +1,110 @@
+name: ETIM R6 Public Carrier Exact-Head Gate
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".ci/triggers/etim-r6.txt"
+
+permissions:
+  contents: read
+
+env:
+  SOURCE_REPOSITORY: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
+  SOURCE_HEAD: 8e71c1881e38da15cf1363dc7b91aecd42db050d
+  SOURCE_BASE: 2f21cf45712b6eb4acea8edce1d78c88857164cf
+
+jobs:
+  validate_r6:
+    name: Private STOUT R6 exact-head compute-only validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Public carrier provenance
+        run: |
+          echo "PUBLIC_CI_CARRIER=nalsur0609/1234"
+          echo "PRIVATE_SSOT=$SOURCE_REPOSITORY"
+          echo "SOURCE_HEAD=$SOURCE_HEAD"
+          echo "SOURCE_BASE=$SOURCE_BASE"
+          echo "ARTIFACT_RETENTION=NONE"
+
+      - name: Checkout private STOUT exact head
+        uses: actions/checkout@v4
+        with:
+          repository: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
+          ref: ${{ env.SOURCE_HEAD }}
+          token: ${{ secrets.DEV2_READ_TOKEN }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify exact head and accepted R5 ancestry
+        run: |
+          set -euo pipefail
+          actual="$(git rev-parse HEAD)"
+          test "$actual" = "$SOURCE_HEAD"
+          merge_base="$(git merge-base HEAD "$SOURCE_BASE")"
+          test "$merge_base" = "$SOURCE_BASE"
+          test "$(git rev-list --count "HEAD..$SOURCE_BASE")" = "0"
+
+      - name: Verify immutable accepted authority refs
+        run: |
+          set -euo pipefail
+          verify_pr() {
+            pr="$1"
+            expected="$2"
+            ref="refs/remotes/origin/r6-authority-pr-$pr"
+            git fetch --no-tags origin "+refs/pull/$pr/head:$ref" >/dev/null 2>&1
+            actual="$(git rev-parse "$ref")"
+            test "$actual" = "$expected"
+          }
+          verify_pr 267 f369bedac24709abf0c29a30c4ffcf21429647bc
+          verify_pr 386 6c406cf91b03e366eaffc8385f7f1866ac5a6a74
+          verify_pr 381 2247095f41069a3ea9b57f5a05ed883b77cf0002
+          verify_pr 392 2f21cf45712b6eb4acea8edce1d78c88857164cf
+          verify_pr 329 fe788b76b2927bc1e643af539f4b470101f65e23
+          verify_pr 296 475d3461cb7ebc35c4866266f16cab7f47b1ec3f
+
+      - name: Assert bounded R6 diff
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import subprocess
+          base = "2f21cf45712b6eb4acea8edce1d78c88857164cf"
+          paths = subprocess.check_output(["git","diff","--name-only",f"{base}...HEAD"], text=True).splitlines()
+          allowed = (
+              "data/etim_selection_tiers/r6_processing1822/",
+              "tools/etim_selection_tiers_r6/",
+              "docs/etim_selection_tiers/ETIM_TIERS_R6_PROCESSING1822_CENSUS_HANDOFF.md",
+              ".github/workflows/etim_selection_tiers_r6.yml",
+          )
+          bad = [p for p in paths if not any(p == a or p.startswith(a) for a in allowed)]
+          assert not bad, bad
+          assert paths, "empty R6 diff"
+          PY
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Deterministic R6 census validation twice
+        run: |
+          set -euo pipefail
+          python tools/etim_selection_tiers_r6/validate_processing1822_census_r6.py > /tmp/r6-a.json
+          python tools/etim_selection_tiers_r6/validate_processing1822_census_r6.py > /tmp/r6-b.json
+          cmp /tmp/r6-a.json /tmp/r6-b.json
+          echo "R6_DETERMINISTIC_VALIDATION=PASS"
+
+      - name: Negative-oracle regressions
+        run: |
+          set -euo pipefail
+          python tools/etim_selection_tiers_r6/test_processing1822_census_r6.py
+          echo "R6_NEGATIVE_ORACLE_REGRESSIONS=PASS"
+
+      - name: Public carrier no-artifact guard
+        run: |
+          set -euo pipefail
+          test ! -d artifact
+          test ! -d artifacts
+          echo "PUBLIC_CARRIER_ARTIFACT_UPLOAD=NONE"
