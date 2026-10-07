@@ -8,10 +8,11 @@ on:
 
 permissions:
   contents: read
+  actions: write
 
 env:
   SOURCE_REPOSITORY: nalsur0609/PROGRAMMA_PODBORA_DEV2_SANDBOX
-  SOURCE_HEAD: d86ccf162680ad59317153956b8eb39f95e9b00d
+  SOURCE_HEAD: 063e42b192538d731ebb08fbd0e8be7b1e993f3d
   TASK_BASE: 70bf3eae906102dc003f7f06cd7a8bdd32515589
 
 jobs:
@@ -52,6 +53,24 @@ jobs:
           echo "SOURCE_HEAD=$SOURCE_HEAD"
           echo "TASK_BASE=$TASK_BASE"
           echo "ARTIFACT_RETENTION=NONE"
+      - name: Cleanup one-time encrypted transport artifacts
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          for id in 11484300619 11484364614; do
+            code="$(curl -sS -o /dev/null -w '%{http_code}' -X DELETE \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "https://api.github.com/repos/nalsur0609/1234/actions/artifacts/$id")"
+            if [ "$code" != "204" ] && [ "$code" != "404" ]; then
+              echo "ARTIFACT_DELETE_FAILED:$id:$code"
+              exit 1
+            fi
+          done
+          echo "PUBLIC_ARTIFACT_RETENTION=NONE"
       - name: Checkout pinned private SSOT
         uses: actions/checkout@v4
         with:
@@ -143,6 +162,37 @@ jobs:
         run: |
           set -euo pipefail
           python APP_CORE_R3_PILOT/cel_shadow_r1/shadow.py             --binary APP_CORE_R3_PILOT/cel_shadow_r1/bin/app-cel-shadow-r1             --evidence-dir release/issue_201/evidence             --summary-out WEB_CEL_SHADOW_SUMMARY.json
+          second="$RUNNER_TEMP/app-cel-shadow-web-evidence-generation-2"
+          python APP_CORE_R3_PILOT/cel_shadow_r1/shadow.py             --binary APP_CORE_R3_PILOT/cel_shadow_r1/bin/app-cel-shadow-r1             --evidence-dir "$second"             --summary-out "$RUNNER_TEMP/WEB_CEL_SHADOW_SUMMARY_GENERATION_2.json"
+          for name in REQUEST_CASE_MANIFEST.json CURRENT_MATCHER_RESULT_LEDGER.json CEL_RESULT_LEDGER.json; do
+            cmp "release/issue_201/evidence/$name" "$second/$name"
+          done
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          root=Path("release/issue_201/evidence")
+          first=json.loads(Path("WEB_CEL_SHADOW_SUMMARY.json").read_text(encoding="utf-8"))
+          second=json.loads(Path(os.environ["RUNNER_TEMP"]).joinpath("WEB_CEL_SHADOW_SUMMARY_GENERATION_2.json").read_text(encoding="utf-8"))
+          keys=("manifest_sha256","current_ledger_sha256","cel_ledger_sha256")
+          assert all(first[k] == second[k] for k in keys)
+          d=json.loads(root.joinpath("DETERMINISTIC_VALIDATION.json").read_text(encoding="utf-8"))
+          d["full_payload_generation_count"]=2
+          d["full_payload_byte_identity"]={
+              "REQUEST_CASE_MANIFEST.json": True,
+              "CURRENT_MATCHER_RESULT_LEDGER.json": True,
+              "CEL_RESULT_LEDGER.json": True,
+          }
+          d["independent_generation_sha256"]={
+              "generation_1": {k:first[k] for k in keys},
+              "generation_2": {k:second[k] for k in keys},
+          }
+          d["retention_repair"]="FULL_MANIFEST_AND_RESULT_LEDGER_PRIVATE_SSOT_R1"
+          root.joinpath("DETERMINISTIC_VALIDATION.json").write_text(
+              json.dumps(d,ensure_ascii=False,sort_keys=True,separators=(",",":"))+"\n",
+              encoding="utf-8",newline="\n"
+          )
+          print("FULL_PAYLOAD_X2_BYTE_IDENTITY=PASS")
+          PY
           python - <<'PY'
           import json, os
           from pathlib import Path
