@@ -3,3 +3,4 @@ private_ssot=nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
 source_head=8e71c1881e38da15cf1363dc7b91aecd42db050d
 source_base=2f21cf45712b6eb4acea8edce1d78c88857164cf
 policy=compute-only;no-public-artifacts;private-ssot-authoritative
+attempt=2
