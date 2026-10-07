@@ -1,0 +1,100 @@
+name: APP-BUILD-7 Owner Public Carrier
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  SOURCE_REPOSITORY: nalsur0609/PROGRAMMA_PODBORA_DEV2_SANDBOX
+  SOURCE_HEAD: faf793ee0f7ec206fcac71692cb02a44f44c24ad
+  EXACT_BASE: 1da016563d3b783eb6f3cbeaccbf09395fb832ab
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    outputs:
+      ledger: ${{ steps.r.outputs.ledger }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.SOURCE_REPOSITORY }}
+          ref: ${{ env.SOURCE_HEAD }}
+          token: ${{ secrets.DEV2_READ_TOKEN }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.10"
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23.12"
+          cache-dependency-path: APP_CORE_R3_PILOT/cel_shadow_r1/go.sum
+      - id: r
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_HEAD"
+          test "$(git merge-base "$EXACT_BASE" HEAD)" = "$EXACT_BASE"
+          test -z "$(git diff --name-only "$EXACT_BASE" -- APP_CORE_R3_PILOT/machine_selection.py APP_CORE_R3_PILOT/tier_router_r1.py)"
+          mkdir -p APP_CORE_R3_PILOT/cel_shadow_r1/bin
+          (cd APP_CORE_R3_PILOT/cel_shadow_r1 && CGO_ENABLED=0 go build -trimpath -o bin/app-cel-shadow-r1 .)
+          python release/issue_203/validate_tier_router_integration_r1.py --binary APP_CORE_R3_PILOT/cel_shadow_r1/bin/app-cel-shadow-r1 --output-dir WEB_BUILD_7 --platform WEB
+          python - <<'PY'
+          import json, os
+          s=json.load(open("WEB_BUILD_7/VALIDATION_SUMMARY.json"))
+          r=s["integration_regression"]; c=s["route_manifest"]["counts"]; h=s["route_manifest"]["hashes"]
+          assert [c["linked"],c["ordinary_cel"],c["bounded_fail_closed"],c["engineering_fail_closed"],c["blocked"]]==[1543,1031,171,341,512]
+          assert r["mismatch_count"]==r["unsafe_selection_count"]==r["false_reject_count"]==0
+          assert r["fail_closed_case_count"]==r["fail_closed_parity_count"]==26 and r["deterministic_repeat_pass"]
+          assert h["ordinary_cel_sha256"]=="993b5b3473f48bcb2d1e907927e620bd78ce6845cd8ede92e98dc15d18bc4c2c"
+          assert h["blocked_sha256"]=="855843826b625c672d7c4d642482b4ca1f3eaf4df5416c7d2f5e39fa0bbe9ec1"
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f: f.write("ledger="+r["router_result_ledger_sha256"]+"\n")
+          print(json.dumps(s,indent=2))
+          PY
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 180
+    outputs:
+      ledger: ${{ steps.r.outputs.ledger }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.SOURCE_REPOSITORY }}
+          ref: ${{ env.SOURCE_HEAD }}
+          token: ${{ secrets.DEV2_READ_TOKEN }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.10"
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23.12"
+          cache-dependency-path: APP_CORE_R3_PILOT/cel_shadow_r1/go.sum
+      - id: r
+        shell: pwsh
+        run: |
+          $ErrorActionPreference="Stop"
+          if ((git rev-parse HEAD).Trim() -ne $env:SOURCE_HEAD) { throw "HEAD_MISMATCH" }
+          if ((git merge-base $env:EXACT_BASE HEAD).Trim() -ne $env:EXACT_BASE) { throw "BASE_MISMATCH" }
+          $head=(git rev-parse HEAD).Trim()
+          & "$PWD/release/issue_205/ci_windows_owner_package_r1.ps1" -RepoRoot "$PWD" -ExpectedHead $head
+          if ($LASTEXITCODE -ne 0) { throw "WINDOWS_DRIVER_FAILED" }
+          $s=Get-Content "WINDOWS_BUILD_7_REGRESSION/VALIDATION_SUMMARY.json" -Raw | ConvertFrom-Json
+          "ledger=$($s.integration_regression.router_result_ledger_sha256)" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+          Write-Host "PUBLIC_ARTIFACTS=NONE"
+          Get-Content "APP_BUILD_7_CI_EVIDENCE.json"
+  parity:
+    runs-on: ubuntu-latest
+    needs: [web, windows]
+    steps:
+      - shell: bash
+        env:
+          W: ${{ needs.web.outputs.ledger }}
+          X: ${{ needs.windows.outputs.ledger }}
+        run: |
+          test -n "$W"
+          test "$W" = "$X"
+          echo "APP_BUILD_7_WINDOWS_WEB_PARITY=PASS"
+          echo "PUBLIC_ARTIFACTS=NONE"
