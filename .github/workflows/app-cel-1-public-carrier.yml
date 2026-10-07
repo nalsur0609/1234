@@ -246,15 +246,13 @@ jobs:
             -outform DER -out "$RUNNER_TEMP/app-cel-retention.enc" "$RUNNER_TEMP/app-cel-retention-cert.pem"
           rm -f "$RUNNER_TEMP/app-cel-retention.tar.gz" "$RUNNER_TEMP/app-cel-retention-cert.pem"
 
-      - name: Emit one-time encrypted retention transport
-        shell: bash
-        run: |
-          set -euo pipefail
-          echo "APP_CEL_RETENTION_CIPHERTEXT_BEGIN"
-          base64 -w0 "$RUNNER_TEMP/app-cel-retention.enc"
-          echo
-          echo "APP_CEL_RETENTION_CIPHERTEXT_END"
-          rm -f "$RUNNER_TEMP/app-cel-retention.enc"
+      - name: One-time encrypted retention transport
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-cel-retention-encrypted
+          path: ${{ runner.temp }}/app-cel-retention.enc
+          if-no-files-found: error
+          retention-days: 1
 
 
   windows_owner_shadow:
