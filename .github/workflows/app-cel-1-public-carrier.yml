@@ -8,10 +8,11 @@ on:
 
 permissions:
   contents: read
+  actions: write
 
 env:
   SOURCE_REPOSITORY: nalsur0609/PROGRAMMA_PODBORA_DEV2_SANDBOX
-  SOURCE_HEAD: d86ccf162680ad59317153956b8eb39f95e9b00d
+  SOURCE_HEAD: 7b7b3800a9c6fd80a78940dc85917100cd413d03
   TASK_BASE: 70bf3eae906102dc003f7f06cd7a8bdd32515589
 
 jobs:
@@ -52,6 +53,24 @@ jobs:
           echo "SOURCE_HEAD=$SOURCE_HEAD"
           echo "TASK_BASE=$TASK_BASE"
           echo "ARTIFACT_RETENTION=NONE"
+      - name: Cleanup one-time encrypted transport artifacts
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          for id in 11484300619 11484364614; do
+            code="$(curl -sS -o /dev/null -w '%{http_code}' -X DELETE \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "https://api.github.com/repos/nalsur0609/1234/actions/artifacts/$id")"
+            if [ "$code" != "204" ] && [ "$code" != "404" ]; then
+              echo "ARTIFACT_DELETE_FAILED:$id:$code"
+              exit 1
+            fi
+          done
+          echo "PUBLIC_ARTIFACT_RETENTION=NONE"
       - name: Checkout pinned private SSOT
         uses: actions/checkout@v4
         with:
@@ -225,34 +244,6 @@ jobs:
           kill "$(cat WEB_APP_CEL_SHADOW.pid)" || true
           wait "$(cat WEB_APP_CEL_SHADOW.pid)" 2>/dev/null || true
 
-      - name: Encrypt retained corpus for one-time handoff
-        shell: bash
-        env:
-          TRANSPORT_CERT_B64: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUZNVENDQXhtZ0F3SUJBZ0lVWUI2RXd2Y3BBUklBQzdoN1NiankxQnJsVWZBd0RRWUpLb1pJaHZjTkFRRUwKQlFBd0tERW1NQ1FHQTFVRUF3d2RRVkJRTFVORlRDMHhMWEpsZEdWdWRHbHZiaTEwY21GdWMzQnZjblF3SGhjTgpNall4TURBM01UTXdOVE0wV2hjTk1qWXhNREE0TVRNd05UTTBXakFvTVNZd0pBWURWUVFEREIxQlVGQXRRMFZNCkxURXRjbVYwWlc1MGFXOXVMWFJ5WVc1emNHOXlkRENDQWlJd0RRWUpLb1pJaHZjTkFRRUJCUUFEZ2dJUEFEQ0MKQWdvQ2dnSUJBTWR4czJIOU4rMm5QbGY4Y3lOTE1jN3FpSkZXWmlvUFFWRVk0UFNLeWc5clVQYkJBdzBxMVFwMgpUdHQyRU1rMWN6NUtGQTlVaWYxMmNZZFVQS1R1QkxhTHhDUWZsVDZHUUpkVDhHWE5OLzJnV2RSalprbk8rQ2VZCjc1MWVsSEFPWVdPcGx0MHBlT0VxSHNJU2dIK0ZkWjNaZWp0MkZDNC9KU3k0a0ZvV1ErNk9ld3NBQ0VNNGJaUGgKYmNienFFN3VWcDJ4eWVLQmJad1Voa2YvZVNSbzQ0ZGpjRllYM0pUZFJnbUdrL00yOFBsWmZTSVg5SllDN1AvdgpZTXJnTFhGdmtzNk1zV1VuV25GNGFWSzNGKzZCQkhDd2N2eUNpMERaYlRjeDZtZlIrZ0Z1UTlJZ2R2YTgyamJwCnRDRDE1d2pUd0V1Znlpd0NkVG5IZUVhMnV2RTgwUElweE05emNiQjZuNE11SWphVDFNVC8xRWs2dUlWVnVUYloKalVydDJmUkYranl4ZGUwMVlqWXdJQU5nV04vVVlYOFVZMWlYY3JNS1BZSll6VUdScWw2cFV1eUk0R3JhZmFNRApRUVBFaGdlZEd2d25aVXBlWEJHdGlkRng1am5HMEMwSXNCYlpMU25aYU1BbmRtU1dSeTdHZXMxd3MrZTYrcC9zCkFrQkc4enhHeDVmeDdzVURlNFpTVE1GcVpyalVWTEF3a2pJZ0Z4QzRWdXdsUEdFNzQ5c3BtMG5adEVDWkhDS1cKMW8zYnE5TG5kSDB0NHBoejVSRVpndmo1U2puZ1p0UDUzZ0ViTkE1OTlYZWVINTYrZ2U3cjZzeWh0ckdXdXhuSQpIRWR6clpqcVRWc0N0d2E2V3VFQWoxSGpXbmx4ZWhRT2VJenprU0FyWWdnZnNHOHV0RzF6QWdNQkFBR2pVekJSCk1CMEdBMVVkRGdRV0JCU0xFNlJ1bFlqZWZCTU9lUWFRVmJxSE5tRHNFakFmQmdOVkhTTUVHREFXZ0JTTEU2UnUKbFlqZWZCTU9lUWFRVmJxSE5tRHNFakFQQmdOVkhSTUJBZjhFQlRBREFRSC9NQTBHQ1NxR1NJYjNEUUVCQ3dVQQpBNElDQVFCVDJJYXBETlZEaFcxeHZNWVBoL1FkeW5KMFdsbmZVR2piZE4yaktzTG1TZGdFVlJoY0RudXlSaFp6Cmo3NXJVaW1LekVzVm1Td0crK2gzWmprN3ByVTV3WUFRbnM0YUNiaEZZNFZnUTlFRUNvaFFYVWZ5Y2ZUVmd5dlIKZitxVGdUbkVYVW01Q3lSYWttbHNzMi80bU5COUt4Y0JOUE9SMHI2STRPenAyUkNQMW5IbDZiMDNpZFl4WXhKegpycTdXNjhUbDBSbFEza2ttZ05BREF6MGxjL1diR0VFaDVkMHpkMzE5K3krYUNNYTRNWWRrRTIxVU1JNFprWkhKCk5EajYwU2U0WkRuMjBBY28yY3ZvRnpMaHZPc3BTUU5wN01IN1kyUTBMYWJXaGFUZmpYL2U2Qno5TndYK0NrNGcKMHVkcVhtLytFN3JOdzgrNlRmT1RjUXN6T3lXU01YSFNvRDFydVRQanlXNnVhc2pVMWxSL09VTjFacFFzRDB6Ygo2S1o3VEhaMFhIMGg4VTdSM3NBWkgzMXR6cjZZZXdDbENMMUZMUHB0VCtlWUZaMGp5QzJmMVpib25zZyt5a3F3CkRXNnB0TEFVTGpNVXQ3ckxJMit6bHJybVFQVWF6eUU0bG0rY3lLYlhJRDJWTmFoaFBJVEFrVmVmUmpMS0tBY04KWHFTcE13YXE4NjJCcjJuMWRjSVQ1UUZCNitPUDhONW1hNVE4Mmo4QnEyMTdOSHdmaWgveGlYblkzVSt3YWRQMwoyWDFpcm4vNHZuNFdSMEFIV2NTL1NUTFMyeElBdzRLVWhLMXBzUVQvaGpxRWxuVzVFRzdaWmZOZkpQSTk4VGxPClBIYW5LeVJVQ0pSSG9qWEJVRFk5UGVjZXgwUk10TEZSV3RDNVpIMkt1OUF2SXFzeXBRPT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
-        run: |
-          set -euo pipefail
-          echo "$TRANSPORT_CERT_B64" | base64 -d > "$RUNNER_TEMP/app-cel-retention-cert.pem"
-          tar -czf "$RUNNER_TEMP/app-cel-retention.tar.gz" -C release/issue_201/evidence \
-            REQUEST_CASE_MANIFEST.json \
-            REQUEST_CASE_MANIFEST.sha256 \
-            CURRENT_MATCHER_RESULT_LEDGER.json \
-            CEL_RESULT_LEDGER.json \
-            PARITY_LEDGER.json \
-            DETERMINISTIC_VALIDATION.json \
-            DECISION_TRACE_EVIDENCE.json \
-            CURRENT_MATCHER_SEMANTIC_INVENTORY.json \
-            MISMATCH_BLOCKER_TAXONOMY.json
-          openssl smime -encrypt -aes-256-cbc -binary -in "$RUNNER_TEMP/app-cel-retention.tar.gz" \
-            -outform DER -out "$RUNNER_TEMP/app-cel-retention.enc" "$RUNNER_TEMP/app-cel-retention-cert.pem"
-          rm -f "$RUNNER_TEMP/app-cel-retention.tar.gz" "$RUNNER_TEMP/app-cel-retention-cert.pem"
-
-      - name: One-time encrypted retention transport
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-cel-retention-encrypted
-          path: ${{ runner.temp }}/app-cel-retention.enc
-          if-no-files-found: error
-          retention-days: 1
 
 
   windows_owner_shadow:
