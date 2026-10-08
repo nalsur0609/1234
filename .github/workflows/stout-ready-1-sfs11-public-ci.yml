@@ -1,0 +1,91 @@
+name: STOUT-READY-1 SFS11 Public Compute Gate
+
+on:
+  push:
+    branches:
+      - stout-ready-1-sfs11-public-ci-r1
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  SOURCE_REPOSITORY: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
+  SOURCE_HEAD: 5f6a675dde0c51f9d74caa8a75285cae63ad4e16
+  SOURCE_BASE: ab10f38095c236e7ce0c69dcc470a65dd628b0b2
+
+jobs:
+  validate:
+    name: SFS11 exact-head strict Product-Data gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Public carrier provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "PUBLIC_CI_CARRIER=nalsur0609/1234"
+          echo "PRIVATE_SSOT=$SOURCE_REPOSITORY"
+          echo "SOURCE_HEAD=$SOURCE_HEAD"
+          echo "SOURCE_BASE=$SOURCE_BASE"
+          echo "PUBLIC_ARTIFACTS=NONE"
+
+      - name: Checkout pinned private STOUT head
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.SOURCE_REPOSITORY }}
+          ref: ${{ env.SOURCE_HEAD }}
+          token: ${{ secrets.DEV2_READ_TOKEN }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify exact private head and bounded diff
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_HEAD"
+          test "$(git merge-base "$SOURCE_BASE" HEAD)" = "$SOURCE_BASE"
+          git diff --name-only "$SOURCE_BASE"...HEAD > /tmp/paths.txt
+          cat /tmp/paths.txt
+          python - <<'PY'
+          from pathlib import Path
+          expected={
+            ".github/workflows/stout_ready_1_sfs11.yml",
+            "artifacts/issue_425/SFS11_PASS_EXACT_SET_R1.txt",
+            "artifacts/issue_425/SFS11_PRODUCT_DATA_VERDICT_R1.json",
+            "docs/product_data_r2/STOUT_READY_1_SFS11_R1.md",
+            "tests/product_data_r2/test_sfs11_strict_readiness_gate_r1.py",
+            "tools/product_data_r2/sfs11_strict_readiness_gate_r1.py",
+          }
+          actual=set(Path("/tmp/paths.txt").read_text().splitlines())
+          assert actual==expected,(actual,expected)
+          print("BOUNDED_DIFF=PASS")
+          PY
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Deterministic strict gate twice
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/product_data_r2/sfs11_strict_readiness_gate_r1.py --root . > /tmp/a.json
+          python tools/product_data_r2/sfs11_strict_readiness_gate_r1.py --root . > /tmp/b.json
+          cmp /tmp/a.json /tmp/b.json
+          cat /tmp/a.json
+
+      - name: Negative-oracle unit regression
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.product_data_r2.test_sfs11_strict_readiness_gate_r1
+
+      - name: No public artifact retention
+        shell: bash
+        run: |
+          echo "PUBLIC_COMPUTE_ONLY=PASS"
+          echo "ARTIFACT_UPLOADS=0"
