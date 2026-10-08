@@ -1,0 +1,36 @@
+name: STOUT-READY-1 exact4 port proposal compute
+on:
+  push:
+    branches: [stout-ready-1-pressure-reducer-port-public-ci-r1]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
+          ref: 903112907b7f3c3189b67452038278627edc9621
+          token: ${{ secrets.DEV2_READ_TOKEN }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify and run pinned private proposal twice
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "903112907b7f3c3189b67452038278627edc9621"
+          python tools/product_data_r2/pressure_reducer_exact4_port_proposal_r1.py > /tmp/run1.json
+          python tools/product_data_r2/pressure_reducer_exact4_port_proposal_r1.py > /tmp/run2.json
+          cmp /tmp/run1.json /tmp/run2.json
+          python - <<'PY'
+          import json
+          j=json.load(open("/tmp/run1.json"))
+          assert len(j["records"])==4
+          assert j["passed_positive"]==4 and j["passed_negative"]==16
+          assert j["accepted_ready_delta"]==0
+          assert j["standard_approval"]=="PENDING"
+          print("EXACT4_PORT_PROPOSAL_DETERMINISTIC_PASS")
+          PY
+      - run: echo 'PUBLIC_ARTIFACT_RETENTION=NONE'
