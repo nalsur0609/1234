@@ -13,14 +13,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
-          ref: 903112907b7f3c3189b67452038278627edc9621
+          ref: 3b1e6b93f559a5b68f6b2452e6be10b725724691
           token: ${{ secrets.DEV2_READ_TOKEN }}
           fetch-depth: 0
           persist-credentials: false
       - name: Verify and run pinned private proposal twice
         run: |
           set -euo pipefail
-          test "$(git rev-parse HEAD)" = "903112907b7f3c3189b67452038278627edc9621"
+          test "$(git rev-parse HEAD)" = "3b1e6b93f559a5b68f6b2452e6be10b725724691"
           python tools/product_data_r2/pressure_reducer_exact4_port_proposal_r1.py > /tmp/run1.json
           python tools/product_data_r2/pressure_reducer_exact4_port_proposal_r1.py > /tmp/run2.json
           cmp /tmp/run1.json /tmp/run2.json
