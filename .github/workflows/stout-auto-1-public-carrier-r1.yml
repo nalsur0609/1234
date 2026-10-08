@@ -1,0 +1,217 @@
+name: STOUT-AUTO-1 Public Carrier R1
+
+on:
+  push:
+    branches:
+      - stout-auto-1-public-carrier-r1
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  SOURCE_REPO: https://github.com/nalsur0609/PROGRAMMA_PODBORA_DEV2_SANDBOX.git
+  SOURCE_HEAD: a1f18a7fa1e0a419f40c614ecace7bfade152544
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    outputs:
+      binding_sha: ${{ steps.evidence.outputs.binding_sha }}
+      selectable_sha: ${{ steps.evidence.outputs.selectable_sha }}
+      bounded_sha: ${{ steps.evidence.outputs.bounded_sha }}
+      engineering_sha: ${{ steps.evidence.outputs.engineering_sha }}
+      ledger_sha: ${{ steps.evidence.outputs.ledger_sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Checkout exact DEV2 candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --no-tags "$SOURCE_REPO" source
+          cd source
+          git checkout --detach "$SOURCE_HEAD"
+          test "$(git rev-parse HEAD)" = "$SOURCE_HEAD"
+          echo "SOURCE_HEAD=$(git rev-parse HEAD)"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.10"
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23.12"
+          cache-dependency-path: source/APP_CORE_R3_PILOT/cel_shadow_r1/go.sum
+      - name: Build accepted CEL runtime
+        working-directory: source/APP_CORE_R3_PILOT/cel_shadow_r1
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p bin
+          CGO_ENABLED=0 go build -trimpath -o bin/app-cel-shadow-r1 .
+          ./bin/app-cel-shadow-r1 </dev/null | head -n 1
+      - name: Source and bounded-expansion regressions
+        working-directory: source
+        shell: bash
+        run: |
+          set -euo pipefail
+          python APP_CORE_R3_PILOT/tests/test_stout_ready_1543_shared_core_r1.py
+          python APP_CORE_R3_PILOT/tests/test_tier_router_integration_r1.py
+          python APP_CORE_R3_PILOT/tests/test_stout_auto_pipe_clamp_r1.py
+      - name: Deterministic materialization and CEL/reference parity
+        id: evidence
+        working-directory: source
+        shell: bash
+        run: |
+          set -euo pipefail
+          python release/issue_220/materialize_stout_auto_pipe_clamp_r1.py --output OUT_A.json --evidence-output EVIDENCE_A.json
+          python release/issue_220/materialize_stout_auto_pipe_clamp_r1.py --output OUT_B.json --evidence-output EVIDENCE_B.json
+          cmp OUT_A.json OUT_B.json
+          cmp EVIDENCE_A.json EVIDENCE_B.json
+          python release/issue_220/validate_stout_auto_pipe_clamp_cel_r1.py --binary APP_CORE_R3_PILOT/cel_shadow_r1/bin/app-cel-shadow-r1 --output CEL_PARITY.json
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          binding=Path("OUT_A.json").read_bytes()
+          e=json.loads(Path("EVIDENCE_A.json").read_text(encoding="utf-8"))
+          c=json.loads(Path("CEL_PARITY.json").read_text(encoding="utf-8"))
+          assert c["result"]=="PASS"
+          assert e["accounting"]["selectable_candidate_after"]==1064
+          assert e["accounting"]["bounded_candidate_after"]==138
+          assert e["accounting"]["engineering_preserved"]==341
+          vals={
+            "binding_sha":hashlib.sha256(binding).hexdigest(),
+            "selectable_sha":e["hashes"]["selectable_candidate_sha256"],
+            "bounded_sha":e["hashes"]["bounded_candidate_sha256"],
+            "engineering_sha":e["hashes"]["engineering_sha256"],
+            "ledger_sha":c["ledger_sha256"],
+          }
+          with open(os.environ["GITHUB_OUTPUT"],"a",encoding="utf-8") as f:
+              for k,v in vals.items(): f.write(f"{k}={v}\n")
+          print(json.dumps(vals,indent=2,sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stout-auto-1-ubuntu-r1
+          path: |
+            source/EVIDENCE_A.json
+            source/CEL_PARITY.json
+            source/OUT_A.json
+
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 75
+    outputs:
+      binding_sha: ${{ steps.evidence.outputs.binding_sha }}
+      selectable_sha: ${{ steps.evidence.outputs.selectable_sha }}
+      bounded_sha: ${{ steps.evidence.outputs.bounded_sha }}
+      engineering_sha: ${{ steps.evidence.outputs.engineering_sha }}
+      ledger_sha: ${{ steps.evidence.outputs.ledger_sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Checkout exact DEV2 candidate
+        shell: pwsh
+        run: |
+          $ErrorActionPreference="Stop"
+          git clone --no-tags $env:SOURCE_REPO source
+          Set-Location source
+          git config core.autocrlf false
+          git config core.eol lf
+          git checkout --detach $env:SOURCE_HEAD
+          $actual=(git rev-parse HEAD).Trim()
+          if ($actual -ne $env:SOURCE_HEAD) { throw "SOURCE_HEAD_MISMATCH:$actual" }
+          Write-Host "SOURCE_HEAD=$actual"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.10"
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23.12"
+          cache-dependency-path: source/APP_CORE_R3_PILOT/cel_shadow_r1/go.sum
+      - name: Build accepted CEL runtime
+        working-directory: source/APP_CORE_R3_PILOT/cel_shadow_r1
+        shell: pwsh
+        run: |
+          $ErrorActionPreference="Stop"
+          New-Item -ItemType Directory -Force bin | Out-Null
+          $env:CGO_ENABLED="0"
+          go build -trimpath -o bin/app-cel-shadow-r1.exe .
+          if ($LASTEXITCODE -ne 0) { throw "CEL_BUILD_FAILED" }
+      - name: Source and bounded-expansion regressions
+        working-directory: source
+        shell: pwsh
+        run: |
+          $ErrorActionPreference="Stop"
+          python APP_CORE_R3_PILOT/tests/test_stout_ready_1543_shared_core_r1.py
+          if ($LASTEXITCODE -ne 0) { throw "READY1543_REGRESSION_FAILED" }
+          python APP_CORE_R3_PILOT/tests/test_tier_router_integration_r1.py
+          if ($LASTEXITCODE -ne 0) { throw "TIER_ROUTER_REGRESSION_FAILED" }
+          python APP_CORE_R3_PILOT/tests/test_stout_auto_pipe_clamp_r1.py
+          if ($LASTEXITCODE -ne 0) { throw "STOUT_AUTO_TEST_FAILED" }
+      - name: Deterministic materialization and CEL/reference parity
+        id: evidence
+        working-directory: source
+        shell: pwsh
+        run: |
+          $ErrorActionPreference="Stop"
+          python release/issue_220/materialize_stout_auto_pipe_clamp_r1.py --output OUT_A.json --evidence-output EVIDENCE_A.json
+          if ($LASTEXITCODE -ne 0) { throw "MATERIALIZE_A_FAILED" }
+          python release/issue_220/materialize_stout_auto_pipe_clamp_r1.py --output OUT_B.json --evidence-output EVIDENCE_B.json
+          if ($LASTEXITCODE -ne 0) { throw "MATERIALIZE_B_FAILED" }
+          if ((Get-FileHash OUT_A.json -Algorithm SHA256).Hash -ne (Get-FileHash OUT_B.json -Algorithm SHA256).Hash) { throw "BINDING_NONDETERMINISTIC" }
+          if ((Get-FileHash EVIDENCE_A.json -Algorithm SHA256).Hash -ne (Get-FileHash EVIDENCE_B.json -Algorithm SHA256).Hash) { throw "EVIDENCE_NONDETERMINISTIC" }
+          python release/issue_220/validate_stout_auto_pipe_clamp_cel_r1.py --binary APP_CORE_R3_PILOT/cel_shadow_r1/bin/app-cel-shadow-r1.exe --output CEL_PARITY.json
+          if ($LASTEXITCODE -ne 0) { throw "CEL_PARITY_FAILED" }
+          $e=Get-Content EVIDENCE_A.json -Raw | ConvertFrom-Json
+          $c=Get-Content CEL_PARITY.json -Raw | ConvertFrom-Json
+          if ($c.result -ne "PASS") { throw "CEL_PARITY_NOT_PASS" }
+          if ($e.accounting.selectable_candidate_after -ne 1064 -or $e.accounting.bounded_candidate_after -ne 138 -or $e.accounting.engineering_preserved -ne 341) { throw "ACCOUNTING_MISMATCH" }
+          $bindingSha=(Get-FileHash OUT_A.json -Algorithm SHA256).Hash.ToLowerInvariant()
+          "binding_sha=$bindingSha" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "selectable_sha=$($e.hashes.selectable_candidate_sha256)" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "bounded_sha=$($e.hashes.bounded_candidate_sha256)" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "engineering_sha=$($e.hashes.engineering_sha256)" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "ledger_sha=$($c.ledger_sha256)" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stout-auto-1-windows-r1
+          path: |
+            source/EVIDENCE_A.json
+            source/CEL_PARITY.json
+            source/OUT_A.json
+
+  parity:
+    needs: [ubuntu, windows]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require Windows/Ubuntu exact parity
+        shell: bash
+        env:
+          U_BINDING: ${{ needs.ubuntu.outputs.binding_sha }}
+          W_BINDING: ${{ needs.windows.outputs.binding_sha }}
+          U_SELECTABLE: ${{ needs.ubuntu.outputs.selectable_sha }}
+          W_SELECTABLE: ${{ needs.windows.outputs.selectable_sha }}
+          U_BOUNDED: ${{ needs.ubuntu.outputs.bounded_sha }}
+          W_BOUNDED: ${{ needs.windows.outputs.bounded_sha }}
+          U_ENGINEERING: ${{ needs.ubuntu.outputs.engineering_sha }}
+          W_ENGINEERING: ${{ needs.windows.outputs.engineering_sha }}
+          U_LEDGER: ${{ needs.ubuntu.outputs.ledger_sha }}
+          W_LEDGER: ${{ needs.windows.outputs.ledger_sha }}
+        run: |
+          set -euo pipefail
+          test "$U_BINDING" = "$W_BINDING"
+          test "$U_SELECTABLE" = "$W_SELECTABLE"
+          test "$U_BOUNDED" = "$W_BOUNDED"
+          test "$U_ENGINEERING" = "$W_ENGINEERING"
+          test "$U_LEDGER" = "$W_LEDGER"
+          python - <<'PY'
+          import json, os
+          print(json.dumps({
+            "result":"PASS",
+            "source_head":"a1f18a7fa1e0a419f40c614ecace7bfade152544",
+            "binding_sha256":os.environ["U_BINDING"],
+            "selectable_1064_sha256":os.environ["U_SELECTABLE"],
+            "bounded_138_sha256":os.environ["U_BOUNDED"],
+            "engineering_341_sha256":os.environ["U_ENGINEERING"],
+            "cel_reference_ledger_sha256":os.environ["U_LEDGER"],
+          },indent=2,sort_keys=True))
+          PY
