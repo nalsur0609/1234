@@ -1,0 +1,70 @@
+name: STOUT-READY-1 Pressure Reducer Public Compute Gate
+on:
+  push:
+    branches: [stout-ready-1-pressure-reducer-public-ci-r1]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  SOURCE_REPOSITORY: nalsur0609/PROGRAMMA_PODBORA_STOUT_SANDBOX
+  SOURCE_HEAD: 62e7530c8ba01ce1167c4bd67ccafc4917d4892f
+  SOURCE_BASE: ab10f38095c236e7ce0c69dcc470a65dd628b0b2
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Public carrier provenance
+        run: |
+          echo "PUBLIC_CI_CARRIER=nalsur0609/1234"
+          echo "PRIVATE_SSOT=$SOURCE_REPOSITORY"
+          echo "SOURCE_HEAD=$SOURCE_HEAD"
+          echo "PUBLIC_ARTIFACTS=NONE"
+      - name: Checkout pinned private STOUT head
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.SOURCE_REPOSITORY }}
+          ref: ${{ env.SOURCE_HEAD }}
+          token: ${{ secrets.DEV2_READ_TOKEN }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify exact head and bounded diff
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_HEAD"
+          test "$(git merge-base "$SOURCE_BASE" HEAD)" = "$SOURCE_BASE"
+          git diff --name-only "$SOURCE_BASE"...HEAD > /tmp/paths.txt
+          cat /tmp/paths.txt
+          python - <<'PY'
+          from pathlib import Path
+          expected={
+            ".github/workflows/stout_ready_1_pressure_reducer_recovery.yml",
+            "artifacts/issue_428/PRESSURE_REDUCER_BLOCKED_CONFLICT_EXACT3_R1.txt",
+            "artifacts/issue_428/PRESSURE_REDUCER_SOURCE_COMPLETE_EXACT4_R1.txt",
+            "artifacts/issue_428/PRESSURE_REDUCER_SOURCE_RECOVERY_R1.json",
+            "docs/product_data_r2/STOUT_READY_1_PRESSURE_REDUCER_SOURCE_RECOVERY_R1.md",
+            "tests/product_data_r2/test_pressure_reducer_source_recovery_r1.py",
+            "tools/product_data_r2/pressure_reducer_source_recovery_r1.py",
+          }
+          actual=set(Path("/tmp/paths.txt").read_text().splitlines())
+          assert actual==expected,(actual,expected)
+          print("BOUNDED_DIFF=PASS")
+          PY
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Deterministic recovery validator x2
+        run: |
+          set -euo pipefail
+          python tools/product_data_r2/pressure_reducer_source_recovery_r1.py > /tmp/a.json
+          python tools/product_data_r2/pressure_reducer_source_recovery_r1.py > /tmp/b.json
+          cmp /tmp/a.json /tmp/b.json
+          cat /tmp/a.json
+      - name: Negative regression
+        run: python -m unittest tests.product_data_r2.test_pressure_reducer_source_recovery_r1
+      - name: No public artifact retention
+        run: |
+          echo "PUBLIC_COMPUTE_ONLY=PASS"
+          echo "ARTIFACT_UPLOADS=0"
