@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 env:
-  SOURCE_REPO: https://github.com/nalsur0609/PROGRAMMA_PODBORA_DEV2_SANDBOX.git
+  SOURCE_REPOSITORY: nalsur0609/PROGRAMMA_PODBORA_DEV2_SANDBOX
   SOURCE_HEAD: a1f18a7fa1e0a419f40c614ecace7bfade152544
 
 jobs:
@@ -25,13 +25,16 @@ jobs:
       ledger_sha: ${{ steps.evidence.outputs.ledger_sha }}
     steps:
       - uses: actions/checkout@v4
-      - name: Checkout exact DEV2 candidate
+        with:
+          repository: ${{ env.SOURCE_REPOSITORY }}
+          ref: ${{ env.SOURCE_HEAD }}
+          token: ${{ secrets.DEV2_READ_TOKEN }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify exact DEV2 candidate
         shell: bash
         run: |
           set -euo pipefail
-          git clone --no-tags "$SOURCE_REPO" source
-          cd source
-          git checkout --detach "$SOURCE_HEAD"
           test "$(git rev-parse HEAD)" = "$SOURCE_HEAD"
           echo "SOURCE_HEAD=$(git rev-parse HEAD)"
       - uses: actions/setup-python@v5
@@ -40,9 +43,9 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: "1.23.12"
-          cache-dependency-path: source/APP_CORE_R3_PILOT/cel_shadow_r1/go.sum
+          cache-dependency-path: APP_CORE_R3_PILOT/cel_shadow_r1/go.sum
       - name: Build accepted CEL runtime
-        working-directory: source/APP_CORE_R3_PILOT/cel_shadow_r1
+        working-directory: APP_CORE_R3_PILOT/cel_shadow_r1
         shell: bash
         run: |
           set -euo pipefail
@@ -50,7 +53,7 @@ jobs:
           CGO_ENABLED=0 go build -trimpath -o bin/app-cel-shadow-r1 .
           ./bin/app-cel-shadow-r1 </dev/null | head -n 1
       - name: Source and bounded-expansion regressions
-        working-directory: source
+        working-directory: .
         shell: bash
         run: |
           set -euo pipefail
@@ -59,7 +62,7 @@ jobs:
           python APP_CORE_R3_PILOT/tests/test_stout_auto_pipe_clamp_r1.py
       - name: Deterministic materialization and CEL/reference parity
         id: evidence
-        working-directory: source
+        working-directory: .
         shell: bash
         run: |
           set -euo pipefail
@@ -93,9 +96,9 @@ jobs:
         with:
           name: stout-auto-1-ubuntu-r1
           path: |
-            source/EVIDENCE_A.json
-            source/CEL_PARITY.json
-            source/OUT_A.json
+            EVIDENCE_A.json
+            CEL_PARITY.json
+            OUT_A.json
 
   windows:
     runs-on: windows-latest
@@ -108,15 +111,18 @@ jobs:
       ledger_sha: ${{ steps.evidence.outputs.ledger_sha }}
     steps:
       - uses: actions/checkout@v4
-      - name: Checkout exact DEV2 candidate
+        with:
+          repository: ${{ env.SOURCE_REPOSITORY }}
+          ref: ${{ env.SOURCE_HEAD }}
+          token: ${{ secrets.DEV2_READ_TOKEN }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify exact DEV2 candidate
         shell: pwsh
         run: |
           $ErrorActionPreference="Stop"
-          git clone --no-tags $env:SOURCE_REPO source
-          Set-Location source
           git config core.autocrlf false
           git config core.eol lf
-          git checkout --detach $env:SOURCE_HEAD
           $actual=(git rev-parse HEAD).Trim()
           if ($actual -ne $env:SOURCE_HEAD) { throw "SOURCE_HEAD_MISMATCH:$actual" }
           Write-Host "SOURCE_HEAD=$actual"
@@ -126,9 +132,9 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: "1.23.12"
-          cache-dependency-path: source/APP_CORE_R3_PILOT/cel_shadow_r1/go.sum
+          cache-dependency-path: APP_CORE_R3_PILOT/cel_shadow_r1/go.sum
       - name: Build accepted CEL runtime
-        working-directory: source/APP_CORE_R3_PILOT/cel_shadow_r1
+        working-directory: APP_CORE_R3_PILOT/cel_shadow_r1
         shell: pwsh
         run: |
           $ErrorActionPreference="Stop"
@@ -137,7 +143,7 @@ jobs:
           go build -trimpath -o bin/app-cel-shadow-r1.exe .
           if ($LASTEXITCODE -ne 0) { throw "CEL_BUILD_FAILED" }
       - name: Source and bounded-expansion regressions
-        working-directory: source
+        working-directory: .
         shell: pwsh
         run: |
           $ErrorActionPreference="Stop"
@@ -149,7 +155,7 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw "STOUT_AUTO_TEST_FAILED" }
       - name: Deterministic materialization and CEL/reference parity
         id: evidence
-        working-directory: source
+        working-directory: .
         shell: pwsh
         run: |
           $ErrorActionPreference="Stop"
@@ -175,9 +181,9 @@ jobs:
         with:
           name: stout-auto-1-windows-r1
           path: |
-            source/EVIDENCE_A.json
-            source/CEL_PARITY.json
-            source/OUT_A.json
+            EVIDENCE_A.json
+            CEL_PARITY.json
+            OUT_A.json
 
   parity:
     needs: [ubuntu, windows]
