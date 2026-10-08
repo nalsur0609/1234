@@ -215,3 +215,5 @@ jobs:
             "cel_reference_ledger_sha256":os.environ["U_LEDGER"],
           },indent=2,sort_keys=True))
           PY
+
+# carrier-trigger: stout-auto-1-r1
